@@ -1,9 +1,9 @@
 ---
-title: "BULL CH76 Challenger – Buldoexcavator 2WD | Distribuitor oficial Moldova"
-description: "Buldoexcavator BULL CH76 Challenger 2WD: turbo Ashok Leyland, săpare la 4,77 m, 108 l/min. Livrare, service și piese în Moldova. Cere ofertă: 069 898 307."
+title: "BULL CH76 Challenger – Buldoexcavator 76 CP, 2WD | Distribuitor oficial Moldova"
+description: "Buldoexcavator BULL CH76 Challenger 2WD: 76 CP turbo Ashok Leyland, săpare la 4,77 m, 108 l/min. Livrare, service și piese în Moldova. Cere ofertă: 069 898 307."
 faq:
   - q: "Ce motor are BULL CH76 Challenger?"
-    a: "Motorul e Ashok Leyland H4CSE5520 BS-V (CEV), turbo, cu cilindree de 3.840 cm³. Cuplul maxim e de 290 Nm la 1200 rpm, deci utilajul trage bine la turație joasă, la săpat și la încărcat. Fișa tehnică completă a motorului ți-o trimitem împreună cu oferta."
+    a: "Motorul e Ashok Leyland H4CSE5520 BS-V (CEV), turbo, de 76 CP, cu cilindree de 3.840 cm³. Cuplul maxim e de 290 Nm la 1200 rpm, deci utilajul trage bine la turație joasă, la săpat și la încărcat. Fișa tehnică completă a motorului ți-o trimitem împreună cu oferta."
   - q: "Prin ce diferă CH76 Challenger de SD76 Super Smart?"
     a: "Ambele fac parte din seria High Speed. CH76 Challenger e varianta economică: doar 2WD, motor Ashok Leyland H4CSE5520, 108 l/min și 36 km/h. SD76 Super Smart vine în 2WD sau 4WD, cu motor Kirloskar sau Ashok Leyland, 130 l/min, 40 km/h, cupă Square Cut și transmisie hidrostatică SMART HTS opțională. Dacă lucrezi des pe teren moale, ia în calcul SD76 în varianta 4WD."
   - q: "Cât de adânc sapă și cât de sus încarcă CH76 Challenger?"
@@ -16,7 +16,7 @@ faq:
 
 ## Pentru cine este BULL CH76 Challenger
 
-BULL CH76 Challenger e modelul economic al seriei High Speed. Are tracțiune 2WD, transmisie Carraro și motor turbo Ashok Leyland, cu cuplu mare la turație joasă. Îl alegi când lucrezi mai ales pe teren ferm, pe drumuri și în localități și vrei un buldoexcavator simplu, cu cost redus la cumpărare și pe fiecare oră de lucru.
+BULL CH76 Challenger e modelul economic al seriei High Speed. Are tracțiune 2WD, transmisie Carraro și motor turbo Ashok Leyland de 76 CP, cu cuplu mare la turație joasă. Îl alegi când lucrezi mai ales pe teren ferm, pe drumuri și în localități și vrei un buldoexcavator simplu, cu cost redus la cumpărare și pe fiecare oră de lucru.
 
 Se potrivește firmelor mici și mijlocii de construcții, echipelor care montează rețele de apă și canalizare, primăriilor, întreprinderilor comunale și fermelor. Dacă prestezi servicii cu ora sau abia pornești o afacere de terasamente, CH76 îți dă un buldoexcavator complet, fără dotări pe care nu le folosești.
 
@@ -32,7 +32,7 @@ Conform broșurii BULL, brațul de excavator sapă până la 4,77 m și ajunge l
 
 ## De ce BULL CH76 Challenger
 
-Motorul Ashok Leyland H4CSE5520 BS-V (CEV) e turbo, are 3.840 cm³ și dă 290 Nm la doar 1200 rpm. La săpat și când cupa intră în grămadă, contează cuplul de jos: utilajul împinge fără să turezi motorul.
+Motorul Ashok Leyland H4CSE5520 BS-V (CEV) e turbo, de 76 CP și 3.840 cm³, cu 290 Nm la doar 1200 rpm. La săpat și când cupa intră în grămadă, contează cuplul de jos: utilajul împinge fără să turezi motorul.
 
 Transmisia Carraro synchro-shuttle are convertizor de cuplu. Convertizorul preia șocul când cupa intră în material și nu lasă motorul să se înece. Hidraulica load sensing, cu pompă cu piston și debit variabil, lucrează la 230 bar: 108 l/min la 2000 rpm și 119 l/min la turație mare. Forța de rupere la cupa încărcătorului e de 8.183 kgf.
 

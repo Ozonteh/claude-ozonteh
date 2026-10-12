@@ -142,10 +142,13 @@ Garanția e definită într-un singur loc, `company.warranty` din `src/data/site
 
 Clipurile filmate de Ozonteh (canalul YouTube Ozonteh) stau în `src/data/videos.ts`, cu data publicării și durata, iar din ele se generează schema `VideoObject`. Clipurile oficiale BULL rămân în `products.json`. Pentru un clip nou de pe canal adăugați o intrare în `videos.ts` (id YouTube, data, durata, modelul). Posterul se descarcă de pe YouTube prin `scripts/image-manifest.mjs` (`videoPosters`) și `npm run images`. Pe pagina unui model fără clip Ozonteh se afișează linkul către canal și mesajul că clipul apare în curând.
 
+## Confirmat de Ozonteh
+
+- **HD 100:** în Moldova se vând două versiuni (ZF Power Shift și Carraro + Casappa). Versiunea Carraro vine cu cupă 6 în 1, braț telescopic, joystick și aer condiționat. Ciocanul hidraulic e opțional.
+- **CH76 Challenger:** se publică 76 CP. Broșura BULL `ch76-new.pdf` indică 55 HP (40,5 kW) la 2000 rpm, așa că pe site nu apare valoarea în kW.
+
 ## De verificat cu Ozonteh / BULL înainte de lansare
 
 - Clipul de 6–10 s pentru hero.
-- **CH76 Challenger, puterea:** Anexa B (regula numelui de model) dă 76 CP, dar broșura oficială `ch76-new.pdf` și pagina bullindia.com dau **55 HP (40,5 kW) la 2000 rpm** pentru motorul Ashok Leyland H4CSE5520 (3.840 cm³). Pe site rămân deocamdată 76 CP în fișă și pe carduri, iar textul paginii nu menționează nicio putere. Trebuie confirmat cu BULL.
-- **HD 100:** în Moldova se vând două versiuni (ZF Power Shift / Carraro + Casappa), confirmat de Ozonteh. Rămâne de confirmat dacă dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt standard. Textul le formulează ca „poate fi livrată cu”.
 - **Gabaritul:** pe bullindia.com, lungimea totală e 6,04 m la SD76/HD96 și 7,46 m la HD 100 (și în broșura CH76). Gabaritul Grandia e identic cu al SD76, deci probabil copiat. Pentru Grandia afișăm doar cotele de lucru.
 - Celelalte cifre marcate `verify` în `products.json` (SD76 75/76 CP, AV490 50/52 CP, fișa Grandia DLX).

@@ -949,7 +949,7 @@
       }
     ],
     "verify": [
-      "Putere: Anexa B (regula numelui de model) indică 76 CP; broșura oficială ch76-new.pdf și pagina bullindia.com indică 55 HP (40,5 kW) la 2000 rpm pentru motorul Ashok Leyland H4CSE5520 de 3.840 cm³. De confirmat cu BULL.",
+      "Putere: confirmat de Ozonteh, se publică 76 CP. Broșura ch76-new.pdf și pagina bullindia.com indică 55 HP (40,5 kW) la 2000 rpm; kW nu se afișează până la confirmarea BULL.",
       "Cotele excavatorului, încărcătorului și gabaritul (7,46 × 2,35 × 3,49 m) sunt din broșura ch76-new.pdf, pagina 2."
     ],
     "drawing": {
@@ -2090,8 +2090,8 @@
         "ru": "Две версии в Молдове: трансмиссия ZF Power Shift или Carraro с насосами Casappa"
       },
       {
-        "ro": "Versiunea Carraro: cupă 6 în 1, ciocan hidraulic, braț telescopic, joystick și aer condiționat",
-        "ru": "Версия Carraro: ковш 6 в 1, гидромолот, телескопическая рукоять, джойстики и кондиционер"
+        "ro": "Versiunea Carraro: cupă 6 în 1, braț telescopic, joystick și aer condiționat; ciocan hidraulic opțional",
+        "ru": "Версия Carraro: ковш 6 в 1, телескопическая рукоять, джойстики и кондиционер; гидромолот опционально"
       },
       {
         "ro": "Hidraulică de 145 l/min",
@@ -2315,8 +2315,8 @@
     ],
     "verify": [
       "Adâncimea de săpare (4,6 / 5,6 m) e preluată de pe pagina bullindia.com a modelului HD 100, nu din Anexa B. De confirmat cu broșura.",
-      "Confirmat de Ozonteh: în Moldova se vând două versiuni HD 100 (ZF Power Shift / Carraro + Casappa). Dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt preluate din video-urile Ozonteh; de confirmat dacă sunt standard. Viteza 40/22 km/h e din Anexa B (versiunea ZF).",
-      "Cotele din desenul tehnic sunt de pe pagina modelului de pe bullindia.com. Lungimea totală diferă între modele (6,04 m la SD76/HD96, 7,46 m la HD 100 și în broșura CH76): de confirmat cu BULL."
+      "Cotele din desenul tehnic sunt de pe pagina modelului de pe bullindia.com. Lungimea totală diferă între modele (6,04 m la SD76/HD96, 7,46 m la HD 100 și în broșura CH76): de confirmat cu BULL.",
+      "Confirmat de Ozonteh: în Moldova se vând două versiuni HD 100 (ZF Power Shift / Carraro + Casappa). Versiunea Carraro vine cu cupă 6 în 1, braț telescopic, joystick și aer condiționat; ciocanul hidraulic e opțional. Viteza 40/22 km/h e din Anexa B (versiunea ZF)."
     ],
     "variants": [
       {
@@ -2350,8 +2350,8 @@
             "ru": "Гидронасосы Casappa (Италия)"
           },
           {
-            "ro": "Cupă 6 în 1 și ciocan hidraulic",
-            "ru": "Ковш 6 в 1 и гидромолот"
+            "ro": "Cupă 6 în 1",
+            "ru": "Ковш 6 в 1"
           },
           {
             "ro": "Braț telescopic: săpare până la 5,6 m",
@@ -2360,6 +2360,10 @@
           {
             "ro": "Joystick și aer condiționat",
             "ru": "Джойстики и кондиционер"
+          },
+          {
+            "ro": "Opțional: ciocan hidraulic",
+            "ru": "Опционально: гидромолот"
           }
         ]
       }
