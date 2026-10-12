@@ -1,0 +1,214 @@
+---
+// Comparator: până la 3 modele, alese din liste (sau din „Compară" în catalog: ?m=id1,id2,id3).
+// Tabelul conține toate modelele; JS afișează doar coloanele alese. Fără JS se văd primele 3 modele implicite.
+// Mobil: prima coloană (parametrul) rămâne fixă, iar coloanele modelelor se glisează orizontal.
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { products } from '../lib/products';
+import { compareRows } from '../lib/compare';
+import { asset } from '../lib/images';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph } from '../lib/schema';
+import { productPath, route, type Lang } from '../i18n/routes';
+import { t, tpl } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const c = ui.pages.compare;
+const page = await getPage('compara', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [
+  { name: ui.nav.machines, path: route('catalog', lang) },
+  { name: ui.nav.compare, path: route('compare', lang) },
+]);
+const DEFAULT = ['bull-sd76-super-smart', 'bull-hd96-4wd', 'bull-hd-100'];
+const rows = compareRows(products, lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('compare')}
+  ogImage={asset('santier/buldoexcavator-bull-hd96-santier.webp')}
+  ogImageAlt={page.h1}
+  jsonld={[breadcrumbGraph(cr)]}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={c.eyebrow} title={page.h1} lead={page.lead} />
+
+  <section class="cmp on-light section" aria-labelledby="cmp-howto">
+    <div class="wrap cmp-inner">
+      {
+        page.blocks.howto && (
+          <div class="cmp-howto">
+            <h2 id="cmp-howto" class="t-eyebrow">
+              <span class="idx">01</span> {page.blocks.howto.title}
+            </h2>
+            <p>{page.blocks.howto.text}</p>
+          </div>
+        )
+      }
+
+      <form class="cmp-pick" data-compare-form>
+        {
+          DEFAULT.map((id, i) => (
+            <div class="field">
+              <label class="field-label" for={`cmp-${i}`}>{tpl(c.pick, { n: i + 1 })}</label>
+              <select class="input" id={`cmp-${i}`} data-slot={i}>
+                <option value="">{c.none}</option>
+                {products.map((p) => (
+                  <option value={p.id} selected={p.id === id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))
+        }
+      </form>
+
+      <p class="cmp-swipe t-mono" aria-hidden="true"><Icon name="arrow" size={16} /> {c.swipe}</p>
+
+      <div class="cmp-scroll" data-compare-scroll>
+        <table class="cmp-table" data-compare-table>
+          <thead>
+            <tr>
+              <th scope="col" class="cmp-param">{c.param}</th>
+              {
+                products.map((p) => (
+                  <th scope="col" data-col={p.id} hidden={!DEFAULT.includes(p.id)}>
+                    <a href={productPath(p, lang)} class="cmp-model">
+                      <Image src={asset(p.image)} alt="" widths={[240, 360]} sizes="200px" loading="lazy" />
+                      <span class="cmp-name">{p.name}</span>
+                    </a>
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rows.map((r) => (
+                <tr>
+                  <th scope="row" class="cmp-param">{r.label}</th>
+                  {products.map((p) => (
+                    <td data-col={p.id} hidden={!DEFAULT.includes(p.id)}>
+                      {r.values[p.id]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+            <tr class="cmp-actions">
+              <th scope="row" class="cmp-param"><span class="sr-only">{c.details}</span></th>
+              {
+                products.map((p) => (
+                  <td data-col={p.id} hidden={!DEFAULT.includes(p.id)}>
+                    <button type="button" class="btn btn-primary btn-sm" data-quote data-model={p.id}>
+                      {ui.cta.quote}
+                    </button>
+                    <a href={productPath(p, lang)} class="link-arrow cmp-link">
+                      {c.details} <Icon name="arrow" size={16} />
+                    </a>
+                  </td>
+                ))
+              }
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note t-mono">{c.note}</p>
+    </div>
+  </section>
+
+  <FinalCta lang={lang} idx="02" />
+</BaseLayout>
+
+<script>
+  // Coloanele afișate: ?m= din URL (din catalog) sau alegerea din liste; ordinea urmează listele.
+  const form = document.querySelector<HTMLFormElement>('[data-compare-form]');
+  const table = document.querySelector<HTMLTableElement>('[data-compare-table]');
+  if (form && table) {
+    const selects = [...form.querySelectorAll<HTMLSelectElement>('select[data-slot]')];
+    const fromUrl = (new URLSearchParams(location.search).get('m') ?? '').split(',').filter(Boolean).slice(0, 3);
+    if (fromUrl.length) selects.forEach((s, i) => (s.value = fromUrl[i] && s.querySelector(`option[value="${CSS.escape(fromUrl[i])}"]`) ? fromUrl[i] : ''));
+    const apply = () => {
+      const chosen = selects.map((s) => s.value);
+      table.querySelectorAll<HTMLElement>('[data-col]').forEach((cell) => {
+        const i = chosen.indexOf(cell.dataset.col!);
+        cell.hidden = i === -1;
+      });
+      // Ordinea coloanelor: mutăm celulele în ordinea alegerii (tabelul nu folosește flex).
+      table.querySelectorAll('tr').forEach((tr) => {
+        chosen.forEach((id) => {
+          const cell = id && tr.querySelector(`[data-col="${CSS.escape(id)}"]`);
+          if (cell) tr.appendChild(cell);
+        });
+      });
+      // Rândurile fără nicio valoare publicată pentru modelele alese („—" peste tot) se ascund.
+      table.querySelectorAll<HTMLTableRowElement>('tbody tr:not(.cmp-actions)').forEach((tr) => {
+        const cells = [...tr.querySelectorAll<HTMLElement>('td[data-col]')].filter((c) => !c.hidden);
+        tr.hidden = cells.length > 0 && cells.every((c) => c.textContent?.trim() === '—');
+      });
+      const url = new URL(location.href);
+      const ids = chosen.filter(Boolean);
+      if (ids.length) url.searchParams.set('m', ids.join(','));
+      else url.searchParams.delete('m');
+      history.replaceState(null, '', url);
+    };
+    selects.forEach((s) => s.addEventListener('change', apply));
+    apply();
+  }
+</script>
+
+<style>
+  .cmp-inner { display: grid; gap: 1.5rem; }
+  .cmp-howto { display: grid; gap: 0.75rem; max-width: 46rem; }
+  .cmp-howto p { color: #2a2d31; }
+  .cmp-pick { display: grid; gap: 10px; }
+  .cmp-pick .input { background-color: #fff; color: var(--color-asphalt); }
+  .cmp-swipe { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-steel-ink); }
+  /* Mobil: coloana parametrului (34vw) e fixă; o coloană de model (66vw) umple restul ecranului. */
+  .cmp-scroll { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: 34vw; margin-inline: calc(var(--gutter) * -1); }
+  .cmp-table { border-collapse: separate; border-spacing: 0; min-width: 100%; }
+  .cmp-table th, .cmp-table td { padding: 0.8rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-line-ink); }
+  .cmp-table td { min-width: 66vw; max-width: 66vw; scroll-snap-align: start; font-weight: 600; font-size: 0.9375rem; line-height: 1.4; background: var(--color-paper); }
+  .cmp-table thead th { vertical-align: bottom; border-bottom: 2px solid var(--color-asphalt); }
+  .cmp-param {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    width: 34vw;
+    min-width: 34vw;
+    padding-left: var(--gutter);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-steel-ink);
+    background: var(--color-paper-2);
+    box-shadow: 1px 0 0 var(--color-line-ink);
+  }
+  .cmp-model { display: grid; gap: 0.5rem; }
+  .cmp-model :global(img) { width: 100%; max-width: 220px; aspect-ratio: 4 / 3; object-fit: contain; }
+  .cmp-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 1.375rem; line-height: 1.1; letter-spacing: var(--display-track); color: var(--color-asphalt); }
+  :global(html:lang(ru)) .cmp-name { font-weight: 600; font-size: 1.2rem; }
+  .cmp-actions td { display: table-cell; }
+  .cmp-actions td > * + * { margin-top: 0.75rem; }
+  .cmp-link { display: flex; width: fit-content; }
+  .cmp-table tbody tr:nth-child(even) td { background: #efebe2; }
+  .cmp-note { font-size: 0.75rem; color: var(--color-steel-ink); }
+  @media (min-width: 48rem) {
+    .cmp-pick { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cmp-swipe { display: none; }
+    .cmp-scroll { margin: 0; overflow: visible; scroll-padding-left: 0; }
+    .cmp-table { width: 100%; table-layout: fixed; }
+    .cmp-table td { min-width: 0; max-width: none; }
+    .cmp-param { position: static; width: 22%; min-width: 0; padding-left: 0.9rem; }
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+// Paginile de categorie, RO: /buldoexcavatoare/, /incarcatoare-frontale/, /miniincarcatoare-skid-steer/
+import CategoryPage from '../../views/CategoryPage.astro';
+import { CATEGORY_SLUGS, type CategoryId } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return (Object.keys(CATEGORY_SLUGS) as CategoryId[]).map((cat) => ({ params: { category: CATEGORY_SLUGS[cat].ro }, props: { cat } }));
+}
+const { cat } = Astro.props;
+---
+
+<CategoryPage lang="ro" cat={cat} />

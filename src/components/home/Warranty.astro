@@ -5,8 +5,8 @@ import { company, departments } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
 
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; idx?: string }
+const { lang, idx = '03' } = Astro.props;
 const ui = t(lang);
 const g = ui.home.warranty;
 const w = company.warranty;
@@ -22,7 +22,7 @@ const cards = [
   <div class="hazard" aria-hidden="true"></div>
   <div class="wrap section wty-grid">
     <div class="wty-copy" data-reveal>
-      <p class="t-eyebrow"><span class="idx">03</span> {g.eyebrow}</p>
+      <p class="t-eyebrow"><span class="idx">{idx}</span> {g.eyebrow}</p>
       <h2 id="wty-title" class="t-h2">{g.title}</h2>
       <p class="t-lead">{g.text}</p>
       <ul class="wty-points" role="list">

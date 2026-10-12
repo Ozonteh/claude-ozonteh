@@ -1,0 +1,124 @@
+---
+// Catalogul „Utilaje": toate modelele, cu filtre după tip, putere, tracțiune și greutate, plus comparare.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import ProductGrid from '../components/pages/ProductGrid.astro';
+import TextBlock from '../components/pages/TextBlock.astro';
+import CompareTray from '../components/pages/CompareTray.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { products } from '../lib/products';
+import { asset } from '../lib/images';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph, itemListGraph } from '../lib/schema';
+import { CATEGORY_SLUGS, route, type CategoryId, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const c = ui.pages.catalog;
+const page = await getPage('catalog', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.machines, path: route('catalog', lang) }]);
+const cats = Object.keys(CATEGORY_SLUGS) as CategoryId[];
+const groups = [
+  { name: 'tip', label: c.type, opts: cats.map((id) => ({ v: id, label: ui.categories[id].plural })) },
+  { name: 'cp', label: c.power, opts: [{ v: 'low', label: c.powerOpts.low }, { v: 'high', label: c.powerOpts.high }] },
+  { name: 'tr', label: c.drive, opts: [{ v: '2WD', label: '2WD' }, { v: '4WD', label: '4WD' }] },
+  { name: 'g', label: c.weight, opts: [{ v: 'light', label: c.weightOpts.light }, { v: 'mid', label: c.weightOpts.mid }, { v: 'heavy', label: c.weightOpts.heavy }] },
+];
+const jsonld = [breadcrumbGraph(cr), itemListGraph(products, site, lang)];
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('catalog')}
+  ogImage={asset('santier/buldoexcavator-bull-sd76-santier-constructii.webp')}
+  ogImageAlt={page.h1}
+  jsonld={jsonld}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={c.eyebrow} title={page.h1} lead={page.lead} />
+
+  <section class="cat on-dark" aria-label={page.h1}>
+    <div class="wrap cat-grid">
+      <form class="cat-filters" data-filters aria-label={c.filters}>
+        <details class="cat-details" data-filters-panel>
+          <summary class="cat-sum t-mono"><Icon name="menu" size={18} /> {c.filters}</summary>
+          <div class="cat-groups">
+            {
+              groups.map((g) => (
+                <fieldset class="cat-group">
+                  <legend class="t-mono">{g.label}</legend>
+                  <div class="cat-chips">
+                    <label class="fchip">
+                      <input type="radio" name={g.name} value="" checked />
+                      <span>{g.name === 'tip' ? c.all : c.any}</span>
+                    </label>
+                    {g.opts.map((o) => (
+                      <label class="fchip">
+                        <input type="radio" name={g.name} value={o.v} />
+                        <span>{o.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ))
+            }
+            <button type="reset" class="btn btn-ghost btn-sm cat-reset">{c.reset}</button>
+          </div>
+        </details>
+      </form>
+
+      <div class="cat-results">
+        <p class="cat-count t-mono" aria-live="polite" data-count data-many={c.results} data-one={c.resultsOne}>{c.results.replace('{n}', String(products.length))}</p>
+        <ProductGrid list={products} lang={lang} headingLevel="h2" />
+        <p class="cat-empty" data-empty hidden>{c.empty}</p>
+      </div>
+    </div>
+  </section>
+
+  {
+    page.blocks.intro && (
+      <section class="on-light section">
+        <div class="wrap">
+          <TextBlock title={page.blocks.intro.title} text={page.blocks.intro.text} eyebrow={c.eyebrow} idx="01" />
+        </div>
+      </section>
+    )
+  }
+
+  <FinalCta lang={lang} idx="02" />
+  <CompareTray lang={lang} />
+</BaseLayout>
+
+<script>
+  import '../scripts/catalog';
+</script>
+
+<style>
+  .cat { padding-block: clamp(1.5rem, 1rem + 2vw, 3rem) clamp(4rem, 3rem + 4vw, 7rem); }
+  .cat-grid { display: grid; gap: 1.25rem; }
+  .cat-details { background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .cat-sum { display: flex; align-items: center; gap: 0.6rem; min-height: 52px; padding: 0 1rem; font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-bull-yellow); cursor: pointer; }
+  .cat-groups { display: grid; gap: 1.25rem; padding: 0.25rem 1rem 1.25rem; }
+  .cat-group { border: 0; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .cat-group legend { padding: 0; margin-bottom: 0.6rem; font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-steel); }
+  .cat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fchip { position: relative; display: inline-flex; }
+  .fchip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .fchip span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 0.85rem; font-size: 0.875rem; font-weight: 600; color: var(--color-bone); box-shadow: inset 0 0 0 1px var(--color-line); transition: background-color 0.2s, color 0.2s; }
+  .fchip input:checked + span { color: var(--color-asphalt); background: var(--color-bull-yellow); box-shadow: none; }
+  .fchip input:focus-visible + span { outline: 2px solid var(--color-bull-yellow); outline-offset: 2px; }
+  .fchip:hover span { box-shadow: inset 0 0 0 1px var(--color-bull-yellow); }
+  .cat-reset { justify-self: start; }
+  .cat-count { margin-bottom: 1rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-steel); }
+  .cat-empty { padding: 2rem 1.25rem; color: var(--color-bone); background: var(--color-graphite); box-shadow: inset 3px 0 0 var(--color-hazard); }
+  @media (min-width: 64rem) {
+    .cat-grid { grid-template-columns: 260px minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+    .cat-filters { position: sticky; top: calc(var(--header-h) + 1rem); }
+    .cat-sum { pointer-events: none; }
+  }
+</style>

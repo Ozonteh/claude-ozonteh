@@ -12,9 +12,12 @@ interface Props {
   id: string;
   model?: string;
   variant?: 'dark' | 'graphite';
+  /** „service": formularul de pe pagina Service și piese (tip solicitare, fără demonstrație). */
+  kind?: 'quote' | 'service';
 }
-const { lang, id, model, variant = 'dark' } = Astro.props;
+const { lang, id, model, variant = 'dark', kind = 'quote' } = Astro.props;
 const ui = t(lang).form;
+const service = kind === 'service';
 ---
 
 <form class:list={['qform', `qform-${variant}`]} action={LEAD_ENDPOINT} method="post" novalidate data-quote-form>
@@ -54,31 +57,48 @@ const ui = t(lang).form;
     </div>
 
     <div class="field field-wide">
-      <label class="field-label" for={`${id}-model`}>{ui.model}</label>
+      <label class="field-label" for={`${id}-model`}>{service ? ui.modelOwned : ui.model}</label>
       <select class="input" id={`${id}-model`} name="model" data-model-select>
-        <option value="">{ui.modelAny}</option>
+        <option value="">{service ? ui.modelOwnedAny : ui.modelAny}</option>
         {products.map((p) => <option value={p.name} data-id={p.id} selected={model === p.id}>{p.name}</option>)}
       </select>
     </div>
 
+    {
+      service && (
+        <div class="field field-wide">
+          <label class="field-label" for={`${id}-request`}>{ui.request}</label>
+          <select class="input" id={`${id}-request`} name="request">
+            {Object.entries(ui.requestOptions).map(([v, label]) => (
+              <option value={v}>{label}</option>
+            ))}
+          </select>
+        </div>
+      )
+    }
+
     <div class="field field-wide">
       <label class="field-label" for={`${id}-msg`}>{ui.message}</label>
-      <textarea class="input" id={`${id}-msg`} name="message" rows="3" maxlength="1500" placeholder={ui.messagePh}></textarea>
+      <textarea class="input" id={`${id}-msg`} name="message" rows="3" maxlength="1500" placeholder={service ? ui.messageServicePh : ui.messagePh}></textarea>
     </div>
 
-    <label class="check field-wide">
-      <input type="checkbox" name="demo" value="1" data-demo-check />
-      <span>{ui.demo}</span>
-    </label>
+    {
+      !service && (
+        <label class="check field-wide">
+          <input type="checkbox" name="demo" value="1" data-demo-check />
+          <span>{ui.demo}</span>
+        </label>
+      )
+    }
   </div>
 
   <p class="qform-consent">
-    {ui.consent}
+    {service ? ui.consentService : ui.consent}
     <a href={route('privacy', lang)} class="prose-links">{ui.consentLink}</a>.
   </p>
 
   <button type="submit" class="btn btn-primary btn-lg btn-block" data-submit>
-    <span data-label>{ui.submit}</span>
+    <span data-label>{service ? ui.submitService : ui.submit}</span>
     <span data-label-sending hidden>{ui.sending}</span>
     <Icon name="arrow" class="arrow" />
   </button>
@@ -87,7 +107,7 @@ const ui = t(lang).form;
   <div class="qform-success" data-success hidden tabindex="-1">
     <span class="qform-success-icon"><Icon name="check" size={28} /></span>
     <p class="t-h3">{ui.successTitle}</p>
-    <p>{ui.successText}</p>
+    <p>{service ? ui.successServiceText : ui.successText}</p>
     <button type="button" class="link-arrow" data-reset>{ui.successAgain}</button>
   </div>
 </form>

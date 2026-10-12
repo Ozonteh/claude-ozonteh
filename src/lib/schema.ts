@@ -157,3 +157,27 @@ export function productGraph(p: Product, site: URL, lang: Lang, imageUrl: string
     },
   };
 }
+
+/** ItemList pentru catalog și categorii: lista modelelor, în ordinea din pagină. */
+export function itemListGraph(list: Product[], site: URL, lang: Lang) {
+  return {
+    '@type': 'ItemList',
+    itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: new URL(productPath(p, lang), site).href, name: p.name })),
+  };
+}
+
+/** BlogPosting pentru articolele de blog. */
+export function articleGraph(a: { title: string; description: string; url: string; image: string; date: Date; lang: Lang }, site: URL) {
+  return {
+    '@type': 'BlogPosting',
+    headline: a.title,
+    description: a.description,
+    image: a.image,
+    datePublished: a.date.toISOString().slice(0, 10),
+    dateModified: a.date.toISOString().slice(0, 10),
+    inLanguage: a.lang === 'ru' ? 'ru-MD' : 'ro-MD',
+    mainEntityOfPage: a.url,
+    author: { '@id': orgId(site) },
+    publisher: { '@id': orgId(site) },
+  };
+}

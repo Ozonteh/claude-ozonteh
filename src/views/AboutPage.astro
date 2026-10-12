@@ -1,0 +1,199 @@
+---
+// Despre noi: Ozonteh, BULL Machines, parteneriatul și vizita delegației BULL la Strășeni (11.09.2026).
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import TextBlock from '../components/pages/TextBlock.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import OzontehLogo from '../components/ui/OzontehLogo.astro';
+import BullLogo from '../components/ui/BullLogo.astro';
+import WarrantyBadges from '../components/ui/WarrantyBadges.astro';
+import Icon from '../components/ui/Icon.astro';
+import { counters } from '../data/site';
+import { getVideo } from '../data/videos';
+import { asset } from '../lib/images';
+import { fmt } from '../lib/products';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph, videoGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const a = ui.pages.about;
+const page = await getPage('despre-noi', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.about, path: route('about', lang) }]);
+const visit = getVideo('zIWOgi8mmsk')!;
+const thumb = await getImage({ src: asset(visit.poster!), width: 1280, format: 'jpg', quality: 80 });
+const ozBrands = ['LS', 'Ferrari', 'Zanon', 'Bao Mak', 'Adrimak', 'Kadioglu'];
+const components = ['Perkins', 'Kubota', 'Kirloskar', 'Ashok Leyland', 'Carraro', 'ZF'];
+const jsonld = [
+  breadcrumbGraph(cr),
+  videoGraph({
+    id: visit.id,
+    name: visit.title[lang],
+    description: visit.description[lang],
+    thumbnailUrl: new URL(thumb.src, site).href,
+    uploadDate: visit.uploadDate,
+    duration: visit.duration,
+    inLanguage: 'ro',
+  }),
+];
+const b = page.blocks;
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('about')}
+  ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
+  ogImageAlt={page.h1}
+  jsonld={jsonld}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={a.eyebrow} title={page.h1} lead={page.lead} image="santier/buldoexcavator-bull-ch76-santier-moldova.webp" imageAlt={page.h1} />
+
+  {
+    b.ozonteh && (
+      <section class="ab-oz on-light section" aria-label="Ozonteh">
+        <div class="wrap ab-grid">
+          <TextBlock title={b.ozonteh.title} text={b.ozonteh.text} eyebrow="Ozonteh Impex SRL" idx="01">
+            <div class="ab-brands">
+              <p class="t-mono ab-k">{a.brands}</p>
+              <ul class="ab-chips" role="list">
+                {ozBrands.map((x) => (
+                  <li>{x}</li>
+                ))}
+              </ul>
+            </div>
+          </TextBlock>
+          <div class="ab-side" data-reveal style="--d:1">
+            <OzontehLogo variant="blue" height={48} />
+            <dl class="ab-facts">
+              {a.ozFacts.map((f) => (
+                <div>
+                  <dt class="t-num ab-v">{f.v}</dt>
+                  <dd class="ab-fk">{f.k}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    b.bull && (
+      <section class="ab-bull on-dark section" aria-label="BULL Machines">
+        <Image src={asset('santier/fabrica-bull-machines-coimbatore-india.webp')} alt="" widths={[640, 1024, 1600]} sizes="100vw" class="ab-bg" loading="lazy" />
+        <div class="ab-scrim" aria-hidden="true" />
+        <div class="wrap ab-grid">
+          <TextBlock title={b.bull.title} text={b.bull.text} eyebrow="BULL Machines Pvt Ltd" idx="02">
+            <div class="ab-brands">
+              <p class="t-mono ab-k">{a.components}</p>
+              <ul class="ab-chips ab-chips-dark" role="list">
+                {components.map((x) => (
+                  <li>{x}</li>
+                ))}
+              </ul>
+            </div>
+          </TextBlock>
+          <div class="ab-side" data-reveal style="--d:1">
+            <BullLogo height={40} />
+            <p class="t-mono ab-k">{a.bullFigures}</p>
+            <dl class="ab-facts ab-facts-dark">
+              {counters.map((c) => (
+                <div>
+                  <dt class="t-num ab-v">{`${fmt(c.value, lang)}${c.suffix}`}</dt>
+                  <dd class="ab-fk">{(ui.home.trust.counters as Record<string, string>)[c.key]}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="t-mono ab-src">{a.bullSource}</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    b.partnership && (
+      <section class="ab-part on-yellow section" aria-label={b.partnership.title}>
+        <div class="hazard" aria-hidden="true" />
+        <div class="wrap ab-grid">
+          <TextBlock title={b.partnership.title} text={b.partnership.text} eyebrow="Ozonteh × BULL" idx="03">
+            <WarrantyBadges lang={lang} />
+          </TextBlock>
+          {b.visit && (
+            <div class="ab-visit" data-reveal style="--d:1">
+              <div class="ab-frame" data-yt={visit.id} data-yt-title={visit.title[lang]}>
+                <Image src={asset(visit.poster!)} alt="" widths={[480, 800, 1200]} sizes="(min-width: 1024px) 40vw, 100vw" class="ab-poster" loading="lazy" />
+                <button type="button" class="ab-play" aria-label={`${ui.home.videos.play}: ${visit.title[lang]}`}>
+                  <span class="ab-play-icon">
+                    <Icon name="play" size={26} />
+                  </span>
+                </button>
+                <span class="ab-tag t-mono">YouTube · Ozonteh · 11.09.2026</span>
+              </div>
+              <h3 class="ab-visit-title">{b.visit.title}</h3>
+              <p class="ab-visit-text">{b.visit.text}</p>
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <FinalCta lang={lang} idx="04" />
+</BaseLayout>
+
+<script>
+  import { initYouTube } from '../scripts/youtube';
+  initYouTube();
+</script>
+
+<style>
+  .ab-grid { display: grid; gap: 2.5rem; position: relative; }
+  .ab-brands { display: grid; gap: 0.6rem; margin-top: 0.75rem; }
+  .ab-k { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-steel-ink); }
+  .on-dark .ab-k { color: var(--color-steel); }
+  .ab-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ab-chips li { padding: 0.45rem 0.8rem; font-weight: 600; font-size: 0.9375rem; box-shadow: inset 0 0 0 1px var(--color-line-ink); }
+  .ab-chips-dark li { box-shadow: inset 0 0 0 1px var(--color-line); color: var(--color-bone); }
+  .ab-side { display: grid; gap: 1.25rem; align-content: start; }
+  .ab-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--color-line-ink); box-shadow: 0 0 0 1px var(--color-line-ink); }
+  .ab-facts > div { display: grid; gap: 0.4rem; align-content: start; padding: 1.1rem 1rem; background: var(--color-paper); }
+  .ab-facts > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .ab-facts-dark { background: var(--color-line); box-shadow: 0 0 0 1px var(--color-line); }
+  .ab-facts-dark > div { background: rgb(18 19 20 / 0.85); }
+  .ab-v { font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem); color: var(--color-asphalt); }
+  .ab-facts-dark .ab-v { color: var(--color-bull-yellow); }
+  .ab-fk { margin: 0; font-size: 0.875rem; line-height: 1.35; color: var(--color-steel-ink); }
+  .ab-facts-dark .ab-fk { color: var(--color-steel); }
+  .ab-src { font-size: 0.6875rem; color: var(--color-steel); }
+
+  .ab-bull { position: relative; overflow: hidden; isolation: isolate; }
+  .ab-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.35; }
+  .ab-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--color-asphalt) 0%, rgb(18 19 20 / 0.85) 55%, rgb(18 19 20 / 0.6) 100%); }
+
+  .ab-part { padding-top: 0; }
+  .ab-part .hazard { margin-bottom: clamp(4.5rem, 3rem + 6vw, 9rem); }
+  .ab-visit { display: grid; gap: 0.75rem; align-content: start; }
+  .ab-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-asphalt); }
+  .ab-poster { width: 100%; height: 100%; object-fit: cover; }
+  .ab-play { position: absolute; inset: 0; display: grid; place-items: center; padding: 0; background: none; border: 0; color: var(--color-asphalt); }
+  .ab-play-icon { display: grid; place-items: center; width: 76px; height: 76px; background: var(--color-bull-yellow); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); transition: transform 0.3s var(--ease-press); }
+  .ab-play:hover .ab-play-icon { transform: scale(1.08); }
+  .ab-tag { position: absolute; left: 10px; top: 10px; padding: 4px 6px; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-bone); background: rgb(18 19 20 / 0.72); }
+  .ab-frame :global(.video-iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .ab-visit-title { font-family: var(--font-display); font-weight: 800; font-size: 1.75rem; line-height: 1.1; text-transform: uppercase; }
+  :global(html:lang(ru)) .ab-visit-title { font-weight: 600; font-size: 1.4rem; }
+  .ab-visit-text { color: rgb(18 19 20 / 0.85); }
+
+  @media (min-width: 64rem) {
+    .ab-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 5rem; align-items: start; }
+  }
+</style>

@@ -1,0 +1,212 @@
+---
+// Contacte: linia BULL Moldova, departamente, sediul central, filiale, program, hartă (facade) și formular.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import TextBlock from '../components/pages/TextBlock.astro';
+import QuoteForm from '../components/layout/QuoteForm.astro';
+import Icon from '../components/ui/Icon.astro';
+import { company, departments, branches } from '../data/site';
+import { asset } from '../lib/images';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const c = ui.pages.contact;
+const page = await getPage('contacte', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.contact, path: route('contact', lang) }]);
+const socials = [
+  { name: 'Facebook', href: company.social.facebook, icon: 'facebook' as const },
+  { name: 'Instagram', href: company.social.instagram, icon: 'instagram' as const },
+  { name: 'TikTok', href: company.social.tiktok, icon: 'tiktok' as const },
+  { name: 'YouTube', href: company.social.youtube, icon: 'youtube' as const },
+  { name: 'Telegram', href: company.social.telegram, icon: 'telegram' as const },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('contact')}
+  ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
+  ogImageAlt={page.h1}
+  jsonld={[breadcrumbGraph(cr)]}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={c.eyebrow} title={page.h1} lead={page.lead}>
+    <div class="pgh-actions" slot="actions" data-track-loc="contact-hero">
+      <a href={`tel:${company.phone.tel}`} class="btn btn-primary btn-lg"><Icon name="phone" /> {company.phone.display}</a>
+      <a href={company.whatsapp} class="btn btn-outline btn-lg" target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp</a>
+    </div>
+  </PageHero>
+
+  <section class="ct-main on-dark" aria-label={page.h1}>
+    <div class="wrap ct-grid">
+      <article class="ct-card ct-bull ticks" data-reveal data-track-loc="contact-bull-line">
+        <p class="t-mono ct-k">{c.bullLine}</p>
+        <a href={`tel:${company.phone.tel}`} class="t-num ct-big">{company.phone.intl}</a>
+        <a href={company.whatsapp} target="_blank" rel="noopener" class="ct-line"><Icon name="whatsapp" /> wa.me/37369898307</a>
+        <a href={`mailto:${company.email}`} class="ct-line"><Icon name="mail" /> {company.email}</a>
+      </article>
+
+      <article class="ct-card" data-reveal style="--d:1">
+        <h2 class="t-mono ct-k">{c.departments}</h2>
+        <ul class="ct-dept" role="list" data-track-loc="contact-departments">
+          {
+            departments.map((d) => (
+              <li>
+                <span>{c.dept[d.key]}</span>
+                <a href={`tel:${d.tel}`} class="t-mono">{d.phone}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+
+      <article class="ct-card" data-reveal style="--d:2">
+        <h2 class="t-mono ct-k">{c.hq}</h2>
+        <address class="ct-addr">
+          {company.legalName}<br />
+          {company.address.street}<br />
+          {company.address.locality}, {company.address.postalCode}<br />
+          {company.address.countryName[lang]}
+        </address>
+        <h3 class="t-mono ct-k ct-k2">{c.hours}</h3>
+        <ul class="ct-hours" role="list">
+          {ui.footer.hours.map((h) => <li>{h}</li>)}
+        </ul>
+        <h3 class="t-mono ct-k ct-k2">{c.social}</h3>
+        <ul class="ct-social" role="list">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener" aria-label={s.name}>
+                  <Icon name={s.icon} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="ct-map on-graphite" aria-label={c.map}>
+    <div class="map-facade blueprint" data-map data-src={company.mapsEmbed}>
+      <div class="map-inner">
+        <span class="map-pin" aria-hidden="true"><Icon name="pin" size={30} /></span>
+        <p class="map-title">{company.address.street}, {company.address.locality}</p>
+        <div class="map-actions">
+          <button type="button" class="btn btn-primary" data-map-load>{c.mapLoad}</button>
+          <a href={company.mapsUrl} target="_blank" rel="noopener" class="btn btn-outline">{c.mapOpen} <Icon name="arrowUpRight" size={16} /></a>
+        </div>
+        <p class="t-mono map-note">{c.mapNote}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-branches on-dark section" aria-labelledby="ct-branches">
+    <div class="wrap ct-b-grid">
+      <div>
+        <h2 id="ct-branches" class="t-eyebrow"><span class="idx">02</span> {c.branches}</h2>
+        {page.blocks.romania && <TextBlock title={page.blocks.romania.title} text={page.blocks.romania.text} level="h3" class="ct-ro" />}
+      </div>
+      <ul class="ct-b-list" role="list" data-track-loc="contact-branches">
+        {
+          branches.map((b) => (
+            <li class="ct-card">
+              <p class="t-mono ct-k">{c.branch[b.key]}</p>
+              <p class="ct-addr">{b.address}</p>
+              <a href={`tel:${b.tel}`} class="ct-line t-mono">
+                <Icon name="phone" size={18} /> {b.phone}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="oferta" class="ct-form on-dark section" aria-labelledby="ct-form-title">
+    <div class="wrap ct-f-grid">
+      <div class="ct-f-copy" data-reveal>
+        <p class="t-eyebrow"><span class="idx">03</span> {c.formTitle}</p>
+        <h2 id="ct-form-title" class="t-h2 ct-f-title">{page.blocks.visit?.title ?? c.formTitle}</h2>
+        <p class="t-lead">{page.blocks.visit?.text ?? c.formText}</p>
+      </div>
+      <div class="ct-f-box ticks" data-reveal style="--d:1">
+        <QuoteForm lang={lang} id="contact" variant="graphite" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Harta Google se încarcă doar la click (fără cereri către Google la deschiderea paginii).
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((box) => {
+    box.querySelector('[data-map-load]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = box.dataset.src!;
+      iframe.title = box.querySelector('.map-title')?.textContent ?? 'Google Maps';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.className = 'map-iframe';
+      box.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .ct-main { padding-block: clamp(1.5rem, 1rem + 2vw, 3rem) clamp(3rem, 2rem + 3vw, 5rem); }
+  .ct-grid { display: grid; gap: 10px; }
+  .ct-card { display: grid; gap: 0.75rem; align-content: start; padding: 1.5rem 1.25rem; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .ct-k { margin: 0; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-bull-yellow); }
+  .ct-k2 { margin-top: 0.75rem; }
+  .ct-big { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem); color: var(--color-bull-yellow); }
+  .ct-line { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--color-bone); }
+  .ct-line:hover { color: var(--color-bull-yellow); }
+  .ct-line :global(svg) { color: var(--color-steel); }
+  .ct-dept { display: grid; }
+  .ct-dept li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.25rem 1rem; min-height: 52px; border-bottom: 1px solid var(--color-line); }
+  .ct-dept li span { color: var(--color-steel); font-size: 0.9375rem; }
+  .ct-dept a { font-size: 1.0625rem; color: var(--color-bone); min-height: 44px; display: inline-flex; align-items: center; }
+  .ct-dept a:hover { color: var(--color-bull-yellow); }
+  .ct-addr { font-style: normal; line-height: 1.6; color: var(--color-bone); }
+  .ct-hours { display: grid; gap: 0.2rem; color: var(--color-steel); }
+  .ct-social { display: flex; gap: 6px; }
+  .ct-social a { display: grid; place-items: center; width: 44px; height: 44px; color: var(--color-bone); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .ct-social a:hover { color: var(--color-asphalt); background: var(--color-bull-yellow); }
+
+  .map-facade { position: relative; display: grid; place-items: center; min-height: 420px; background-color: var(--color-graphite); }
+  .map-inner { display: grid; justify-items: center; gap: 1rem; padding: 2rem var(--gutter); text-align: center; }
+  .map-pin { display: grid; place-items: center; width: 64px; height: 64px; color: var(--color-asphalt); background: var(--color-bull-yellow); clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%); }
+  .map-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); text-transform: uppercase; line-height: 1.1; }
+  :global(html:lang(ru)) .map-title { font-weight: 600; }
+  .map-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .map-note { font-size: 0.6875rem; color: var(--color-steel); }
+  .map-facade :global(.map-iframe) { width: 100%; height: 480px; border: 0; display: block; }
+
+  .ct-b-grid { display: grid; gap: 1.5rem; }
+  .ct-ro { margin-top: 1rem; }
+  .ct-b-list { display: grid; gap: 10px; }
+  .ct-f-grid { display: grid; gap: 2.5rem; }
+  .ct-f-copy { display: grid; gap: 1.1rem; align-content: start; }
+  .ct-f-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .ct-f-box { padding: 1.5rem 1.1rem; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  @media (min-width: 48rem) {
+    .ct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ct-bull { grid-column: 1 / -1; }
+    .ct-b-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .ct-grid { grid-template-columns: 1.2fr 1fr 1fr; }
+    .ct-bull { grid-column: auto; }
+    .ct-b-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+    .ct-f-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 5rem; align-items: start; }
+    .ct-f-box { padding: 2.25rem; }
+  }
+</style>

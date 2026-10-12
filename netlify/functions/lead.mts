@@ -8,10 +8,14 @@ type Lead = {
   model: string;
   message: string;
   demo: boolean;
+  /** Formularul „Service și piese": tipul solicitării; gol pentru cererile de ofertă. */
+  request: '' | keyof typeof REQUEST_LABELS;
   lang: 'ro' | 'ru';
   page: string;
   source: Record<string, string>;
 };
+
+export const REQUEST_LABELS = { service: 'Service', piese: 'Piese de schimb', garantie: 'Garanție', altele: 'Altă solicitare' } as const;
 
 const env = (k: string) => (globalThis as { Netlify?: { env: { get(k: string): string | undefined } } }).Netlify?.env.get(k) ?? process.env[k] ?? '';
 const str = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
@@ -31,15 +35,20 @@ export function normalize(data: Record<string, unknown>): Lead | null {
     model: str(data.model, 80),
     message: str(data.message, 1500),
     demo: data.demo === true || data.demo === '1' || data.demo === 'on',
+    request: typeof data.request === 'string' && data.request in REQUEST_LABELS ? (data.request as Lead['request']) : '',
     lang: data.lang === 'ru' ? 'ru' : 'ro',
     page: str(data.page, 300),
     source,
   };
 }
 
+export function title(l: Lead) {
+  return l.request ? `Solicitare ${REQUEST_LABELS[l.request].toLowerCase()} BULL Moldova` : `Cerere ofertă BULL Moldova${l.demo ? ' + DEMONSTRAȚIE' : ''}`;
+}
+
 export function summary(l: Lead) {
   return [
-    `Cerere ofertă BULL Moldova${l.demo ? ' + DEMONSTRAȚIE' : ''}`,
+    title(l),
     `Nume: ${l.name}`,
     `Telefon: ${l.phone}`,
     `Model: ${l.model || 'nespecificat'}`,
@@ -64,7 +73,8 @@ async function toAmoCrm(l: Lead): Promise<boolean> {
   }
   if (!base || !token) return false;
   const headers = { authorization: `Bearer ${token}`, 'content-type': 'application/json' };
-  const tags = [{ name: 'site-bull' }, { name: l.demo ? 'demonstratie' : 'oferta' }, { name: `lang-${l.lang}` }];
+  const kind = l.request ? `service-${l.request}` : l.demo ? 'demonstratie' : 'oferta';
+  const tags = [{ name: 'site-bull' }, { name: kind }, { name: `lang-${l.lang}` }];
   if (l.source.utm_source) tags.push({ name: `utm-${l.source.utm_source}`.slice(0, 50) });
   const lead: Record<string, unknown> = {
     name: `BULL ${l.model || 'cerere'}: ${l.name}`.slice(0, 250),
@@ -107,7 +117,9 @@ async function toEmail(l: Lead): Promise<boolean> {
     body: JSON.stringify({
       from: env('LEAD_EMAIL_FROM') || 'BULL Moldova <site@bull.ozonteh.md>',
       to: [env('LEAD_EMAIL_TO') || 'marketing@ozonteh.md'],
-      subject: `${l.demo ? '[DEMO] ' : ''}Cerere ofertă ${l.model || 'BULL'}: ${l.name} ${l.phone}`,
+      subject: l.request
+        ? `[SERVICE] ${REQUEST_LABELS[l.request]} ${l.model || 'BULL'}: ${l.name} ${l.phone}`
+        : `${l.demo ? '[DEMO] ' : ''}Cerere ofertă ${l.model || 'BULL'}: ${l.name} ${l.phone}`,
       text: summary(l),
     }),
   });

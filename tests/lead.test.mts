@@ -28,6 +28,11 @@ assert(r.status === 200 && (await r.json()).via === 'crm', 'amoCRM → 200 via c
 assert(calls[0].url.endsWith('/api/v4/leads/complex') && calls[0].body.includes('+37369898307') && calls[0].body.includes('demonstratie'), 'payload amoCRM corect');
 assert(calls[1]?.url.endsWith('/api/v4/leads/notes') && calls[1].body.includes('utm_source=facebook'), 'notă cu sursa UTM');
 
+calls.length = 0;
+r = await post({ ...base, demo: false, request: 'piese' });
+assert(r.status === 200 && calls[0].body.includes('service-piese') && calls[1].body.includes('Solicitare piese de schimb'), 'solicitare service/piese: tag și titlu');
+assert(normalize({ name: 'Ion', phone: '069898307', request: 'hack' })?.request === '', 'tip de solicitare necunoscut ignorat');
+
 failCrm = true;
 process.env.RESEND_API_KEY = 'k';
 calls.length = 0;

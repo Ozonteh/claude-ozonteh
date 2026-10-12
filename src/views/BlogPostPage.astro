@@ -1,0 +1,152 @@
+---
+// Articol de blog: antet cu dată și timp de citire, copertă, text (Markdown), modelele din articol, alte articole.
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import ProductCard from '../components/product/ProductCard.astro';
+import PostCard from '../components/pages/PostCard.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { getProduct } from '../lib/products';
+import { asset } from '../lib/images';
+import { postsFor, postPath, postAlternates, readingMinutes, formatDate, type Post } from '../lib/blog';
+import { crumbs } from '../lib/pages';
+import { articleGraph, breadcrumbGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t, tpl } from '../i18n/ui';
+
+interface Props { lang: Lang; post: Post }
+const { lang, post } = Astro.props;
+const ui = t(lang);
+const b = ui.pages.blog;
+const { Content } = await render(post);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const path = postPath(post);
+const cr = crumbs(site, lang, [
+  { name: ui.nav.blog, path: route('blog', lang) },
+  { name: post.data.title, path },
+]);
+const alternates = await postAlternates(post);
+const models = post.data.models.map((id) => getProduct(id)).filter((p): p is NonNullable<typeof p> => !!p);
+const more = (await postsFor(lang)).filter((p) => p.id !== post.id).slice(0, 2);
+const cover = await getImage({ src: asset(post.data.cover), width: 1200, format: 'jpg', quality: 80 });
+const jsonld = [
+  breadcrumbGraph(cr),
+  articleGraph({ title: post.data.title, description: post.data.description, url: new URL(path, site).href, image: new URL(cover.src, site).href, date: post.data.date, lang }, site),
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={post.data.seoTitle}
+  description={post.data.description}
+  alternates={alternates}
+  ogImage={asset(post.data.cover)}
+  ogImageAlt={post.data.coverAlt}
+  type="article"
+  jsonld={jsonld}
+>
+  <header class="ah on-dark">
+    <div class="ah-grid blueprint" aria-hidden="true"></div>
+    <div class="wrap ah-inner">
+      <Breadcrumbs lang={lang} crumbs={cr} />
+      <p class="t-mono ah-meta">
+        <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date, lang)}</time> · {tpl(b.minutes, { n: readingMinutes(post.body) })}
+      </p>
+      <h1 class="ah-title">{post.data.title}</h1>
+      <p class="t-lead ah-lead">{post.data.description}</p>
+    </div>
+  </header>
+
+  <figure class="ah-cover">
+    <Image src={asset(post.data.cover)} alt={post.data.coverAlt} widths={[640, 960, 1280, 1600]} sizes="(min-width: 1200px) 1100px, 100vw" loading="eager" fetchpriority="high" />
+  </figure>
+
+  <article class="art on-light">
+    <div class="wrap art-inner">
+      <div class="prose art-prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  {
+    models.length > 0 && (
+      <section class="art-models on-dark section" aria-labelledby="art-models">
+        <div class="wrap">
+          <h2 id="art-models" class="t-eyebrow art-h">
+            <span class="idx">01</span> {b.models}
+          </h2>
+          <ul class="art-grid" role="list">
+            {models.map((p) => (
+              <li>
+                <ProductCard p={p} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    more.length > 0 && (
+      <section class="art-more on-graphite section" aria-labelledby="art-more">
+        <div class="wrap">
+          <div class="art-more-head">
+            <h2 id="art-more" class="t-eyebrow">
+              <span class="idx">02</span> {b.more}
+            </h2>
+            <a href={route('blog', lang)} class="link-arrow">
+              {b.back} <Icon name="arrow" size={18} />
+            </a>
+          </div>
+          <ul class="art-grid" role="list">
+            {more.map((p) => (
+              <li>
+                <PostCard post={p} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <FinalCta lang={lang} idx="03" />
+</BaseLayout>
+
+<style>
+  .ah { position: relative; overflow: hidden; isolation: isolate; padding-top: calc(var(--header-h) + 0.75rem); padding-bottom: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .ah-grid { position: absolute; inset: 0; z-index: -1; mask-image: radial-gradient(120% 100% at 70% 20%, #000 30%, transparent 85%); }
+  .ah-inner { display: grid; gap: 1.1rem; }
+  .ah-meta { margin-top: 1rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-bull-yellow); }
+  .ah-title {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: var(--display-track);
+    font-size: calc(clamp(2.4rem, 1.4rem + 4.4vw, 5.5rem) * var(--display-scale));
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  :global(html:lang(ru)) .ah-title { font-weight: 600; line-height: 1.08; max-width: 26ch; }
+  .ah-lead { max-width: 46rem; }
+  .ah-cover { margin: 0; background: linear-gradient(var(--color-asphalt) 50%, var(--color-paper) 50%); }
+  .ah-cover :global(img) { display: block; width: min(1100px, 100%); margin-inline: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .art { padding-block: clamp(2.5rem, 2rem + 3vw, 5rem); }
+  .art-inner { display: grid; justify-items: center; }
+  .art-prose { width: 100%; max-width: 46rem; }
+  .art-h { margin-bottom: 1.25rem; }
+  .art-grid { display: grid; gap: 12px; }
+  .art-grid > li { display: grid; }
+  .art-more-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (min-width: 48rem) {
+    .art-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 80rem) {
+    .art-models .art-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

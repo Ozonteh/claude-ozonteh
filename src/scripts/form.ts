@@ -97,6 +97,7 @@ function bind(form: HTMLFormElement) {
       model,
       message: String(fd.get('message') || '').trim(),
       demo: fd.get('demo') === '1',
+      request: String(fd.get('request') || ''),
       lang: String(fd.get('lang') || document.documentElement.lang),
       page: location.href,
       source: (() => {
@@ -122,7 +123,8 @@ function bind(form: HTMLFormElement) {
       form.dataset.state = 'success';
       success.hidden = false;
       success.focus();
-      track('submit_quote', { model: model || 'nespecificat', demo: payload.demo });
+      if (payload.request) track('submit_service', { model: model || 'nespecificat', request: payload.request });
+      else track('submit_quote', { model: model || 'nespecificat', demo: payload.demo });
     } catch {
       status.textContent = status.dataset.error ?? '';
     } finally {

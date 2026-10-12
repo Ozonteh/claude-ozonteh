@@ -7,7 +7,7 @@ Site-ul de prezentare și generare de lead-uri pentru utilajele **BULL Machines*
 - **Date:** toate modelele sunt în `src/data/products.json`. Un model nou se adaugă fără cod.
 - **Lead-uri:** formularul trimite cererea la `/api/lead` (`api/lead.php` pe cPanel). De acolo ajunge în amoCRM, iar dacă amoCRM nu răspunde, pleacă un e-mail de rezervă către marketing@ozonteh.md.
 
-> **Stadiu: Etapa 2 din 3.** Sunt gata design system-ul (`/design-system/`), pagina Acasă, **paginile de produs pentru toate cele 9 modele** (RO și RU, 18 pagini), layout-ul global, SEO-ul tehnic, pagina 404 și funcția de lead. Urmează etapa 3: catalogul, paginile de categorie, comparatorul, cupe și atașamente, service, despre noi, contacte, blog, politici. Linkurile către aceste pagini (inclusiv breadcrumbs „Utilaje” și categoriile) dau deocamdată 404.
+> **Stadiu: toate cele 3 etape sunt gata.** Site-ul conține design system-ul (`/design-system/`), pagina Acasă, paginile de produs pentru toate cele 9 modele, catalogul cu filtre, 3 pagini de categorie, comparatorul, cupe și atașamente, service și piese, despre noi, contacte, blogul cu 3 articole, politica de confidențialitate, politica cookies și pagina 404. Toate există în română și în rusă.
 
 ## Cerințe
 
@@ -77,6 +77,9 @@ src/
   data/dimensions.ts        ← denumirile cotelor din desenele tehnice (A, B, C…), RO + RU
   data/videos.ts            ← clipurile de pe canalul YouTube Ozonteh
   content/produse/ro|ru/    ← textele lungi ale paginilor de produs (Markdown: SEO title/description, FAQ, 4 secțiuni)
+  content/pagini/ro|ru/     ← textele paginilor din meniu (YAML: SEO, H1, lead, blocuri de text, FAQ)
+  content/blog/ro|ru/       ← articolele de blog (Markdown; `translation` leagă RO de RU)
+  content/legal/ro|ru/      ← politica de confidențialitate și politica cookies
   i18n/routes.ts            ← URL-uri RO ↔ RU (slug-uri ruse transliterate), hreflang
   i18n/ui.ts                ← toate textele interfeței, RO + RU (traduse manual)
   styles/global.css         ← design system: tokens, tipografie, componente, motion
@@ -84,6 +87,8 @@ src/
   components/home/          ← secțiunile paginii Acasă
   components/product/       ← secțiunile paginii de produs (hero + galerie, cifre, desen tehnic, fișă, video, broșură…)
   views/ProductPage.astro   ← șablonul paginii de produs (date, JSON-LD, ordinea secțiunilor)
+  views/*Page.astro         ← catalog, categorie, comparator, atașamente, service, despre noi, contacte, blog, legal
+  components/pages/         ← hero-ul paginilor interioare, grila de modele, bara „Compară", blocuri de text
   components/seo/Seo.astro  ← title, description, canonical, hreflang, OG, Twitter, JSON-LD
   lib/schema.ts             ← JSON-LD: Organization, LocalBusiness, Product, FAQPage, BreadcrumbList, VideoObject
   scripts/                  ← JS client: header, dialoguri, consimțământ, tracking, formular
@@ -113,6 +118,24 @@ Editați `src/data/products.json` și adăugați un obiect nou după modelul cel
 **Textul paginii** (minimum 400 de cuvinte în română) e în `src/content/produse/ro/<id>.md`, iar traducerea manuală e în `src/content/produse/ru/<id>.md`. Frontmatter-ul conține `title` (SEO), `description` și `faq` (afișat pe pagină și în schema FAQPage). Corpul are 4 secțiuni: pentru cine este, ce lucrări face, de ce acest model, service/piese/garanție. Un model nou fără aceste două fișiere oprește build-ul cu un mesaj clar.
 
 Build-ul eșuează dacă o imagine referită lipsește.
+
+## Paginile din meniu (etapa 3)
+
+| Pagina | RO | RU | Ce conține |
+|---|---|---|---|
+| Catalog | `/utilaje/` | `/ru/tehnika/` | toate modelele; filtre după tip, putere, tracțiune și greutate (parametri în URL); „Compară” pe fiecare card |
+| Categorii | `/buldoexcavatoare/` · `/incarcatoare-frontale/` · `/miniincarcatoare-skid-steer/` | `/ru/ekskavatory-pogruzchiki/` · `/ru/frontalnye-pogruzchiki/` · `/ru/mini-pogruzchiki/` | modelele categoriei, text SEO, FAQ (FAQPage), ItemList |
+| Comparator | `/compara/` | `/ru/sravnenie/` | până la 3 modele (`?m=id1,id2,id3`); pe mobil prima coloană rămâne fixă și coloanele se glisează |
+| Cupe și atașamente | `/cupe-si-atasamente/` | `/ru/kovshi-i-navesnoe-oborudovanie/` | cele 19 atașamente, filtrate după tipul utilajului (doar CSS) |
+| Service și piese | `/service-si-piese/` | `/ru/servis-i-zapchasti/` | servicii, garanția, piese (069 898 822), Strășeni și Bălți, formular de solicitare (service / piese / garanție) |
+| Despre noi | `/despre-noi/` | `/ru/o-nas/` | Ozonteh, BULL Machines (date atribuite BULL), parteneriatul, clipul vizitei BULL din 11.09.2026 |
+| Contacte | `/contacte/` | `/ru/kontakty/` | linia BULL, departamente, sediu, program, filiale, hartă Google încărcată doar la click, formular |
+| Blog | `/blog/` + 3 articole | `/ru/blog/` + 3 articole | BlogPosting, modelele din articol, alte articole |
+| Politici | `/politica-de-confidentialitate/` · `/politica-cookies/` | `/ru/politika-konfidencialnosti/` · `/ru/politika-cookies/` | ce date colectează formularele, cookie-urile și stocarea locală, exact ca în cod |
+
+Formularul de pe „Service și piese” trimite și câmpul `request` (`service`, `piese`, `garantie` sau `altele`). În amoCRM, cererea primește tag-ul `service-<tip>`, iar e-mailul de rezervă are subiectul `[SERVICE] …`. Evenimentul de analiză e `submit_service`.
+
+**Textele** se editează în `src/content/pagini/<lang>/<cheie>.yaml`, fără cod. Un articol nou de blog înseamnă câte un fișier `.md` în `src/content/blog/ro/` și `src/content/blog/ru/`, cu același `translation`.
 
 ## Pagina de produs
 
@@ -148,6 +171,9 @@ Clipurile filmate de Ozonteh (canalul YouTube Ozonteh) stau în `src/data/videos
 - **CH76 Challenger:** se publică 76 CP. Broșura BULL `ch76-new.pdf` indică 55 HP (40,5 kW) la 2000 rpm, așa că pe site nu apare valoarea în kW.
 
 ## De verificat cu Ozonteh / BULL înainte de lansare
+
+- **Politicile legale** (`src/content/legal/`) descriu exact ce face site-ul, dar trebuie verificate de un jurist înainte de lansare, mai ales termenul de păstrare a cererilor (scris acum „cel mult 3 ani de la ultimul contact”).
+- **Despre noi:** fotografiile de la vizita delegației BULL din 11.09.2026 și clipul cu drona. Deocamdată pagina afișează clipul de pe canalul YouTube Ozonteh.
 
 - Clipul de 6–10 s pentru hero.
 - **Gabaritul:** pe bullindia.com, lungimea totală e 6,04 m la SD76/HD96 și 7,46 m la HD 100 (și în broșura CH76). Gabaritul Grandia e identic cu al SD76, deci probabil copiat. Pentru Grandia afișăm doar cotele de lucru.

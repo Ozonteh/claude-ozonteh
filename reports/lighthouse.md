@@ -1,4 +1,4 @@
-# Raport Lighthouse: Etapa 2 (pagina de produs) + Acasă
+# Raport Lighthouse: tot site-ul (etapele 1–3)
 
 Data: 12.10.2026 · Lighthouse 13.5.0 · Chromium headless · build de producție (`npm run build`) servit static cu gzip și cache, ca pe hosting.
 Mobil = emulare Moto G Power, 4G lent simulat, CPU ×4. Desktop = preset `desktop`.
@@ -20,6 +20,24 @@ Accessibility a fost 97 înaintea a două corecturi globale: eticheta linkului-l
 Elementul LCP pe pagina de produs e imaginea utilajului (`fetchpriority="high"`, AVIF). Watermark-ul cu numele modelului e text SVG, deci nu devine element LCP, iar animația de intrare a imaginii folosește doar `transform`, fără opacitate.
 
 Ce se încarcă abia la nevoie: desenul tehnic (lazy, un singur fișier pentru toate vederile), fotografiile galeriei (doar când se deschide lightbox-ul), posterele video (lazy) și iframe-ul YouTube (doar la Play).
+
+## Paginile din etapa 3
+
+| Pagina | Dispozitiv | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|---|
+| `/utilaje/` (catalog) | Mobil | **96** | **100** | **100** | **100** | 2,4 s | 0 | 0 ms |
+| `/despre-noi/` | Mobil | **96** | **100** | **100** | **100** | 2,5 s | 0 | 0 ms |
+| `/contacte/` | Mobil | **98** | **100** | **100** | **100** | 2,0 s | 0,016 | 0 ms |
+| `/ru/kontakty/` | Mobil | **98** | **100** | **100** | **100** | 2,0 s | 0 | 0 ms |
+| `/service-si-piese/` | Mobil | **98** | **100** | **100** | **100** | 2,0 s | 0,039 | 0 ms |
+| `/ru/blog/mini-pogruzchik-ili-ekskavator-pogruzchik/` | Mobil | **97** | **100** | **100** | **100** | 2,4 s | 0,015 | 30 ms |
+| `/compara/` | Desktop | **100** | **100** | **100** | **100** | 0,5 s | 0,016 | 0 ms |
+
+Două corecturi făcute în urma măsurătorilor:
+- Pe Contacte, butoanele din hero se rupeau altfel cu fontul de rezervă decât cu fontul final, iar CLS-ul era 0,125. Acum stau într-o grilă cu coloane fixe, iar CLS-ul a scăzut la 0,016.
+- Pe comparator, etichetele formularului de pe fundal deschis aveau contrast 2,85:1. Acum folosesc culoarea `--steel-ink`.
+
+Filtrele din catalog sunt închise implicit pe mobil (pe desktop stau deschise în coloana din stânga), ca primul model să apară în primul ecran.
 
 ## Acasă (după etapa 2)
 

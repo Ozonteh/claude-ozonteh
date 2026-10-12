@@ -64,6 +64,17 @@ function str_field($v, int $max): string
 }
 
 /** @return array|null */
+const REQUEST_LABELS = ['service' => 'Service', 'piese' => 'Piese de schimb', 'garantie' => 'Garanție', 'altele' => 'Altă solicitare'];
+
+/** Titlul cererii: ofertă (cu sau fără demonstrație) sau solicitare de service/piese. */
+function lead_title(array $l): string
+{
+    if ($l['request'] !== '') {
+        return 'Solicitare ' . mb_strtolower(REQUEST_LABELS[$l['request']]) . ' BULL Moldova';
+    }
+    return 'Cerere ofertă BULL Moldova' . ($l['demo'] ? ' + DEMONSTRAȚIE' : '');
+}
+
 function normalize_lead(array $d)
 {
     $name = str_field($d['name'] ?? '', 80);
@@ -86,12 +97,18 @@ function normalize_lead(array $d)
         }
     }
     $demo = $d['demo'] ?? false;
+    // Formularul de pe „Service și piese" trimite și tipul solicitării.
+    $request = (string) ($d['request'] ?? '');
+    if (!array_key_exists($request, REQUEST_LABELS)) {
+        $request = '';
+    }
     return [
         'name' => $name,
         'phone' => '+373' . $digits,
         'model' => str_field($d['model'] ?? '', 80),
         'message' => str_field($d['message'] ?? '', 1500),
         'demo' => $demo === true || $demo === '1' || $demo === 'on',
+        'request' => $request,
         'lang' => (($d['lang'] ?? '') === 'ru') ? 'ru' : 'ro',
         'page' => str_field($d['page'] ?? '', 300),
         'source' => $source,
@@ -101,7 +118,7 @@ function normalize_lead(array $d)
 function summary(array $l): string
 {
     $lines = [
-        'Cerere ofertă BULL Moldova' . ($l['demo'] ? ' + DEMONSTRAȚIE' : ''),
+        lead_title($l),
         'Nume: ' . $l['name'],
         'Telefon: ' . $l['phone'],
         'Model: ' . ($l['model'] !== '' ? $l['model'] : 'nespecificat'),
@@ -155,7 +172,8 @@ function to_crm(array $l, array $cfg): bool
     }
     $base = rtrim($cfg['amocrm_base_url'], '/');
     $auth = ['Authorization: Bearer ' . $cfg['amocrm_access_token']];
-    $tags = [['name' => 'site-bull'], ['name' => $l['demo'] ? 'demonstratie' : 'oferta'], ['name' => 'lang-' . $l['lang']]];
+    $kind = $l['request'] !== '' ? 'service-' . $l['request'] : ($l['demo'] ? 'demonstratie' : 'oferta');
+    $tags = [['name' => 'site-bull'], ['name' => $kind], ['name' => 'lang-' . $l['lang']]];
     if (!empty($l['source']['utm_source'])) {
         $tags[] = ['name' => mb_substr('utm-' . $l['source']['utm_source'], 0, 50)];
     }
@@ -202,7 +220,9 @@ function to_email(array $l, array $cfg): bool
     if ($cfg['email_to'] === '' || !function_exists('mail')) {
         return false;
     }
-    $subject = ($l['demo'] ? '[DEMO] ' : '') . 'Cerere ofertă ' . ($l['model'] !== '' ? $l['model'] : 'BULL') . ': ' . $l['name'] . ' ' . $l['phone'];
+    $subject = $l['request'] !== ''
+        ? '[SERVICE] ' . REQUEST_LABELS[$l['request']] . ' ' . ($l['model'] !== '' ? $l['model'] : 'BULL') . ': ' . $l['name'] . ' ' . $l['phone']
+        : ($l['demo'] ? '[DEMO] ' : '') . 'Cerere ofertă ' . ($l['model'] !== '' ? $l['model'] : 'BULL') . ': ' . $l['name'] . ' ' . $l['phone'];
     $headers = implode("\r\n", [
         'From: ' . $cfg['email_from'],
         'Content-Type: text/plain; charset=UTF-8',

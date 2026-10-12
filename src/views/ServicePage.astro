@@ -1,0 +1,179 @@
+---
+// Service și piese: servicii, garanția, comanda de piese (069 898 822), locații și formularul de solicitare.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import TextBlock from '../components/pages/TextBlock.astro';
+import Warranty from '../components/home/Warranty.astro';
+import Faq from '../components/home/Faq.astro';
+import QuoteForm from '../components/layout/QuoteForm.astro';
+import Icon from '../components/ui/Icon.astro';
+import { company, departments, branches } from '../data/site';
+import { asset } from '../lib/images';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph, faqGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const s = ui.pages.service;
+const page = await getPage('service-si-piese', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.service, path: route('service', lang) }]);
+const service = departments.find((d) => d.key === 'service')!;
+const parts = departments.find((d) => d.key === 'parts')!;
+const balti = branches.find((b) => b.key === 'balti')!;
+const icons = ['shield', 'wrench', 'box', 'calendar'] as const;
+const jsonld = [breadcrumbGraph(cr), ...(page.faq?.length ? [faqGraph(page.faq)] : [])];
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('service')}
+  ogImage={asset('santier/buldoexcavator-bull-hd96-sapare-fundatie.webp')}
+  ogImageAlt={page.h1}
+  jsonld={jsonld}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={s.eyebrow} title={page.h1} lead={page.lead}>
+    <div class="pgh-actions" slot="actions" data-track-loc="service-hero">
+      <a href={`tel:${service.tel}`} class="btn btn-primary btn-lg"><Icon name="wrench" /> {s.call.service}: {service.phone}</a>
+      <a href={`tel:${parts.tel}`} class="btn btn-outline btn-lg"><Icon name="box" /> {s.call.parts}: {parts.phone}</a>
+    </div>
+  </PageHero>
+
+  {
+    page.blocks.services && (
+      <section class="svc on-light section" aria-labelledby="svc-title">
+        <div class="wrap svc-inner">
+          <div data-reveal>
+            <p class="t-eyebrow">
+              <span class="idx">01</span> {s.eyebrow}
+            </p>
+            <h2 id="svc-title" class="t-h2 svc-title">{page.blocks.services.title}</h2>
+          </div>
+          <ul class="svc-grid" role="list">
+            {(page.blocks.services.items ?? []).map((it, i) => (
+              <li class="svc-card" data-reveal style={`--d:${i}`}>
+                <span class="svc-icon">
+                  <Icon name={icons[i % icons.length]} size={26} />
+                </span>
+                <h3 class="svc-name">{it.title}</h3>
+                <p class="svc-text">{it.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Warranty lang={lang} idx="02" />
+
+  <section class="parts on-graphite section" aria-label={page.blocks.parts?.title ?? s.call.parts}>
+    <div class="wrap parts-grid">
+      {page.blocks.parts && <TextBlock title={page.blocks.parts.title} text={page.blocks.parts.text} eyebrow={s.call.parts} idx="03" />}
+      <div class="parts-cta" data-reveal style="--d:1" data-track-loc="service-parts">
+        <a href={`tel:${parts.tel}`} class="parts-phone">
+          <span class="t-mono parts-k">{s.call.parts}</span>
+          <span class="t-num parts-num">{parts.phone}</span>
+        </a>
+        <a href={`tel:${service.tel}`} class="parts-phone">
+          <span class="t-mono parts-k">{s.call.service}</span>
+          <span class="t-num parts-num">{service.phone}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="loc on-dark section" aria-labelledby="loc-title">
+    <div class="wrap loc-inner">
+      <h2 id="loc-title" class="t-eyebrow"><span class="idx">04</span> {s.locations}</h2>
+      <div class="loc-grid">
+        <article class="loc-card ticks" data-reveal>
+          <p class="t-mono loc-k">{s.hq}</p>
+          <h3 class="loc-city">{company.address.city}</h3>
+          <p class="loc-addr">{company.address.street}, {company.address.locality}</p>
+          <ul class="loc-lines" role="list" data-track-loc="service-locations">
+            <li><Icon name="wrench" size={18} /> <a href={`tel:${service.tel}`}>{service.phone}</a></li>
+            <li><Icon name="box" size={18} /> <a href={`tel:${parts.tel}`}>{parts.phone}</a></li>
+            <li><Icon name="clock" size={18} /> {ui.footer.hours.join(' · ')}</li>
+          </ul>
+          <a href={company.mapsUrl} target="_blank" rel="noopener" class="link-arrow">{ui.pages.contact.mapOpen} <Icon name="arrowUpRight" size={16} /></a>
+        </article>
+        <article class="loc-card ticks" data-reveal style="--d:1">
+          <p class="t-mono loc-k">{s.branch}</p>
+          <h3 class="loc-city">{lang === 'ru' ? 'Бельцы' : 'Bălți'}</h3>
+          <p class="loc-addr">{balti.address}</p>
+          <ul class="loc-lines" role="list" data-track-loc="service-locations">
+            <li><Icon name="phone" size={18} /> <a href={`tel:${balti.tel}`}>{balti.phone}</a></li>
+            <li><Icon name="clock" size={18} /> {ui.footer.hours.join(' · ')}</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="solicitare" class="sreq on-dark section" aria-labelledby="sreq-title">
+    <div class="wrap sreq-grid">
+      <div class="sreq-copy" data-reveal>
+        <p class="t-eyebrow"><span class="idx">05</span> {s.formTitle}</p>
+        <h2 id="sreq-title" class="t-h2 sreq-title">{page.blocks.request?.title ?? s.formTitle}</h2>
+        <p class="t-lead">{page.blocks.request?.text ?? s.formText}</p>
+      </div>
+      <div class="sreq-form ticks" data-reveal style="--d:1">
+        <QuoteForm lang={lang} id="svc" kind="service" variant="graphite" />
+      </div>
+    </div>
+  </section>
+
+  {page.faq?.length && <Faq lang={lang} items={page.faq} idx="06" />}
+</BaseLayout>
+
+<style>
+  .svc-inner { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .svc-title { margin-top: 1.1rem; font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .svc-grid { display: grid; gap: 2px; background: var(--color-asphalt); box-shadow: 0 0 0 2px var(--color-asphalt); }
+  .svc-card { display: grid; gap: 0.75rem; align-content: start; padding: 1.5rem 1.25rem 1.75rem; background: var(--color-paper); }
+  .svc-icon { display: grid; place-items: center; width: 52px; height: 52px; color: var(--color-bull-yellow); background: var(--color-asphalt); }
+  .svc-name { font-family: var(--font-display); font-weight: 800; font-size: 1.75rem; line-height: 1.1; text-transform: uppercase; }
+  :global(html:lang(ru)) .svc-name { font-weight: 600; font-size: 1.4rem; }
+  .svc-text { color: #2a2d31; }
+
+  .parts-grid { display: grid; gap: 2rem; }
+  .parts-cta { display: grid; gap: 10px; align-content: start; }
+  .parts-phone { display: grid; gap: 0.35rem; padding: 1.25rem 1.25rem 1.4rem; background: var(--color-asphalt); box-shadow: inset 0 0 0 1px var(--color-line); transition: box-shadow 0.25s; }
+  .parts-phone:hover { box-shadow: inset 0 0 0 2px var(--color-bull-yellow); }
+  .parts-k { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-steel); }
+  .parts-num { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.4rem); color: var(--color-bull-yellow); }
+
+  .loc-inner { display: grid; gap: 1.5rem; }
+  .loc-grid { display: grid; gap: 10px; }
+  .loc-card { display: grid; gap: 0.75rem; align-content: start; padding: 1.5rem 1.25rem; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .loc-k { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-bull-yellow); }
+  .loc-city { font-family: var(--font-display); font-weight: 800; font-size: 2.25rem; line-height: 1; text-transform: uppercase; }
+  :global(html:lang(ru)) .loc-city { font-weight: 600; font-size: 1.9rem; }
+  .loc-addr { color: var(--color-bone); }
+  .loc-lines { display: grid; gap: 0.5rem; color: var(--color-steel); }
+  .loc-lines li { display: flex; align-items: center; gap: 0.6rem; }
+  .loc-lines a { color: var(--color-bone); min-height: 40px; display: inline-flex; align-items: center; }
+  .loc-lines a:hover { color: var(--color-bull-yellow); }
+
+  .sreq-grid { display: grid; gap: 2.5rem; }
+  .sreq-copy { display: grid; gap: 1.1rem; align-content: start; }
+  .sreq-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .sreq-form { padding: 1.5rem 1.1rem; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+
+  @media (min-width: 48rem) {
+    .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .loc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .svc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .parts-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 5rem; align-items: center; }
+    .sreq-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 5rem; align-items: start; }
+    .sreq-form { padding: 2.25rem; }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+// Hero-ul paginilor interioare: breadcrumbs, eyebrow, H1, lead, acțiuni opționale (slot „actions")
+// și o imagine opțională în dreapta (pe desktop), estompată spre fundalul grafit.
+import { Image } from 'astro:assets';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
+import { asset } from '../../lib/images';
+import type { Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  crumbs: { name: string; url: string }[];
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  image?: string;
+  imageAlt?: string;
+  /** Imaginea decupată a unui utilaj (fundal transparent) în loc de fotografie. */
+  cutout?: boolean;
+}
+const { lang, crumbs, eyebrow, title, lead, image, imageAlt = '', cutout = false } = Astro.props;
+---
+
+<section class:list={['pgh on-dark', { 'has-image': !!image }]} aria-labelledby="pgh-title">
+  <div class="pgh-grid blueprint" aria-hidden="true"></div>
+  {
+    image && (
+      <div class:list={['pgh-media', { 'is-cutout': cutout }]}>
+        <Image
+          src={asset(image)}
+          alt={imageAlt}
+          widths={cutout ? [480, 720, 960] : [640, 960, 1280, 1600]}
+          sizes={cutout ? '(min-width: 1024px) 44vw, 90vw' : '(min-width: 1024px) 55vw, 100vw'}
+          loading="eager"
+          fetchpriority="high"
+          class="pgh-img"
+        />
+      </div>
+    )
+  }
+  <div class="wrap pgh-inner">
+    <Breadcrumbs lang={lang} crumbs={crumbs} />
+    <div class="pgh-copy">
+      <p class="t-eyebrow">{eyebrow}</p>
+      <h1 id="pgh-title" class="pgh-title">{title}</h1>
+      {lead && <p class="t-lead pgh-lead">{lead}</p>}
+      <slot name="actions" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .pgh { position: relative; overflow: hidden; isolation: isolate; padding-top: calc(var(--header-h) + 0.75rem); padding-bottom: clamp(2.5rem, 1.5rem + 4vw, 5rem); }
+  .pgh-grid { position: absolute; inset: 0; z-index: -2; mask-image: radial-gradient(120% 100% at 80% 30%, #000 30%, transparent 85%); }
+  .pgh-inner { display: grid; gap: clamp(1.5rem, 1rem + 3vw, 4rem); }
+  .pgh-copy { display: grid; gap: 1.1rem; max-width: 52rem; }
+  .pgh-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: var(--display-track);
+    font-size: calc(clamp(2.6rem, 1.5rem + 5vw, 6.5rem) * var(--display-scale));
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  :global(html:lang(ru)) .pgh-title { font-weight: 600; line-height: 1.06; }
+  .pgh-lead { max-width: 42rem; }
+  /* Grilă cu coloane de lățime fixă: numărul de rânduri depinde doar de lățimea ecranului, nu de font,
+     deci schimbarea fontului de rezervă cu cel final nu mută conținutul (CLS). */
+  .pgh-copy > :global(.pgh-actions) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    justify-items: start;
+    gap: 8px;
+    max-width: 40rem;
+    margin-top: 0.5rem;
+  }
+
+  .pgh-media { position: relative; margin: 0 calc(var(--gutter) * -1) 1rem; aspect-ratio: 16 / 9; z-index: -1; }
+  .pgh-media :global(.pgh-img) { width: 100%; height: 100%; object-fit: cover; }
+  .pgh-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, var(--color-asphalt) 100%); }
+  .pgh-media.is-cutout { aspect-ratio: 4 / 3; margin-inline: 0; }
+  .pgh-media.is-cutout :global(.pgh-img) { object-fit: contain; filter: drop-shadow(0 24px 26px rgb(0 0 0 / 0.5)); }
+  .pgh-media.is-cutout::after { display: none; }
+  .has-image { padding-top: calc(var(--header-h) + 0.75rem); }
+  .has-image .pgh-media { order: -1; }
+
+  @media (min-width: 64rem) {
+    .pgh { padding-top: calc(var(--header-h) + 1.5rem); min-height: min(72vh, 680px); display: grid; align-content: center; }
+    .pgh-media { position: absolute; inset: 0 0 0 42%; margin: 0; aspect-ratio: auto; }
+    .pgh-media::after { background: linear-gradient(90deg, var(--color-asphalt) 0%, rgb(18 19 20 / 0.55) 35%, rgb(18 19 20 / 0.1) 70%), linear-gradient(0deg, var(--color-asphalt) 0%, transparent 30%); }
+    .pgh-media.is-cutout { inset: 12% var(--gutter) 8% 52%; }
+    .has-image .pgh-copy { max-width: 40rem; }
+  }
+</style>

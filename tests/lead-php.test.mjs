@@ -46,6 +46,13 @@ try {
   ok(calls[0]?.body.includes('+37369898307') && calls[0].body.includes('demonstratie') && calls[0].body.includes('utm-facebook'), 'payload: telefon normalizat, tag-uri');
   ok(calls[1]?.url === '/api/v4/leads/notes' && calls[1].body.includes('utm_source=facebook'), 'notă cu sursa UTM');
 
+  calls.length = 0;
+  r = await post({ ...base, demo: false, request: 'service' });
+  ok(r.status === 200 && calls[0]?.body.includes('service-service') && calls[1]?.body.includes('Solicitare service'), 'solicitare service: tag și titlu');
+  calls.length = 0;
+  r = await post({ ...base, demo: false, request: 'hack' });
+  ok(r.status === 200 && calls[0]?.body.includes('"oferta"'), 'tip de solicitare necunoscut → ofertă');
+
   r = await post({ ...base, phone: '123' });
   ok(r.status === 422, 'telefon invalid → 422');
 

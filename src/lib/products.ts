@@ -75,7 +75,7 @@ export function cardStats(p: Product, lang: Lang, ui: { specs: Record<string, an
   const all: Record<string, Stat | null> = {
     power: { k: s.power, v: fmt(k.powerHp, lang), u: u.hp },
     weight: k.weightKg ? { k: s.weight, v: fmt(k.weightKg, lang), u: u.kg } : null,
-    dig: k.digDepthM ? { k: s.digDepth, v: fmt(k.digDepthM, lang), u: u.m } : null,
+    dig: k.digDepthM ? { k: s.digDepth, v: fmt(k.digDepthM, lang, 2), u: u.m } : null,
     speed: k.speedKmh ? { k: s.speed, v: fmt(k.speedKmh, lang), u: u.kmh } : null,
     payload: k.payloadKg ? { k: s.payload, v: fmt(k.payloadKg, lang), u: u.kg } : null,
     rated: k.ratedLoadKg ? { k: s.ratedLoad, v: fmt(k.ratedLoadKg, lang), u: u.kg } : null,

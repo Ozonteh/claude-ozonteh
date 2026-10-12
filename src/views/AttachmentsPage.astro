@@ -1,0 +1,144 @@
+---
+// Cupe și atașamente: cele 19 atașamente BULL, filtrabile după tipul utilajului (doar CSS, cu :has).
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import TextBlock from '../components/pages/TextBlock.astro';
+import AttachmentDrawing from '../components/home/AttachmentDrawing.astro';
+import Faq from '../components/home/Faq.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { attachments } from '../data/attachments';
+import { asset } from '../lib/images';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph, faqGraph } from '../lib/schema';
+import { categoryPath, route, type CategoryId, type Lang } from '../i18n/routes';
+import { t, tpl } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const a = ui.pages.attachments;
+const page = await getPage('cupe-si-atasamente', lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.attachments, path: route('attachments', lang) }]);
+const types = ['backhoe', 'loader', 'skid'] as const;
+const catOf: Record<(typeof types)[number], CategoryId> = {
+  backhoe: 'buldoexcavatoare',
+  loader: 'incarcatoare-frontale',
+  skid: 'miniincarcatoare-skid-steer',
+};
+const jsonld = [breadcrumbGraph(cr), ...(page.faq?.length ? [faqGraph(page.faq)] : [])];
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('attachments')}
+  ogImage={asset('santier/incarcator-frontal-bull-hd76-variante-cupa.webp')}
+  ogImageAlt={page.h1}
+  jsonld={jsonld}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={a.eyebrow} title={page.h1} lead={page.lead} image="santier/buldoexcavator-bull-hd96-sapare-fundatie.webp" imageAlt={page.h1} />
+
+  <section class="atp on-dark" aria-labelledby="atp-title">
+    <div class="wrap atp-inner">
+      <div class="atp-bar">
+        <h2 id="atp-title" class="t-eyebrow"><span class="idx">01</span> {tpl(a.count, { n: attachments.length })}</h2>
+        <fieldset class="atp-filter">
+          <legend class="sr-only">{a.filter}</legend>
+          <label class="fchip"><input type="radio" name="atp" value="all" checked /><span>{a.all}</span></label>
+          {
+            types.map((ty) => (
+              <label class="fchip">
+                <input type="radio" name="atp" value={ty} id={`atp-${ty}`} />
+                <span>{a.types[ty]}</span>
+              </label>
+            ))
+          }
+        </fieldset>
+      </div>
+
+      <ul class="atp-grid" role="list">
+        {
+          attachments.map((x, i) => (
+            <li class="atp-card" data-for={x.for.join(' ')}>
+              <div class="atp-media">
+                {x.image ? (
+                  <Image src={asset(x.image)} alt={x.name[lang]} widths={[320, 480]} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw" loading={i < 4 ? 'eager' : 'lazy'} />
+                ) : (
+                  <AttachmentDrawing kind={x.drawing!} title={x.name[lang]} class="atp-drawing" />
+                )}
+              </div>
+              <div class="atp-body">
+                <h3 class="atp-name">{x.name[lang]}</h3>
+                <p class="atp-text">{x.text[lang]}</p>
+                <p class="atp-k t-mono">{a.compatible}</p>
+                <ul class="atp-types" role="list">
+                  {x.for.map((ty) => (
+                    <li>
+                      <a href={categoryPath(catOf[ty], lang)}>{a.types[ty]}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    page.blocks.intro && (
+      <section class="on-light section">
+        <div class="wrap">
+          <TextBlock title={page.blocks.intro.title} text={page.blocks.intro.text} eyebrow={a.eyebrow} idx="02" />
+        </div>
+      </section>
+    )
+  }
+
+  {page.faq?.length && <Faq lang={lang} items={page.faq} idx="03" />}
+  <FinalCta lang={lang} idx="04" />
+</BaseLayout>
+
+<style>
+  .atp { padding-block: clamp(2rem, 1.5rem + 2vw, 3.5rem) clamp(4rem, 3rem + 4vw, 7rem); }
+  .atp-inner { display: grid; gap: 1.5rem; }
+  .atp-bar { display: grid; gap: 1rem; }
+  .atp-filter { display: flex; flex-wrap: wrap; gap: 6px; border: 0; padding: 0; margin: 0; }
+  .fchip { position: relative; display: inline-flex; }
+  .fchip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .fchip span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem; font-size: 0.875rem; font-weight: 600; color: var(--color-bone); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .fchip input:checked + span { color: var(--color-asphalt); background: var(--color-bull-yellow); box-shadow: none; }
+  .fchip input:focus-visible + span { outline: 2px solid var(--color-bull-yellow); outline-offset: 2px; }
+
+  /* Filtru fără JS: ascundem cardurile care nu se potrivesc tipului bifat. */
+  .atp-inner:has(#atp-backhoe:checked) .atp-card:not([data-for~='backhoe']),
+  .atp-inner:has(#atp-loader:checked) .atp-card:not([data-for~='loader']),
+  .atp-inner:has(#atp-skid:checked) .atp-card:not([data-for~='skid']) { display: none; }
+
+  .atp-grid { display: grid; gap: 10px; }
+  .atp-card { display: grid; grid-template-rows: auto 1fr; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .atp-media { display: grid; place-items: center; aspect-ratio: 4 / 3; padding: 12px; background: #fff; }
+  .atp-media:has(svg) { background: rgb(255 255 255 / 0.03); }
+  .atp-media :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  .atp-media :global(.atp-drawing) { width: 100%; height: 100%; color: var(--color-bull-yellow); }
+  .atp-body { display: grid; gap: 0.6rem; align-content: start; padding: 1rem 1.1rem 1.25rem; }
+  .atp-name { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; line-height: 1.1; text-transform: uppercase; letter-spacing: var(--display-track); }
+  :global(html:lang(ru)) .atp-name { font-weight: 600; font-size: 1.25rem; }
+  .atp-text { font-size: 0.9375rem; line-height: 1.5; color: var(--color-steel); }
+  .atp-k { margin-top: 0.25rem; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-steel); }
+  .atp-types { display: flex; flex-wrap: wrap; gap: 6px; }
+  .atp-types a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 0.6rem; font-size: 0.8125rem; color: var(--color-bull-yellow); box-shadow: inset 0 0 0 1px rgb(255 194 14 / 0.45); }
+  .atp-types a:hover { color: var(--color-asphalt); background: var(--color-bull-yellow); }
+  @media (min-width: 40rem) {
+    .atp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .atp-bar { grid-template-columns: auto 1fr; align-items: center; }
+    .atp-filter { justify-content: flex-end; }
+    .atp-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>

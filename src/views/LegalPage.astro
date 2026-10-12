@@ -1,0 +1,47 @@
+---
+// Politica de confidențialitate / Politica cookies (Markdown din src/content/legal).
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import { asset } from '../lib/images';
+import { crumbs, routeAlternates } from '../lib/pages';
+import { formatDate } from '../lib/blog';
+import { breadcrumbGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t, tpl } from '../i18n/ui';
+
+interface Props { lang: Lang; doc: 'confidentialitate' | 'cookies' }
+const { lang, doc } = Astro.props;
+const ui = t(lang);
+const entry = await getEntry('legal', `${lang}/${doc}`);
+if (!entry) throw new Error(`Lipsește src/content/legal/${lang}/${doc}.md`);
+const { Content } = await render(entry);
+const key = doc === 'cookies' ? 'cookies' : 'privacy';
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: entry.data.title, path: route(key, lang) }]);
+---
+
+<BaseLayout
+  lang={lang}
+  title={entry.data.seoTitle}
+  description={entry.data.description}
+  alternates={routeAlternates(key)}
+  ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
+  ogImageAlt={entry.data.title}
+  jsonld={[breadcrumbGraph(cr)]}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={ui.pages.legal.eyebrow} title={entry.data.title} lead={tpl(ui.pages.legal.updated, { date: formatDate(entry.data.updated, lang) })} />
+  <article class="lg on-light">
+    <div class="wrap lg-inner">
+      <div class="prose lg-prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .lg { padding-block: clamp(2.5rem, 2rem + 3vw, 5rem); }
+  .lg-inner { display: grid; }
+  .lg-prose { max-width: 46rem; }
+</style>

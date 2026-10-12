@@ -1,0 +1,33 @@
+---
+// Bloc de text din pagini/<lang>/<cheie>.yaml: titlu H2 + paragrafe (separate printr-un rând gol).
+interface Props { title?: string; text?: string; idx?: string; eyebrow?: string; class?: string; level?: 'h2' | 'h3' }
+const { title, text = '', idx, eyebrow, class: cls, level = 'h2' } = Astro.props;
+const paragraphs = text
+  .split(/\n\s*\n/)
+  .map((x) => x.trim().replace(/\s*\n\s*/g, ' '))
+  .filter(Boolean);
+const H = level;
+---
+
+<div class:list={['tb', cls]} data-reveal>
+  {
+    eyebrow && (
+      <p class="t-eyebrow">
+        {idx && <span class="idx">{idx}</span>} {eyebrow}
+      </p>
+    )
+  }
+  {title && <H class:list={[level === 'h2' ? 't-h2 tb-title' : 't-h3']}>{title}</H>}
+  <div class="tb-text">
+    {paragraphs.map((p) => <p>{p}</p>)}
+  </div>
+  <slot />
+</div>
+
+<style>
+  .tb { display: grid; gap: 1.1rem; align-content: start; }
+  .tb-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .tb-text { display: grid; gap: 1rem; max-width: 46rem; font-size: 1.0625rem; line-height: 1.65; }
+  :global(.on-light) .tb-text { color: #2a2d31; }
+  :global(.on-dark) .tb-text, :global(.on-graphite) .tb-text { color: color-mix(in oklab, var(--color-bone) 88%, transparent); }
+</style>

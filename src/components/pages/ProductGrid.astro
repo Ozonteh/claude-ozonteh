@@ -1,0 +1,31 @@
+---
+// Grila de modele (catalog, categorii): carduri cu „Compară" și atributele folosite de filtre.
+import ProductCard from '../product/ProductCard.astro';
+import type { Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+
+interface Props { list: Product[]; lang: Lang; headingLevel?: 'h2' | 'h3' }
+const { list, lang, headingLevel = 'h3' } = Astro.props;
+---
+
+<ul class="pg" role="list">
+  {
+    list.map((p, i) => (
+      <li data-item data-type={p.category} data-hp={p.key.powerHp} data-drive={p.key.drive.join(' ')} data-weight={p.key.weightKg ?? ''}>
+        <ProductCard p={p} lang={lang} compare headingLevel={headingLevel} eager={i === 0} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .pg { display: grid; gap: 12px; }
+  .pg > li { display: grid; }
+  .pg > li[hidden] { display: none; }
+  @media (min-width: 40rem) {
+    .pg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 80rem) {
+    .pg { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

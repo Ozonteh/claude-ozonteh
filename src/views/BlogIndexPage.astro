@@ -1,0 +1,59 @@
+---
+// Lista articolelor de blog (RO sau RU).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/pages/PageHero.astro';
+import PostCard from '../components/pages/PostCard.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { asset } from '../lib/images';
+import { postsFor } from '../lib/blog';
+import { getPage, crumbs, routeAlternates } from '../lib/pages';
+import { breadcrumbGraph } from '../lib/schema';
+import { route, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const page = await getPage('blog', lang);
+const posts = await postsFor(lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const cr = crumbs(site, lang, [{ name: ui.nav.blog, path: route('blog', lang) }]);
+---
+
+<BaseLayout
+  lang={lang}
+  title={page.seoTitle}
+  description={page.seoDescription}
+  alternates={routeAlternates('blog')}
+  ogImage={asset(posts[0]?.data.cover ?? 'santier/buldoexcavator-bull-hd100-terasamente.webp')}
+  ogImageAlt={page.h1}
+  jsonld={[breadcrumbGraph(cr)]}
+>
+  <PageHero lang={lang} crumbs={cr} eyebrow={ui.pages.blog.eyebrow} title={page.h1} lead={page.lead} />
+  <section class="bl on-dark" aria-label={page.h1}>
+    <div class="wrap">
+      <ul class="bl-grid" role="list">
+        {
+          posts.map((p, i) => (
+            <li>
+              <PostCard post={p} lang={lang} eager={i === 0} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <FinalCta lang={lang} idx="02" />
+</BaseLayout>
+
+<style>
+  .bl { padding-block: clamp(1rem, 0.5rem + 2vw, 2.5rem) clamp(4rem, 3rem + 4vw, 7rem); }
+  .bl-grid { display: grid; gap: 12px; }
+  .bl-grid > li { display: grid; }
+  @media (min-width: 48rem) {
+    .bl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 80rem) {
+    .bl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

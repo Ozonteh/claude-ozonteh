@@ -1,0 +1,43 @@
+---
+// Card de articol (lista de blog, „Alte articole").
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { asset } from '../../lib/images';
+import { postPath, readingMinutes, formatDate, type Post } from '../../lib/blog';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { post: Post; lang: Lang; eager?: boolean }
+const { post, lang, eager = false } = Astro.props;
+const b = t(lang).pages.blog;
+const href = postPath(post);
+---
+
+<article class="post">
+  <a href={href} class="post-media" tabindex="-1" aria-hidden="true">
+    <Image src={asset(post.data.cover)} alt="" widths={[480, 720, 960]} sizes="(min-width: 1024px) 30vw, 92vw" loading={eager ? 'eager' : 'lazy'} />
+  </a>
+  <div class="post-body">
+    <p class="t-mono post-meta">
+      <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date, lang)}</time> · {tpl(b.minutes, { n: readingMinutes(post.body) })}
+    </p>
+    <h2 class="post-title"><a href={href}>{post.data.title}</a></h2>
+    <p class="post-desc">{post.data.description}</p>
+    <span class="link-arrow post-more" aria-hidden="true">{b.read} <Icon name="arrow" size={18} /></span>
+  </div>
+</article>
+
+<style>
+  .post { position: relative; display: grid; grid-template-rows: auto 1fr; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); transition: box-shadow 0.3s, transform 0.4s var(--ease-hydraulic); }
+  .post:hover { box-shadow: inset 0 0 0 1px var(--color-bull-yellow); transform: translateY(-4px); }
+  .post-media { display: block; aspect-ratio: 16 / 10; overflow: hidden; }
+  .post-media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-hydraulic); }
+  .post:hover .post-media :global(img) { transform: scale(1.04); }
+  .post-body { display: grid; gap: 0.75rem; align-content: start; padding: 1.25rem 1.2rem 1.5rem; }
+  .post-meta { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+  .post-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); line-height: 1.08; text-transform: uppercase; letter-spacing: var(--display-track); }
+  :global(html:lang(ru)) .post-title { font-weight: 600; font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem); }
+  .post-title a::after { content: ''; position: absolute; inset: 0; }
+  .post-desc { color: var(--color-steel); font-size: 0.9375rem; line-height: 1.55; }
+  .post-more { justify-self: start; }
+</style>

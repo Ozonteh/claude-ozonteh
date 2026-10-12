@@ -4,6 +4,7 @@
 import { Image, Picture } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
 import WarrantyBadges from '../ui/WarrantyBadges.astro';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
 import { asset } from '../../lib/images';
 import { fmt, type Product } from '../../lib/products';
 import { company } from '../../data/site';
@@ -33,17 +34,7 @@ const photoAlt = (i: number) => `${p.alt[lang]}. ${tpl(u.photoOf, { i: i + 1, n:
 <section class="ph on-dark" aria-labelledby="ph-title">
   <div class="ph-grid blueprint" aria-hidden="true"></div>
   <div class="wrap ph-inner">
-    <nav class="crumbs" aria-label={u.breadcrumb}>
-      <ol>
-        {
-          crumbs.map((c, i) => (
-            <li>
-              {i < crumbs.length - 1 ? <a href={new URL(c.url).pathname}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
-            </li>
-          ))
-        }
-      </ol>
-    </nav>
+    <div class="ph-crumbs"><Breadcrumbs lang={lang} crumbs={crumbs} /></div>
 
     <div class="ph-head">
       {p.isNew && <p class="ph-new"><span class="badge badge-new">{ui.badges.new}</span></p>}
@@ -149,13 +140,7 @@ const photoAlt = (i: number) => `${p.alt[lang]}. ${tpl(u.photoOf, { i: i + 1, n:
     grid-template-areas: 'crumbs' 'head' 'media' 'copy';
     gap: 1.25rem;
   }
-  .crumbs { grid-area: crumbs; }
-  .crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.5rem; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-steel); }
-  .crumbs li { display: inline-flex; align-items: center; gap: 0.5rem; }
-  .crumbs li + li::before { content: '/'; color: rgb(138 144 153 / 0.5); }
-  .crumbs a { display: inline-flex; align-items: center; min-height: 32px; color: var(--color-steel); }
-  .crumbs a:hover { color: var(--color-bull-yellow); }
-  .crumbs [aria-current] { color: var(--color-bone); }
+  .ph-crumbs { grid-area: crumbs; }
 
   .ph-head { grid-area: head; display: grid; gap: 0.9rem; }
   .ph-new { line-height: 1; }

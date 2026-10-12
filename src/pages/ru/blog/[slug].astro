@@ -1,0 +1,14 @@
+---
+// Articolele de blog, RU: /ru/blog/<slug>/
+import { getCollection } from 'astro:content';
+import BlogPostPage from '../../../views/BlogPostPage.astro';
+import { postSlug } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => p.id.startsWith('ru/'));
+  return posts.map((post) => ({ params: { slug: postSlug(post) }, props: { post } }));
+}
+const { post } = Astro.props;
+---
+
+<BlogPostPage lang="ru" post={post} />

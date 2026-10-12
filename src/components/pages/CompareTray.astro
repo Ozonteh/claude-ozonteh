@@ -1,0 +1,48 @@
+---
+// Bara „De comparat": apare când bifezi „Compară" pe 1–3 carduri; duce la comparator cu modelele alese.
+import Icon from '../ui/Icon.astro';
+import { route, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = t(lang).pages.catalog;
+---
+
+<div class="ct" data-compare-tray hidden>
+  <div class="ct-inner">
+    <p class="ct-title t-mono">{c.compareTray} <b><span data-compare-count>0</span>/3</b></p>
+    <ul class="ct-list" role="list" data-compare-list></ul>
+    <p class="ct-msg" data-compare-msg data-max={c.compareMax} data-hint={c.compareHint} aria-live="polite"></p>
+    <div class="ct-actions">
+      <button type="button" class="btn btn-ghost btn-sm" data-compare-clear>{c.compareClear}</button>
+      <a href={route('compare', lang)} class="btn btn-primary btn-sm" data-compare-go>{c.compareGo} <Icon name="arrow" size={16} /></a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ct {
+    position: fixed;
+    inset: auto 0 calc(64px + env(safe-area-inset-bottom)) 0;
+    z-index: 55;
+    padding: 0.75rem var(--gutter);
+    color: var(--color-bone);
+    background: var(--color-graphite);
+    box-shadow: 0 -1px 0 var(--color-line), 0 -12px 30px rgb(0 0 0 / 0.35);
+    border-top: 3px solid var(--color-bull-yellow);
+  }
+  .ct-inner { display: grid; gap: 0.5rem; max-width: 1440px; margin-inline: auto; }
+  .ct-title { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+  .ct-title b { color: var(--color-bull-yellow); font-weight: 500; }
+  .ct-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ct-list :global(li) { padding: 4px 8px; font-size: 0.8125rem; font-weight: 600; background: var(--color-asphalt); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .ct-msg { font-size: 0.8125rem; color: var(--color-steel); }
+  .ct-msg:empty { display: none; }
+  .ct-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  @media (min-width: 64rem) {
+    .ct { inset: auto 50% 1.25rem auto; translate: 50% 0; width: min(920px, calc(100% - 2 * var(--gutter))); }
+    .ct-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; }
+    .ct-msg { grid-column: 1 / -1; }
+  }
+</style>
