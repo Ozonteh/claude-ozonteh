@@ -1,0 +1,137 @@
+---
+// Formular scurt „Cere ofertă": Nume, Telefon (+373), Model (preselectat), Mesaj, „Vreau demonstrație".
+// Validare inline și trimitere fără reîncărcare (src/scripts/form.ts). Fără JS: POST clasic.
+import Icon from '../ui/Icon.astro';
+import { products } from '../../lib/products';
+import { LEAD_ENDPOINT } from '../../data/site';
+import { route, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  id: string;
+  model?: string;
+  variant?: 'dark' | 'graphite';
+}
+const { lang, id, model, variant = 'dark' } = Astro.props;
+const ui = t(lang).form;
+---
+
+<form class:list={['qform', `qform-${variant}`]} action={LEAD_ENDPOINT} method="post" novalidate data-quote-form>
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="page" value="" />
+  <input type="hidden" name="source" value="" />
+  <div class="qform-hp" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="qform-fields">
+    <div class="field">
+      <label class="field-label" for={`${id}-name`}>{ui.name}</label>
+      <input class="input" id={`${id}-name`} name="name" type="text" autocomplete="name" placeholder={ui.namePh} required minlength="2" maxlength="80" aria-describedby={`${id}-name-err`} />
+      <p class="field-error" id={`${id}-name-err`} data-error-for="name" data-msg={ui.errName}></p>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for={`${id}-phone`}>{ui.phone}</label>
+      <div class="phone">
+        <span class="phone-prefix t-mono" aria-hidden="true">+373</span>
+        <input
+          class="input phone-input t-mono"
+          id={`${id}-phone`}
+          name="phone"
+          type="tel"
+          inputmode="tel"
+          autocomplete="tel"
+          placeholder="69 898 307"
+          required
+          maxlength="16"
+          aria-describedby={`${id}-phone-err`}
+          data-phone
+        />
+      </div>
+      <p class="field-error" id={`${id}-phone-err`} data-error-for="phone" data-msg={ui.errPhone}></p>
+    </div>
+
+    <div class="field field-wide">
+      <label class="field-label" for={`${id}-model`}>{ui.model}</label>
+      <select class="input" id={`${id}-model`} name="model" data-model-select>
+        <option value="">{ui.modelAny}</option>
+        {products.map((p) => <option value={p.name} data-id={p.id} selected={model === p.id}>{p.name}</option>)}
+      </select>
+    </div>
+
+    <div class="field field-wide">
+      <label class="field-label" for={`${id}-msg`}>{ui.message}</label>
+      <textarea class="input" id={`${id}-msg`} name="message" rows="3" maxlength="1500" placeholder={ui.messagePh}></textarea>
+    </div>
+
+    <label class="check field-wide">
+      <input type="checkbox" name="demo" value="1" data-demo-check />
+      <span>{ui.demo}</span>
+    </label>
+  </div>
+
+  <p class="qform-consent">
+    {ui.consent}
+    <a href={route('privacy', lang)} class="prose-links">{ui.consentLink}</a>.
+  </p>
+
+  <button type="submit" class="btn btn-primary btn-lg btn-block" data-submit>
+    <span data-label>{ui.submit}</span>
+    <span data-label-sending hidden>{ui.sending}</span>
+    <Icon name="arrow" class="arrow" />
+  </button>
+  <p class="qform-status" role="alert" data-status data-error={ui.error}></p>
+
+  <div class="qform-success" data-success hidden tabindex="-1">
+    <span class="qform-success-icon"><Icon name="check" size={28} /></span>
+    <p class="t-h3">{ui.successTitle}</p>
+    <p>{ui.successText}</p>
+    <button type="button" class="link-arrow" data-reset>{ui.successAgain}</button>
+  </div>
+</form>
+
+<style>
+  .qform { display: grid; gap: 1.25rem; position: relative; container-type: inline-size; }
+  .qform-fields { display: grid; gap: 1rem; }
+  .qform-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .phone { display: flex; align-items: stretch; }
+  .phone-prefix {
+    display: grid;
+    place-items: center;
+    padding: 0 0.9rem;
+    font-size: 1rem;
+    color: var(--color-asphalt);
+    background: var(--color-bull-yellow);
+  }
+  .phone-input { letter-spacing: 0.06em; }
+  .qform-consent { font-size: 0.8125rem; line-height: 1.5; color: var(--color-steel); }
+  .qform-consent a { color: var(--color-bone); }
+  .qform-status:empty { display: none; }
+  .qform-status { font-size: 0.875rem; color: #ffb37a; padding: 0.75rem 1rem; box-shadow: inset 3px 0 0 var(--color-hazard); background: rgb(255 106 0 / 0.08); }
+  .qform-graphite .input { background: var(--color-graphite); }
+
+  .qform-success {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    background: inherit;
+    background: var(--color-graphite);
+    box-shadow: inset 0 0 0 1px var(--color-bull-yellow);
+    animation: fade-up 0.6s var(--ease-hydraulic);
+  }
+  .qform-dark .qform-success { background: var(--color-asphalt); }
+  .qform-success-icon { display: grid; place-items: center; width: 56px; height: 56px; background: var(--color-bull-yellow); color: var(--color-asphalt); }
+  .qform-success p:not(.t-h3) { color: var(--color-steel); }
+  .qform[data-state='success'] > :not(.qform-success) { visibility: hidden; }
+
+  @container (min-width: 34rem) {
+    .qform-fields { grid-template-columns: 1fr 1fr; }
+    .field-wide { grid-column: 1 / -1; }
+  }
+</style>

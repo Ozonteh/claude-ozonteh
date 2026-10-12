@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import QuoteForm from '../layout/QuoteForm.astro';
+import { asset } from '../../lib/images';
+import { company } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const f = ui.home.final;
+---
+
+<section id="oferta" class="final on-dark cv-auto" aria-labelledby="final-title">
+  <Image src={asset('santier/buldoexcavator-bull-hd96-santier.webp')} alt="" widths={[640, 1024, 1600, 2000]} sizes="100vw" class="final-bg" loading="lazy" />
+  <div class="final-scrim" aria-hidden="true"></div>
+  <div class="wrap section final-grid">
+    <div class="final-copy" data-reveal>
+      <p class="t-eyebrow"><span class="idx">09</span> {f.eyebrow}</p>
+      <h2 id="final-title" class="t-h2">{f.title}</h2>
+      <p class="t-lead">{f.text}</p>
+      <ul class="final-contacts" role="list">
+        <li>
+          <a href={`tel:${company.phone.tel}`} class="final-phone t-mono" data-track-loc="final-cta"><Icon name="phone" /> {company.phone.intl}</a>
+        </li>
+        <li>
+          <a href={company.whatsapp} target="_blank" rel="noopener" class="final-line" data-track-loc="final-cta"><Icon name="whatsapp" /> WhatsApp</a>
+        </li>
+        <li class="final-line">
+          <Icon name="pin" />
+          <span><span class="final-sub">{f.hq}</span>{company.address.street}, {company.address.locality}</span>
+        </li>
+        <li class="final-line">
+          <Icon name="clock" />
+          <span>{ui.footer.hours.join(' · ')}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="final-form ticks" data-reveal style="--d:1">
+      <p class="badge badge-warranty"><Icon name="shield" /> {ui.badges.warranty}</p>
+      <QuoteForm lang={lang} id="final" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .final { position: relative; overflow: hidden; isolation: isolate; }
+  .final-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.55; }
+  .final-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--color-asphalt) 0%, rgb(18 19 20 / 0.82) 30%, rgb(18 19 20 / 0.9) 100%); }
+  .final-grid { display: grid; gap: 2.5rem; }
+  .final-copy { display: grid; gap: 1.25rem; align-content: start; }
+  .final-contacts { display: grid; gap: 0.75rem; margin-top: 0.5rem; }
+  .final-phone { display: inline-flex; align-items: center; gap: 0.6rem; font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem); color: var(--color-bull-yellow); min-height: 48px; }
+  .final-line { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--color-bone); min-height: 40px; }
+  .final-line :global(svg) { flex: none; color: var(--color-steel); margin-top: 2px; }
+  a.final-line { align-items: center; }
+  a.final-line:hover { color: var(--color-bull-yellow); }
+  .final-sub { display: block; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+  .final-form { display: grid; gap: 1.25rem; padding: 1.5rem 1.1rem; background-color: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .final-form .badge { width: fit-content; }
+  @media (min-width: 64rem) {
+    .final-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 5rem; align-items: start; }
+    .final-form { padding: 2.25rem; }
+  }
+</style>

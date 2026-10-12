@@ -1,0 +1,703 @@
+/* ==========================================================================
+   BULL Moldova — Design system „Industrial Heavy-Duty, cinematic"
+   Tokens → bază → tipografie → layout → componente → motion
+   ========================================================================== */
+@import 'tailwindcss';
+
+/* ---------- 1. Tokens ---------- */
+@theme {
+  /* Paletă */
+  --color-asphalt: #121314; /* fundal principal */
+  --color-graphite: #1e2022; /* carduri și secțiuni */
+  --color-graphite-2: #272a2d; /* carduri ridicate, hover */
+  --color-steel: #8a9099; /* text secundar pe închis */
+  --color-steel-ink: #565c64; /* text secundar pe paper/galben (contrast AA) */
+  --color-bull-yellow: #ffc20e; /* accent principal, CTA (livrea utilaje ≈ #FCC810) */
+  --color-bull-yellow-hi: #ffd34d;
+  --color-hazard: #ff6a00; /* accent rar: badge „Nou" */
+  --color-paper: #f4f1ea; /* secțiuni deschise */
+  --color-paper-2: #e9e4d8;
+  --color-bone: #e7e4dd; /* text principal pe închis */
+  --color-bull-red: #e9302f; /* doar pentru logo-ul BULL */
+  --color-line: rgb(255 255 255 / 0.09);
+  --color-line-ink: rgb(18 19 20 / 0.14);
+
+  /* Fonturi (variabilele --ff-* vin din Astro Fonts API, auto-găzduite) */
+  --font-display: var(--ff-display);
+  --font-sans: var(--ff-sans);
+  --font-mono: var(--ff-mono);
+
+  /* Breakpoints: mobile-first 360–414 → 768 → 1280 */
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  --ease-hydraulic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-press: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root {
+  --gutter: 16px;
+  --header-h: 64px;
+  --bar-h: 64px;
+  --display-scale: 1;
+  --display-track: -0.005em;
+  --radius: 0px;
+  --chamfer: 12px;
+  color-scheme: dark;
+}
+@media (min-width: 48rem) {
+  :root { --gutter: 24px; }
+}
+@media (min-width: 64rem) {
+  :root { --header-h: 76px; --bar-h: 0px; }
+}
+@media (min-width: 80rem) {
+  :root { --gutter: 40px; }
+}
+
+/* Paginile RU: titluri în Oswald (Big Shoulders nu are chirilică); e mai lat, deci scară mai mică. */
+html:lang(ru) {
+  --font-display: var(--ff-display-cyr);
+  --display-scale: 0.74;
+  --display-track: 0;
+}
+
+/* ---------- 2. Bază ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    background: var(--color-asphalt);
+  }
+  body {
+    min-height: 100dvh;
+    background: var(--color-asphalt);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom));
+    overflow-x: clip;
+  }
+  ::selection { background: var(--color-bull-yellow); color: var(--color-asphalt); }
+  :focus-visible {
+    outline: 2px solid var(--color-bull-yellow);
+    outline-offset: 3px;
+  }
+  .on-light :focus-visible, .on-yellow :focus-visible { outline-color: var(--color-asphalt); }
+  img, video, svg { display: block; max-width: 100%; }
+  img { height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; }
+  summary { cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  [hidden] { display: none !important; }
+}
+
+/* ---------- 3. Tipografie ---------- */
+@layer components {
+  .t-display,
+  .t-hero,
+  .t-h2,
+  .t-h3,
+  .t-num {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: var(--display-track);
+    font-kerning: normal;
+  }
+  .t-hero {
+    font-weight: 800;
+    font-size: calc(clamp(3.4rem, 1.7rem + 8.2vw, 10.25rem) * var(--display-scale));
+    line-height: 0.84;
+  }
+  html:lang(ru) .t-hero { font-weight: 600; line-height: 0.98; }
+  .t-h2 {
+    font-weight: 800;
+    font-size: calc(clamp(2.5rem, 1.55rem + 4.4vw, 6rem) * var(--display-scale));
+    line-height: 0.92;
+  }
+  html:lang(ru) .t-h2 { font-weight: 600; line-height: 1.02; }
+  .t-h3 {
+    font-weight: 800;
+    font-size: calc(clamp(1.65rem, 1.35rem + 1.1vw, 2.35rem) * var(--display-scale));
+    line-height: 0.95;
+  }
+  html:lang(ru) .t-h3 { font-weight: 600; line-height: 1.08; font-size: calc(clamp(1.65rem, 1.35rem + 1.1vw, 2.35rem) * 0.82); }
+  .t-num {
+    font-weight: 800;
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums;
+  }
+  html:lang(ru) .t-num { font-weight: 600; }
+  .t-lead {
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.55;
+    color: color-mix(in oklab, var(--color-bone) 88%, transparent);
+  }
+  .t-body-muted { color: var(--color-steel); }
+  .t-mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .t-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-steel);
+  }
+  .t-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--color-bull-yellow);
+    flex: none;
+  }
+  .t-eyebrow .idx { color: var(--color-bull-yellow); }
+  .on-light .t-eyebrow, .on-yellow .t-eyebrow { color: var(--color-steel-ink); }
+  .on-light .t-eyebrow .idx { color: var(--color-asphalt); }
+  .on-yellow .t-eyebrow::before { background: var(--color-asphalt); }
+  .on-yellow .t-eyebrow .idx { color: var(--color-asphalt); }
+  @media (min-width: 64rem) {
+    .t-eyebrow { font-size: 0.8125rem; }
+  }
+  .hl { color: var(--color-bull-yellow); }
+  .on-light .hl, .on-yellow .hl { color: inherit; background: linear-gradient(transparent 62%, var(--color-bull-yellow) 62% 92%, transparent 92%); }
+  .on-yellow .hl { background: linear-gradient(transparent 62%, var(--color-asphalt) 62% 92%, transparent 92%); color: inherit; }
+  .prose-links a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+}
+
+/* ---------- 4. Layout ---------- */
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .section { padding-block: clamp(4.5rem, 3rem + 6vw, 9rem); position: relative; }
+  .section-tight { padding-block: clamp(3rem, 2rem + 3vw, 5rem); }
+  .on-dark { background: var(--color-asphalt); color: var(--color-bone); }
+  .on-graphite { background: var(--color-graphite); color: var(--color-bone); }
+  .on-light { background: var(--color-paper); color: var(--color-asphalt); color-scheme: light; }
+  .on-yellow { background: var(--color-bull-yellow); color: var(--color-asphalt); color-scheme: light; }
+  .section-head { display: grid; gap: 1.25rem; margin-bottom: clamp(2.5rem, 2rem + 2.5vw, 4.5rem); }
+  @media (min-width: 64rem) {
+    .section-head.split { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: end; gap: 3rem; }
+  }
+}
+
+/* ---------- 5. Componente ---------- */
+@layer components {
+  /* Butoane — colț teșit industrial, efect „presiune hidraulică" la apăsare */
+  .btn {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-bone);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0 1.35rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--btn-fg);
+    background: var(--btn-bg);
+    border: 0;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      transform 0.25s var(--ease-press),
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+    will-change: transform;
+  }
+  .btn svg { width: 1.15em; height: 1.15em; flex: none; }
+  .btn:active {
+    transform: scale(0.96) translate(var(--mx, 0px), var(--my, 0px));
+    transition-duration: 0.08s;
+  }
+  .btn-primary {
+    --btn-bg: var(--color-bull-yellow);
+    --btn-fg: var(--color-asphalt);
+    clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, var(--chamfer) 100%, 0 calc(100% - var(--chamfer)));
+  }
+  .btn-primary:hover { --btn-bg: var(--color-bull-yellow-hi); }
+  .btn-primary:active { box-shadow: inset 0 4px 0 rgb(0 0 0 / 0.22), inset 0 -2px 0 rgb(255 255 255 / 0.35); }
+  .btn-dark {
+    --btn-bg: var(--color-asphalt);
+    --btn-fg: var(--color-bull-yellow);
+    clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, var(--chamfer) 100%, 0 calc(100% - var(--chamfer)));
+  }
+  .btn-dark:hover { --btn-fg: var(--color-paper); }
+  .btn-dark:active { box-shadow: inset 0 4px 0 rgb(0 0 0 / 0.5); }
+  .btn-outline {
+    box-shadow: inset 0 0 0 1.5px rgb(231 228 221 / 0.4);
+  }
+  .btn-outline:hover { box-shadow: inset 0 0 0 1.5px var(--color-bull-yellow); color: var(--color-bull-yellow); }
+  .btn-outline:active { box-shadow: inset 0 0 0 1.5px var(--color-bull-yellow), inset 0 4px 10px rgb(0 0 0 / 0.45); }
+  .on-light .btn-outline, .on-yellow .btn-outline { --btn-fg: var(--color-asphalt); box-shadow: inset 0 0 0 1.5px rgb(18 19 20 / 0.5); }
+  .on-light .btn-outline:hover, .on-yellow .btn-outline:hover { box-shadow: inset 0 0 0 1.5px var(--color-asphalt); color: var(--color-asphalt); }
+  .btn-ghost { --btn-fg: var(--color-bone); padding-inline: 0.5rem; min-height: 44px; }
+  .btn-ghost:hover { --btn-fg: var(--color-bull-yellow); }
+  .btn-lg { min-height: 60px; padding-inline: 1.75rem; font-size: 1rem; }
+  .btn-sm { min-height: 44px; padding-inline: 1rem; font-size: 0.8125rem; }
+  .btn-block { width: 100%; }
+  .btn-icon { width: 48px; min-height: 48px; padding: 0; }
+  .btn .arrow { transition: transform 0.25s var(--ease-hydraulic); }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* Link cu săgeată */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-height: 44px;
+    border-bottom: 1.5px solid currentColor;
+    padding-bottom: 2px;
+    width: fit-content;
+    min-height: auto;
+    transition: color 0.2s, gap 0.25s var(--ease-hydraulic);
+  }
+  .link-arrow:hover { color: var(--color-bull-yellow); gap: 0.8rem; }
+  .on-light .link-arrow:hover, .on-yellow .link-arrow:hover { color: inherit; }
+
+  /* Badge-uri */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.6rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge svg { width: 13px; height: 13px; }
+  .badge-new { background: var(--color-hazard); color: var(--color-asphalt); }
+  .badge-warranty { color: var(--color-bull-yellow); box-shadow: inset 0 0 0 1px rgb(255 194 14 / 0.55); background: rgb(255 194 14 / 0.06); }
+  .on-light .badge-warranty, .on-yellow .badge-warranty { color: var(--color-asphalt); box-shadow: inset 0 0 0 1px rgb(18 19 20 / 0.5); background: transparent; }
+  .badge-muted { color: var(--color-steel); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .badge-official { background: var(--color-bull-yellow); color: var(--color-asphalt); }
+
+  /* Chip (filtre, modele compatibile) */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0.25rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-bone);
+    box-shadow: inset 0 0 0 1px rgb(231 228 221 / 0.22);
+    transition: box-shadow 0.2s, color 0.2s, background-color 0.2s;
+  }
+  a.chip:hover { box-shadow: inset 0 0 0 1px var(--color-bull-yellow); color: var(--color-bull-yellow); }
+  .on-light .chip { color: var(--color-asphalt); box-shadow: inset 0 0 0 1px var(--color-line-ink); }
+
+  /* Card grafit cu repere de colț (crop marks) */
+  .card {
+    position: relative;
+    background-color: var(--color-graphite);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+  .ticks {
+    --tick: 14px;
+    --tick-w: 1.5px;
+    --tc: var(--color-bull-yellow);
+    background-image:
+      linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+      linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+      linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc)),
+      linear-gradient(var(--tc), var(--tc)), linear-gradient(var(--tc), var(--tc));
+    background-repeat: no-repeat;
+    background-size:
+      var(--tick) var(--tick-w), var(--tick-w) var(--tick),
+      var(--tick) var(--tick-w), var(--tick-w) var(--tick),
+      var(--tick) var(--tick-w), var(--tick-w) var(--tick),
+      var(--tick) var(--tick-w), var(--tick-w) var(--tick);
+    background-position:
+      top left, top left,
+      top right, top right,
+      bottom left, bottom left,
+      bottom right, bottom right;
+  }
+  .on-light .ticks, .on-yellow .ticks { --tc: var(--color-asphalt); }
+
+  /* Benzi de avertizare (separatoare promo) */
+  .hazard {
+    height: 14px;
+    background: repeating-linear-gradient(-45deg, var(--color-bull-yellow) 0 14px, var(--color-asphalt) 14px 28px);
+  }
+  .hazard-thin { height: 6px; }
+
+  /* Grilă blueprint */
+  .blueprint {
+    --bp: rgb(138 144 153 / 0.1);
+    --bp-minor: rgb(138 144 153 / 0.045);
+    background-image:
+      linear-gradient(var(--bp) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bp) 1px, transparent 1px),
+      linear-gradient(var(--bp-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bp-minor) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    background-position: -1px -1px;
+  }
+  .on-light .blueprint, .on-light.blueprint {
+    --bp: rgb(18 19 20 / 0.08);
+    --bp-minor: rgb(18 19 20 / 0.035);
+  }
+
+  /* Cote tehnice (A, B, C…) */
+  .dim {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: var(--color-steel);
+    text-transform: uppercase;
+  }
+  .dim::before, .dim::after {
+    content: '';
+    flex: 1;
+    height: 9px;
+    border-block: 0;
+    background:
+      linear-gradient(currentColor, currentColor) left center / 100% 1px no-repeat,
+      linear-gradient(currentColor, currentColor) left center / 1px 9px no-repeat;
+  }
+  .dim::after {
+    background:
+      linear-gradient(currentColor, currentColor) right center / 100% 1px no-repeat,
+      linear-gradient(currentColor, currentColor) right center / 1px 9px no-repeat;
+  }
+  .dim .dim-k {
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 0.625rem;
+    color: var(--color-bull-yellow);
+    border-color: var(--color-bull-yellow);
+  }
+  .on-light .dim { color: var(--color-steel-ink); }
+  .on-light .dim .dim-k { color: var(--color-asphalt); border-color: var(--color-asphalt); }
+
+  /* Fișă tehnică: cifră mare + etichetă mono */
+  .stat { display: grid; gap: 0.35rem; }
+  .stat-v { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 1.6rem + 1.5vw, 3rem); line-height: 0.9; text-transform: uppercase; }
+  html:lang(ru) .stat-v { font-weight: 600; font-size: calc(clamp(2rem, 1.6rem + 1.5vw, 3rem) * 0.85); }
+  .stat-v small { font-family: var(--font-mono); font-weight: 500; font-size: 0.8125rem; letter-spacing: 0.04em; margin-left: 0.25rem; color: var(--color-steel); text-transform: none; }
+  .stat-k { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-steel); }
+
+  /* Câmpuri de formular */
+  .field { display: grid; gap: 0.45rem; }
+  .field-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+  .input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--color-bone);
+    background: var(--color-asphalt);
+    border: 0;
+    box-shadow: inset 0 0 0 1px rgb(231 228 221 / 0.18);
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    appearance: none;
+  }
+  .input::placeholder { color: rgb(138 144 153 / 0.75); }
+  .input:hover { box-shadow: inset 0 0 0 1px rgb(231 228 221 / 0.32); }
+  .input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--color-bull-yellow); }
+  .input[aria-invalid='true'] { box-shadow: inset 0 0 0 2px var(--color-hazard); }
+  textarea.input { min-height: 104px; resize: vertical; }
+  select.input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%23FFC20E' stroke-width='2'%3E%3Cpath d='m1 1 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+  .field-error { font-size: 0.8125rem; color: #ff9a52; min-height: 0; }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 48px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .check input {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    flex: none;
+    box-shadow: inset 0 0 0 1.5px rgb(231 228 221 / 0.45);
+    display: grid;
+    place-items: center;
+    transition: background-color 0.15s, box-shadow 0.15s;
+  }
+  .check input::after {
+    content: '';
+    width: 12px;
+    height: 7px;
+    border-left: 2.5px solid var(--color-asphalt);
+    border-bottom: 2.5px solid var(--color-asphalt);
+    transform: translateY(-2px) rotate(-45deg) scale(0);
+    transition: transform 0.2s var(--ease-press);
+  }
+  .check input:checked { background: var(--color-bull-yellow); box-shadow: none; }
+  .check input:checked::after { transform: translateY(-2px) rotate(-45deg) scale(1); }
+
+  /* Comutator (cookie-uri) */
+  .switch {
+    appearance: none;
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex: none;
+    background: rgb(231 228 221 / 0.18);
+    transition: background-color 0.2s;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-bone);
+    transition: transform 0.25s var(--ease-press);
+  }
+  .switch:checked { background: var(--color-bull-yellow); }
+  .switch:checked::after { transform: translateX(20px); background: var(--color-asphalt); }
+  .switch:disabled { opacity: 0.6; }
+
+  /* Placă cu logo BULL (logo roșu/negru pe fond deschis) */
+  .bull-plate {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-paper);
+    padding: 5px 8px;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+
+  /* Text pe imagine: degradeu pentru lizibilitate */
+  .scrim-b { background: linear-gradient(to top, rgb(18 19 20 / 0.95) 0%, rgb(18 19 20 / 0.55) 45%, transparent 75%); }
+  .scrim-l { background: linear-gradient(90deg, rgb(18 19 20 / 0.92) 0%, rgb(18 19 20 / 0.6) 40%, transparent 72%); }
+
+  /* Utilaj decupat: umbră caldă pe fundal închis */
+  .machine-glow { filter: drop-shadow(0 24px 30px rgb(0 0 0 / 0.55)); }
+
+  /* Marcaj index secțiune (01, 02…) */
+  .index-mark { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-bull-yellow); letter-spacing: 0.1em; }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .skip-link {
+    position: fixed;
+    left: 12px;
+    top: -60px;
+    z-index: 100;
+    background: var(--color-bull-yellow);
+    color: var(--color-asphalt);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 12px; }
+
+  /* Vizibilitate pe breakpoint (globale, ca să funcționeze și pe componente copil) */
+  .hide-mobile { display: none !important; }
+  @media (min-width: 64rem) {
+    .hide-mobile { display: inline-flex !important; }
+    .show-mobile { display: none !important; }
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* ---------- 6. Textură: grain fin peste tot site-ul ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  transform: translateZ(0);
+}
+
+/* ---------- 7. Motion ---------- */
+/* Reveal la scroll (IntersectionObserver în main.ts). Fără JS → conținutul e vizibil. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.8s var(--ease-hydraulic),
+    transform 0.9s var(--ease-hydraulic);
+  transition-delay: calc(var(--d, 0) * 80ms);
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Reveal pe litere al titlului hero (CSS pur → nu blochează LCP) */
+.split-line {
+  display: block;
+  overflow: clip;
+  /* spațiu pentru diacritice (Î, Ă, Ș) deasupra literelor mari, cu line-height strâns */
+  padding-block: 0.16em 0.05em;
+  margin-block: -0.16em -0.05em;
+}
+.split-char {
+  display: inline-block;
+  transform: translate3d(0, 105%, 0);
+  animation: char-up 0.9s var(--ease-hydraulic) forwards;
+  animation-delay: calc(0.15s + var(--i) * 0.03s);
+}
+@keyframes char-up {
+  to { transform: none; }
+}
+.fade-up {
+  opacity: 0;
+  animation: fade-up 0.9s var(--ease-hydraulic) forwards;
+  animation-delay: var(--delay, 0.6s);
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ken-burns {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-2%, -1.5%, 0); }
+}
+@keyframes ticker {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Tranziție între pagini: bandă galbenă diagonală (View Transitions API, cross-document) */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-image-pair(root) { background: var(--color-bull-yellow); isolation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation-duration: 0.75s;
+  animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+::view-transition-old(root) { animation-name: vt-old; }
+::view-transition-new(root) { animation-name: vt-new; }
+@keyframes vt-old {
+  from { clip-path: polygon(0% 0, 100% 0, 100% 100%, -20% 100%); }
+  to { clip-path: polygon(140% 0, 140% 0, 140% 100%, 120% 100%); }
+}
+@keyframes vt-new {
+  from { clip-path: polygon(-40% 0, -40% 0, -60% 100%, -60% 100%); }
+  to { clip-path: polygon(-40% 0, 100% 0, 100% 100%, -60% 100%); }
+}
+/* Header și bara mobilă rămân pe loc în timpul tranziției */
+.site-header { view-transition-name: site-header; }
+.mobile-bar { view-transition-name: mobile-bar; }
+::view-transition-group(site-header),
+::view-transition-group(mobile-bar) { animation: none; }
+
+/* Fallback fără View Transitions: banda galbenă e un element fix animat din JS */
+.vt-fallback {
+  position: fixed;
+  inset: 0 -30%;
+  z-index: 200;
+  pointer-events: none;
+  background: var(--color-bull-yellow);
+  clip-path: polygon(0 0, 0 0, -10% 100%, -10% 100%);
+}
+.vt-fallback.is-leaving { animation: vt-cover 0.38s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+@keyframes vt-cover {
+  to { clip-path: polygon(0 0, 110% 0, 100% 100%, -10% 100%); }
+}
+
+/* Accesibilitate: prefers-reduced-motion → doar fade-uri simple */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+    scroll-behavior: auto !important;
+  }
+  .split-char { transform: none; animation: none; }
+  .fade-up { opacity: 1; animation: none; }
+  .js [data-reveal] { transform: none; transition: opacity 0.4s ease; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none !important; }
+}
+
+/* Butoane magnetice (desktop) — deplasarea vine din main.ts prin --mx/--my */
+[data-magnetic] { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); }
+[data-magnetic]:active { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(0.96); }
+
+/* Fallback tranziție: intrare pe pagina nouă */
+.vt-fallback.is-entering {
+  clip-path: polygon(0 0, 110% 0, 100% 100%, -10% 100%);
+  animation: vt-uncover 0.45s cubic-bezier(0.7, 0, 0.3, 1) 0.05s forwards;
+}
+@keyframes vt-uncover {
+  to { clip-path: polygon(110% 0, 110% 0, 100% 100%, 100% 100%); }
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* Secțiunile de sub fold se randează doar când se apropie de viewport (mai puțin lucru la încărcare pe mobil).
+   Nu se aplică pe hero și pe showroom (măsurat de ScrollTrigger pentru pin). */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}

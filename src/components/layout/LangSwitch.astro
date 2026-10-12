@@ -1,0 +1,39 @@
+---
+import { route, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+interface Props { lang: Lang; alternates: Partial<Record<Lang, string>>; class?: string; size?: 'sm' | 'lg' }
+const { lang, alternates, class: cls, size = 'sm' } = Astro.props;
+const items = (['ro', 'ru'] as Lang[]).map((l) => ({
+  l,
+  href: alternates[l] ?? route('home', l),
+  label: l === 'ro' ? 'Română' : 'Русский',
+}));
+---
+<div class:list={['lang', `lang-${size}`, cls]} role="group" aria-label={t(lang).a11y.langSwitch}>
+  {
+    items.map((i) =>
+      i.l === lang ? (
+        <span class="lang-item is-active" aria-current="true" lang={i.l} title={i.label}>{i.l.toUpperCase()}</span>
+      ) : (
+        <a class="lang-item" href={i.href} hreflang={i.l} lang={i.l} title={i.label} data-no-vt>{i.l.toUpperCase()}</a>
+      )
+    )
+  }
+</div>
+<style>
+  .lang { display: inline-flex; align-items: center; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .lang-item {
+    display: grid;
+    place-items: center;
+    min-width: 40px;
+    min-height: 36px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-steel);
+    transition: color 0.2s, background-color 0.2s;
+  }
+  a.lang-item:hover { color: var(--color-bull-yellow); }
+  .lang-item.is-active { color: var(--color-asphalt); background: var(--color-bull-yellow); }
+  .lang-lg .lang-item { min-width: 56px; min-height: 48px; font-size: 0.875rem; }
+</style>

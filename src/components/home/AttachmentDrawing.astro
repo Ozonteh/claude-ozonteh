@@ -1,0 +1,72 @@
+---
+// Desene schematice (stil blueprint) pentru atașamentele fără fotografie publică BULL:
+// cupă pentru șanțuri, cupă Square Cut, ciocan hidraulic, dinte ripper.
+interface Props { kind: 'ditch' | 'squarecut' | 'breaker' | 'ripper'; class?: string; title?: string }
+const { kind, class: cls, title } = Astro.props;
+---
+
+<svg class={cls} viewBox="0 0 800 500" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : 'true'}>
+  <g class="bp-grid" stroke-width="1" opacity=".18">
+    {Array.from({ length: 9 }, (_, i) => <line x1={i * 100} y1="0" x2={i * 100} y2="500" />)}
+    {Array.from({ length: 6 }, (_, i) => <line x1="0" y1={i * 100} x2="800" y2={i * 100} />)}
+  </g>
+  {
+    kind === 'ditch' && (
+      <g>
+        <path d="M150 170 L650 170 L610 330 Q600 360 570 360 L230 360 Q200 360 190 330 Z" />
+        <path d="M170 190 L630 190" opacity=".5" />
+        <path d="M330 170 L360 90 L440 90 L470 170" />
+        <circle cx="380" cy="115" r="12" />
+        <circle cx="425" cy="140" r="12" />
+        <path d="M200 340 L600 340" opacity=".45" stroke-dasharray="10 8" />
+        <g stroke-width="1.5" opacity=".8">
+          <path d="M150 410 L650 410 M150 400 L150 420 M650 400 L650 420" />
+          <text x="400" y="445" text-anchor="middle" fill="currentColor" stroke="none" font-family="monospace" font-size="22">B</text>
+        </g>
+      </g>
+    )
+  }
+  {
+    kind === 'squarecut' && (
+      <g>
+        <path d="M260 120 L560 120 L560 330 L260 330 Z" opacity=".35" stroke-dasharray="12 8" />
+        <path d="M300 80 L520 80 L520 300 L470 340 L300 340 Z" />
+        <path d="M300 340 L300 360 M340 340 L340 362 M380 340 L380 362 M420 340 L420 362 M460 340 L460 362 M500 324 L500 350" stroke-width="5" />
+        <path d="M360 80 L380 30 L440 30 L460 80" />
+        <circle cx="395" cy="52" r="10" />
+        <path d="M600 120 L640 120 L640 330 L600 330" stroke-width="1.5" />
+        <path d="M560 400 L560 360 L600 360" stroke-width="1.5" />
+        <text x="575" y="390" fill="currentColor" stroke="none" font-family="monospace" font-size="22">90°</text>
+        <text x="652" y="232" fill="currentColor" stroke="none" font-family="monospace" font-size="20">A</text>
+      </g>
+    )
+  }
+  {
+    kind === 'breaker' && (
+      <g>
+        <path d="M330 40 L470 40 L470 90 L330 90 Z" />
+        <path d="M345 90 L345 300 L455 300 L455 90" />
+        <path d="M360 120 L440 120 M360 150 L440 150" opacity=".5" />
+        <path d="M370 300 L370 330 L430 330 L430 300" />
+        <path d="M385 330 L385 430 L400 470 L415 430 L415 330" />
+        <circle cx="400" cy="65" r="11" />
+        <path d="M480 60 Q560 60 560 140" opacity=".6" />
+        <path d="M250 470 L550 470" stroke-width="1.5" />
+        <path d="M330 470 L350 445 M370 470 L380 450 M420 470 L432 448 M460 470 L475 446" stroke-width="2" opacity=".7" />
+      </g>
+    )
+  }
+  {
+    kind === 'ripper' && (
+      <g>
+        <path d="M330 50 L450 50 L450 100 L330 100 Z" />
+        <circle cx="365" cy="75" r="11" />
+        <circle cx="415" cy="75" r="11" />
+        <path d="M350 100 L350 200 Q350 320 450 400 L490 430 L470 380 Q400 300 410 200 L410 100" />
+        <path d="M450 400 L490 430" stroke-width="5" />
+        <path d="M220 330 Q330 300 420 360 T620 370" opacity=".45" stroke-dasharray="10 8" />
+        <path d="M240 450 L600 450" stroke-width="1.5" />
+      </g>
+    )
+  }
+</svg>

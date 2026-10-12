@@ -1,0 +1,55 @@
+---
+// Meta tag-uri per pagină: title, description, canonical, hreflang (ro-MD, ru-MD, x-default),
+// Open Graph, Twitter Cards, robots și JSON-LD.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { HREFLANG, OG_LOCALE, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  alternates: Partial<Record<Lang, string>>;
+  image: ImageMetadata;
+  imageAlt: string;
+  type?: 'website' | 'product' | 'article';
+  noindex?: boolean;
+  jsonld?: (Record<string, unknown> | null)[];
+}
+
+const { lang, title, description, alternates, image, imageAlt, type = 'website', noindex = false, jsonld = [] } = Astro.props;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(alternates[lang] ?? Astro.url.pathname, site).href;
+const og = await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 });
+const ogUrl = new URL(og.src, site).href;
+const graph = jsonld.filter(Boolean);
+const ld = graph.length ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c') : null;
+const otherLang: Lang = lang === 'ro' ? 'ru' : 'ro';
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex ? <meta name="robots" content="noindex, follow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
+{alternates.ro && <link rel="alternate" hreflang={HREFLANG.ro} href={new URL(alternates.ro, site).href} />}
+{alternates.ru && <link rel="alternate" hreflang={HREFLANG.ru} href={new URL(alternates.ru, site).href} />}
+{alternates.ro && <link rel="alternate" hreflang="x-default" href={new URL(alternates.ro, site).href} />}
+
+<meta property="og:type" content={type === 'product' ? 'product' : type} />
+<meta property="og:site_name" content={t(lang).meta.siteName} />
+<meta property="og:locale" content={OG_LOCALE[lang]} />
+{alternates[otherLang] && <meta property="og:locale:alternate" content={OG_LOCALE[otherLang]} />}
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+{ld && <script type="application/ld+json" set:html={ld} />}

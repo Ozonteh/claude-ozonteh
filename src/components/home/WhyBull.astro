@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { asset } from '../../lib/images';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const w = t(lang).home.whyBull;
+const icons = ['breakout', 'fuel', 'cabin', 'gear', 'bucket', 'wrench'] as const;
+const brands = ['Perkins', 'Kubota', 'Kirloskar', 'Carraro', 'ZF'];
+---
+
+<section class="why section on-dark blueprint cv-auto" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="section-head split">
+      <div class="why-titles" data-reveal>
+        <p class="t-eyebrow"><span class="idx">03</span> {w.eyebrow}</p>
+        <h2 id="why-title" class="t-h2">{w.title}</h2>
+      </div>
+      <div class="why-visual" data-reveal style="--d:1" aria-hidden="true">
+        <Image src={asset('produse/buldoexcavator-bull-hd100.webp')} alt="" widths={[420, 640, 850]} sizes="(min-width: 1024px) 40vw, 92vw" class="machine-glow" loading="lazy" />
+        <span class="dim"><span class="dim-k">L</span>7,46 {t(lang).units.m} · BULL HD 100</span>
+      </div>
+    </div>
+
+    <ol class="why-grid" role="list">
+      {
+        w.items.map((it, i) => (
+          <li class="why-card" data-reveal style={`--d:${i % 3}`}>
+            <span class="why-icon">
+              <Icon name={icons[i]} size={28} />
+            </span>
+            <span class="t-mono why-idx">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="why-title">{it.title}</h3>
+            <p class="why-text">{it.text}</p>
+            {i === 3 && (
+              <p class="why-brands" aria-label={brands.join(', ')}>
+                {brands.map((b) => (
+                  <span class="chip">{b}</span>
+                ))}
+              </p>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .why-titles { display: grid; gap: 1.1rem; }
+  .why-visual { position: relative; display: grid; gap: 0.75rem; max-width: 620px; justify-self: end; width: 100%; }
+  .why-visual :global(img) { width: 100%; height: auto; }
+  .why-visual .dim { width: 88%; justify-self: center; }
+
+  .why-grid { display: grid; gap: 1px; background: var(--color-line); box-shadow: 0 0 0 1px var(--color-line); counter-reset: why; }
+  .why-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem 1rem;
+    align-content: start;
+    padding: 1.5rem 1.25rem;
+    background: var(--color-asphalt);
+    transition: background-color 0.3s;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: var(--color-bull-yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-hydraulic);
+  }
+  .why-card:hover { background: var(--color-graphite); }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-icon {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    color: var(--color-bull-yellow);
+    box-shadow: inset 0 0 0 1px rgb(255 194 14 / 0.4);
+  }
+  .why-idx { font-size: 0.6875rem; color: var(--color-steel); align-self: end; }
+  .why-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: calc(1.6rem * var(--display-scale) / 0.82);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  :global(html:lang(ru)) .why-title { font-weight: 600; font-size: 1.3rem; line-height: 1.1; }
+  .why-text { grid-column: 1 / -1; color: color-mix(in oklab, var(--color-bone) 78%, transparent); font-size: 0.9688rem; }
+  .why-brands { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+
+  @media (min-width: 48rem) {
+    .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .why-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .why-card { grid-template-columns: 1fr; padding: 2.25rem 2rem 2.5rem; gap: 1rem; }
+    .why-icon { grid-row: auto; width: 64px; height: 64px; }
+    .why-idx { position: absolute; top: 2.25rem; right: 2rem; }
+  }
+</style>

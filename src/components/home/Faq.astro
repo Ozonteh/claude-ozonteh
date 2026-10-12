@@ -1,0 +1,91 @@
+---
+import Icon from '../ui/Icon.astro';
+import { company } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang; items: { q: string; a: string }[] }
+const { lang, items } = Astro.props;
+const ui = t(lang);
+const f = ui.home.faq;
+---
+
+<section class="faq section on-light cv-auto" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
+    <div class="faq-head" data-reveal>
+      <p class="t-eyebrow"><span class="idx">08</span> {f.eyebrow}</p>
+      <h2 id="faq-title" class="t-h2">{f.title}</h2>
+      <div class="faq-contact">
+        <a href={`tel:${company.phone.tel}`} class="btn btn-dark" data-track-loc="faq"><Icon name="phone" /> {company.phone.display}</a>
+        <a href={company.whatsapp} class="btn btn-outline" target="_blank" rel="noopener" data-track-loc="faq"><Icon name="whatsapp" /> WhatsApp</a>
+      </div>
+    </div>
+    <div class="faq-list">
+      {
+        items.map((x, i) => (
+          <details class="faq-item" data-reveal style={`--d:${i % 3}`} open={i === 0}>
+            <summary>
+              <span class="t-mono faq-idx">{String(i + 1).padStart(2, '0')}</span>
+              <span class="faq-q">{x.q}</span>
+              <span class="faq-sign" aria-hidden="true" />
+            </summary>
+            <div class="faq-a">
+              <p>{x.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grid { display: grid; gap: 2.5rem; }
+  .faq-head { display: grid; gap: 1.1rem; align-content: start; }
+  .faq-contact { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.75rem; }
+  .faq-list { border-top: 1.5px solid var(--color-asphalt); }
+  .faq-item { border-bottom: 1px solid var(--color-line-ink); }
+  .faq-item summary {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    min-height: 64px;
+    padding: 1rem 0;
+  }
+  .faq-idx { font-size: 0.75rem; color: var(--color-steel-ink); }
+  .faq-q { font-weight: 600; font-size: 1.0625rem; line-height: 1.35; }
+  .faq-sign { position: relative; width: 36px; height: 36px; flex: none; background: var(--color-asphalt); transition: background-color 0.25s; }
+  .faq-sign::before,
+  .faq-sign::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    margin: -1px 0 0 -7px;
+    background: var(--color-bull-yellow);
+    transition: transform 0.35s var(--ease-hydraulic);
+  }
+  .faq-sign::after { transform: rotate(90deg); }
+  .faq-item[open] .faq-sign { background: var(--color-bull-yellow); }
+  .faq-item[open] .faq-sign::before, .faq-item[open] .faq-sign::after { background: var(--color-asphalt); }
+  .faq-item[open] .faq-sign::after { transform: rotate(0deg); }
+  .faq-item summary:hover .faq-q { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .faq-a { padding: 0 3.25rem 1.5rem 2.4rem; color: var(--color-steel-ink); max-width: 46rem; }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size 0.45s var(--ease-hydraulic), content-visibility 0.45s allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; }
+  @supports (interpolate-size: allow-keywords) {
+    .faq { interpolate-size: allow-keywords; }
+  }
+  @media (min-width: 64rem) {
+    .faq-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 5rem; }
+    .faq-head { position: sticky; top: calc(var(--header-h) + 2rem); }
+    .faq-q { font-size: 1.1875rem; }
+  }
+</style>

@@ -1,0 +1,164 @@
+---
+import Icon from '../ui/Icon.astro';
+import OzontehLogo from '../ui/OzontehLogo.astro';
+import BullLogo from '../ui/BullLogo.astro';
+import LangSwitch from './LangSwitch.astro';
+import { company } from '../../data/site';
+import { route, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternates: Partial<Record<Lang, string>>;
+}
+const { lang, alternates } = Astro.props;
+const ui = t(lang);
+const nav = [
+  { href: route('attachments', lang), label: ui.nav.attachments },
+  { href: route('service', lang), label: ui.nav.service },
+  { href: route('about', lang), label: ui.nav.about },
+  { href: route('contact', lang), label: ui.nav.contact },
+];
+const here = Astro.url.pathname;
+---
+
+<header class="site-header" data-header>
+  <div class="wrap header-row">
+    <a href={route('home', lang)} class="brand" aria-label={ui.a11y.home}>
+      <OzontehLogo height={22} eager class="brand-logo" />
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-bull">
+        <BullLogo height={14} eager />
+        <span class="brand-official">{ui.header.official}</span>
+      </span>
+    </a>
+
+    <nav class="nav-desktop" aria-label={ui.nav.machines}>
+      <button type="button" class="nav-link nav-models" data-menu-open aria-haspopup="dialog" aria-controls="site-menu">
+        {ui.nav.machines}
+        <Icon name="chevron" size={16} />
+      </button>
+      {
+        nav.map((n) => (
+          <a href={n.href} class="nav-link" aria-current={here === n.href ? 'page' : undefined}>
+            {n.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="header-actions">
+      <LangSwitch lang={lang} alternates={alternates} class="hide-mobile" />
+      <a href={`tel:${company.phone.tel}`} class="header-phone hide-mobile t-mono" data-track-loc="header">
+        <Icon name="phone" size={18} />
+        {company.phone.display}
+      </a>
+      <button type="button" class="btn btn-primary btn-sm hide-mobile" data-quote data-magnetic>
+        {ui.cta.quote}
+      </button>
+      <a href={`tel:${company.phone.tel}`} class="header-icon show-mobile" aria-label={`${ui.cta.call}: ${company.phone.display}`} data-track-loc="header">
+        <Icon name="phone" size={22} />
+      </a>
+      <button type="button" class="header-icon burger" data-menu-open aria-haspopup="dialog" aria-controls="site-menu" aria-label={ui.a11y.menuOpen}>
+        <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--header-h);
+    color: var(--color-bone);
+    transition:
+      background-color 0.35s ease,
+      box-shadow 0.35s ease,
+      transform 0.45s var(--ease-hydraulic);
+  }
+  .site-header[data-scrolled] {
+    background: rgb(18 19 20 / 0.94);
+    box-shadow: 0 1px 0 var(--color-line);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    @media (min-width: 64rem) {
+      .site-header[data-scrolled] { background: rgb(18 19 20 / 0.78); backdrop-filter: blur(14px) saturate(1.2); }
+    }
+  }
+  .site-header[data-hidden] { transform: translateY(-100%); }
+  .header-row { height: 100%; display: flex; align-items: center; gap: 1rem; }
+
+  .brand { display: flex; align-items: center; gap: 0.75rem; flex: none; min-height: 48px; }
+  .brand-sep { width: 1px; height: 26px; background: rgb(231 228 221 / 0.25); }
+  .brand-bull { display: grid; gap: 3px; justify-items: start; }
+  .brand-official {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-steel);
+    line-height: 1;
+  }
+  @media (max-width: 24.3rem) {
+    .brand-official { display: none; }
+  }
+
+  .nav-desktop { display: none; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 0.25rem; }
+  .header-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--color-bone);
+    background: none;
+    border: 0;
+  }
+  .header-icon:hover { color: var(--color-bull-yellow); }
+  .burger-lines { display: grid; gap: 5px; width: 24px; }
+  .burger-lines span { height: 2px; background: currentColor; transition: transform 0.3s var(--ease-hydraulic); }
+  .burger-lines span:nth-child(3) { width: 16px; }
+  .burger:hover .burger-lines span:nth-child(3) { transform: scaleX(1.5); transform-origin: left; }
+
+  @media (min-width: 64rem) {
+    .brand-sep { height: 30px; }
+    .brand-official { font-size: 0.625rem; }
+    .nav-desktop { display: flex; align-items: center; gap: 0.25rem; margin-left: 1.5rem; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      min-height: 44px;
+      padding: 0 0.7rem;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--color-bone);
+      background: none;
+      border: 0;
+      position: relative;
+      white-space: nowrap;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0.7rem;
+      right: 0.7rem;
+      bottom: 8px;
+      height: 2px;
+      background: var(--color-bull-yellow);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s var(--ease-hydraulic);
+    }
+    .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); }
+    .header-actions { gap: 0.9rem; }
+    .header-phone { align-items: center; gap: 0.45rem; font-size: 0.875rem; min-height: 44px; }
+    .header-phone:hover { color: var(--color-bull-yellow); }
+  }
+  @media (min-width: 64rem) and (max-width: 79.99rem) {
+    .header-phone { display: none !important; }
+    .nav-link { padding: 0 0.5rem; }
+  }
+</style>

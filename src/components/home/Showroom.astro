@@ -1,0 +1,288 @@
+---
+// Showroom: pe desktop secțiunea e fixată (pinned) și utilajele defilează orizontal la scroll (GSAP ScrollTrigger,
+// încărcat doar când secțiunea se apropie). Pe mobil: carusel nativ cu swipe și scroll-snap, fără JS.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { products, cardStats } from '../../lib/products';
+import { asset } from '../../lib/images';
+import { route, productPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const s = ui.home.showroom;
+const total = String(products.length).padStart(2, '0');
+---
+
+<section id="gama" class="showroom on-dark" aria-labelledby="showroom-title" data-showroom>
+  <div class="showroom-pin" data-showroom-pin>
+    <div class="wrap showroom-head">
+      <div class="showroom-titles" data-reveal>
+        <p class="t-eyebrow"><span class="idx">02</span> {s.eyebrow}</p>
+        <h2 id="showroom-title" class="t-h2">{s.title}</h2>
+      </div>
+      <div class="showroom-side" data-reveal style="--d:1">
+        <p class="t-body-muted">{s.text}</p>
+        <div class="showroom-meta">
+          <span class="t-mono showroom-count" aria-hidden="true"><span data-showroom-index>01</span> / {total}</span>
+          <span class="t-mono showroom-hint" aria-hidden="true">
+            <span class="hint-desktop">{s.hintDesktop}</span>
+            <span class="hint-mobile">{s.hintMobile}</span>
+            <Icon name="arrow" size={16} />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="showroom-viewport" data-showroom-viewport>
+      <ul class="showroom-track no-scrollbar" role="list" data-showroom-track>
+        {
+          products.map((p, i) => {
+            const stats = cardStats(p, lang, ui);
+            const href = productPath(p, lang);
+            return (
+              <li class="mcard-wrap" data-showroom-item>
+                <article class="mcard" aria-labelledby={`m-${p.id}`}>
+                  <div class="mcard-top">
+                    <span class="t-mono mcard-idx">{String(i + 1).padStart(2, '0')}</span>
+                    <span class="mcard-type">{p.type[lang]}</span>
+                    {p.isNew && <span class="badge badge-new">{ui.badges.new}</span>}
+                  </div>
+                  <a href={href} class="mcard-stage blueprint" tabindex="-1" aria-hidden="true">
+                    <span class="mcard-ghost">{p.model}</span>
+                    <Image
+                      src={asset(p.image)}
+                      alt={p.alt[lang]}
+                      widths={[360, 540, 720, 850]}
+                      sizes="(min-width: 1280px) 560px, (min-width: 1024px) 46vw, 84vw"
+                      class="mcard-img machine-glow"
+                      loading="lazy"
+                    />
+                    <span class="mcard-floor" />
+                  </a>
+                  <div class="mcard-body">
+                    <h3 id={`m-${p.id}`} class="mcard-name">
+                      <a href={href}>
+                        <span class="mcard-brand t-mono">BULL</span>
+                        <span class="t-h3">{p.name.replace('BULL ', '')}</span>
+                      </a>
+                    </h3>
+                    <p class="mcard-tag">{p.tagline[lang]}</p>
+                    <dl class="mcard-specs">
+                      {stats.map((st) => (
+                        <div class="mcard-spec">
+                          <dt>{st.k}</dt>
+                          <dd>
+                            {st.v}
+                            {st.u && <small>{st.u}</small>}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <div class="mcard-actions">
+                      <a href={href} class="link-arrow" aria-label={`${ui.cta.details}: ${p.name}`}>
+                        {ui.cta.more} <Icon name="arrow" size={16} />
+                      </a>
+                      <button type="button" class="btn btn-primary btn-sm" data-quote data-model={p.id}>
+                        {ui.cta.quote}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            );
+          })
+        }
+        <li class="mcard-wrap mcard-end-wrap" data-showroom-item>
+          <div class="mcard mcard-end">
+            <p class="t-h2 mcard-end-title">{products.length}<span class="hl">×</span>BULL</p>
+            <p class="t-body-muted">{s.text}</p>
+            <a href={route('catalog', lang)} class="btn btn-primary">{ui.cta.allMachines} <Icon name="arrow" class="arrow" /></a>
+            <a href={route('compare', lang)} class="link-arrow">{ui.nav.compare} <Icon name="arrow" size={16} /></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="wrap showroom-progress" aria-hidden="true"><span data-showroom-bar></span></div>
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>('[data-showroom]');
+  const track = section?.querySelector<HTMLElement>('[data-showroom-track]');
+  const index = section?.querySelector<HTMLElement>('[data-showroom-index]');
+  const bar = section?.querySelector<HTMLElement>('[data-showroom-bar]');
+  const items = section ? [...section.querySelectorAll<HTMLElement>('[data-showroom-item]')] : [];
+  const total = items.length - 1;
+  const setProgress = (p: number) => {
+    if (bar) bar.style.transform = `scaleX(${Math.max(0.02, p)})`;
+    if (index) index.textContent = String(Math.min(total, Math.round(p * (total - 1)) + 1)).padStart(2, '0');
+  };
+
+  // Mobil / fără pin: progres din scroll-ul orizontal nativ.
+  track?.addEventListener(
+    'scroll',
+    () => {
+      if (section?.classList.contains('is-pinned')) return;
+      const max = track.scrollWidth - track.clientWidth;
+      setProgress(max > 0 ? track.scrollLeft / max : 0);
+    },
+    { passive: true }
+  );
+
+  // Desktop: pin + defilare orizontală cu GSAP ScrollTrigger (încărcat lazy, doar pentru această secțiune).
+  const desktop = matchMedia('(min-width: 64rem) and (prefers-reduced-motion: no-preference)');
+  if (section && track && desktop.matches) {
+    const io = new IntersectionObserver(
+      async ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')]);
+        gsap.registerPlugin(ScrollTrigger);
+        const hook = () => window.__lenis?.on('scroll', ScrollTrigger.update);
+        if (window.__lenis) hook();
+        else document.addEventListener('lenis:ready', hook, { once: true });
+
+        const mm = gsap.matchMedia();
+        mm.add('(min-width: 64rem) and (prefers-reduced-motion: no-preference)', () => {
+          section.classList.add('is-pinned');
+          const viewport = section.querySelector<HTMLElement>('[data-showroom-viewport]')!;
+          const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+          const tween = gsap.to(track, {
+            x: () => -distance(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              pin: section.querySelector('[data-showroom-pin]'),
+              start: 'top top',
+              end: () => `+=${distance()}`,
+              scrub: 0.7,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => setProgress(self.progress),
+            },
+          });
+          // Parallax fin pe utilaje în timpul defilării
+          items.forEach((li) => {
+            const img = li.querySelector('.mcard-img');
+            const ghost = li.querySelector('.mcard-ghost');
+            if (img) gsap.fromTo(img, { xPercent: 8 }, { xPercent: -8, ease: 'none', scrollTrigger: { trigger: li, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+            if (ghost) gsap.fromTo(ghost, { xPercent: -6 }, { xPercent: 10, ease: 'none', scrollTrigger: { trigger: li, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+          });
+          return () => section.classList.remove('is-pinned');
+        });
+        addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+      },
+      { rootMargin: '600px 0px' }
+    );
+    io.observe(section);
+  }
+</script>
+
+<style>
+  .showroom { position: relative; padding-block: clamp(4.5rem, 3rem + 6vw, 8rem) clamp(3rem, 2rem + 3vw, 5rem); }
+  .showroom-pin { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .showroom-viewport { min-width: 0; }
+  .showroom-head { display: grid; gap: 1.25rem; }
+  .showroom-titles { display: grid; gap: 1.1rem; }
+  .showroom-side { display: grid; gap: 1.25rem; align-content: end; }
+  .showroom-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .showroom-count { font-size: 0.875rem; color: var(--color-steel); }
+  .showroom-count span { color: var(--color-bull-yellow); }
+  .showroom-hint { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-steel); }
+  .hint-desktop { display: none; }
+
+  .showroom-track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    padding-bottom: 4px;
+  }
+  .mcard-wrap { flex: none; width: min(84vw, 400px); scroll-snap-align: start; }
+
+  .mcard { display: grid; grid-template-rows: auto auto 1fr; height: 100%; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); transition: box-shadow 0.3s; }
+  .mcard:hover { box-shadow: inset 0 0 0 1px rgb(255 194 14 / 0.45); }
+  .mcard-top { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1rem 0; min-height: 44px; }
+  .mcard-idx { font-size: 0.75rem; color: var(--color-bull-yellow); }
+  .mcard-type { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); margin-right: auto; }
+
+  .mcard-stage { position: relative; display: block; aspect-ratio: 17 / 10; overflow: hidden; margin: 0.6rem 0 0; }
+  .mcard-ghost {
+    position: absolute;
+    inset: auto 0 18% 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(5rem, 3rem + 10vw, 9.5rem);
+    line-height: 0.8;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(231 228 221 / 0.12);
+    pointer-events: none;
+  }
+  :global(html:lang(ru)) .mcard-ghost { font-weight: 600; }
+  .mcard-img { position: relative; width: 100%; height: 100%; object-fit: contain; transition: transform 0.7s var(--ease-hydraulic); }
+  .mcard-floor { position: absolute; left: 10%; right: 10%; bottom: 10%; height: 1px; background: linear-gradient(90deg, transparent, rgb(255 194 14 / 0.5), transparent); }
+  .mcard:hover .mcard-img { transform: scale(1.04); }
+
+  .mcard-body { display: grid; gap: 0.9rem; align-content: start; padding: 0.5rem 1rem 1.1rem; }
+  .mcard-name a { display: grid; gap: 0.25rem; }
+  .mcard-name a:hover .t-h3 { color: var(--color-bull-yellow); }
+  .mcard-brand { font-size: 0.6875rem; letter-spacing: 0.2em; color: var(--color-steel); }
+  .mcard-tag { font-size: 0.9375rem; color: color-mix(in oklab, var(--color-bone) 80%, transparent); line-height: 1.45; min-height: 2.9em; }
+  .mcard-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--color-line); box-shadow: 0 0 0 1px var(--color-line); }
+  .mcard-spec { display: flex; flex-direction: column-reverse; gap: 0.2rem; padding: 0.65rem 0.75rem; background: var(--color-graphite); }
+  .mcard-spec dt { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+  .mcard-spec dd { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--color-bone); white-space: nowrap; }
+  .mcard-spec dd small { font-size: 0.75rem; color: var(--color-steel); margin-left: 0.25rem; }
+  .mcard-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.25rem; }
+  .mcard-actions > * { white-space: nowrap; }
+
+  .mcard-end { display: grid; align-content: center; justify-items: start; gap: 1.25rem; padding: 2rem 1.5rem; min-height: 100%; background: var(--color-graphite) ; }
+  .mcard-end-title { line-height: 0.9; }
+
+  .showroom-progress { position: relative; height: 2px; margin-top: 0.5rem; }
+  .showroom-progress::before { content: ''; position: absolute; inset: 0 var(--gutter); background: var(--color-line); }
+  .showroom-progress span {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: 0;
+    bottom: 0;
+    background: var(--color-bull-yellow);
+    transform-origin: left;
+    transform: scaleX(0.02);
+    transition: transform 0.2s linear;
+  }
+
+  @media (min-width: 48rem) {
+    .mcard-wrap { width: min(60vw, 460px); }
+  }
+  @media (min-width: 64rem) {
+    .showroom-head { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: end; gap: 4rem; }
+    .hint-desktop { display: inline; }
+    .hint-mobile { display: none; }
+    .mcard-wrap { width: clamp(440px, 38vw, 580px); }
+    .mcard-top { padding: 1.1rem 1.4rem 0; }
+    .mcard-body { padding: 0.5rem 1.4rem 1.5rem; }
+    .mcard-specs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mcard-spec dd { font-size: 1rem; }
+    :global(.showroom.is-pinned) { padding-block: 0; }
+    :global(.showroom.is-pinned) .showroom-pin { height: 100vh; align-content: center; padding-block: 1.5rem; gap: 1.5rem; }
+    :global(.showroom.is-pinned) .showroom-head .t-h2 { font-size: calc(clamp(2.5rem, 1.2rem + 3.4vw, 4.75rem) * var(--display-scale)); }
+    :global(.showroom.is-pinned) .showroom-viewport { overflow: hidden; }
+    :global(.showroom.is-pinned) .showroom-track { overflow: visible; scroll-snap-type: none; will-change: transform; }
+    :global(.showroom.is-pinned) .mcard-wrap { width: clamp(400px, 34vw, 540px); }
+    :global(.showroom.is-pinned) .mcard-stage { aspect-ratio: auto; height: clamp(170px, 30vh, 300px); }
+  }
+  @media (min-width: 64rem) and (max-height: 56rem) {
+    :global(.showroom.is-pinned) .mcard-tag { display: none; }
+    :global(.showroom.is-pinned) .showroom-side .t-body-muted { display: none; }
+  }
+</style>

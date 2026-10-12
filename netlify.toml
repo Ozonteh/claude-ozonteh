@@ -1,0 +1,31 @@
+# Deploy pe Netlify: site static (Astro) + funcția /api/lead (amoCRM + e-mail de rezervă).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Pagina 404 în rusă pentru URL-urile /ru/…
+[[redirects]]
+  from = "/ru/*"
+  to = "/ru/404/"
+  status = 404
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    X-Frame-Options = "SAMEORIGIN"

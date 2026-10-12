@@ -1,0 +1,2673 @@
+[
+  {
+    "id": "bull-sd76-super-smart",
+    "order": 1,
+    "category": "buldoexcavatoare",
+    "name": "BULL SD76 Super Smart",
+    "model": "SD76",
+    "series": "High Speed",
+    "isNew": true,
+    "type": {
+      "ro": "Buldoexcavator",
+      "ru": "Экскаватор-погрузчик"
+    },
+    "tagline": {
+      "ro": "Seria complet nouă High Speed",
+      "ru": "Совершенно новая серия High Speed"
+    },
+    "summary": {
+      "ro": "Buldoexcavator de 76 CP cu transmisie Carraro, hidraulică load sensing de 130 l/min și până la 40 km/h pe drum. Cupă Square Cut pentru fundații la 90°.",
+      "ru": "Экскаватор-погрузчик 76 л.с. с трансмиссией Carraro, гидравликой Load Sensing 130 л/мин и скоростью до 40 км/ч. Ковш Square Cut для котлованов под 90°."
+    },
+    "image": "produse/buldoexcavator-bull-sd76-super-smart.webp",
+    "alt": {
+      "ro": "Buldoexcavator BULL SD76 Super Smart, vedere laterală",
+      "ru": "Экскаватор-погрузчик BULL SD76 Super Smart, вид сбоку"
+    },
+    "scenes": [
+      "santier/buldoexcavator-bull-sd76-sapare-sant.webp",
+      "santier/buldoexcavator-bull-sd76-santier-constructii.webp",
+      "santier/buldoexcavator-bull-sd76-incarcare-basculanta.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-sd76.webp",
+    "gallery": [],
+    "key": {
+      "powerHp": 76,
+      "powerKw": 54.8,
+      "weightKg": 8010,
+      "digDepthM": 4.6,
+      "digDepthExtM": 5.6,
+      "speedKmh": 40,
+      "drive": [
+        "2WD",
+        "4WD"
+      ],
+      "flowLpm": 130,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Kirloskar",
+      "Ashok Leyland",
+      "Carraro"
+    ],
+    "advantages": [
+      {
+        "ro": "Cupă Square Cut: pereți drepți la 90° în gropile de fundație, fără finisare manuală",
+        "ru": "Ковш Square Cut: ровные стенки под 90° в котлованах без ручной доводки"
+      },
+      {
+        "ro": "Forță de rupere la cupă record în clasa sa (date BULL)",
+        "ru": "Рекордное в классе усилие отрыва ковша (данные BULL)"
+      },
+      {
+        "ro": "Cu 10% mai multă tracțiune față de seria anterioară",
+        "ru": "На 10% больше тягового усилия, чем у предыдущей серии"
+      },
+      {
+        "ro": "Cea mai mare înălțime de descărcare din clasă: 3,96 m cu cupa booster",
+        "ru": "Самая большая высота выгрузки в классе: 3,96 м с ковшом Booster"
+      },
+      {
+        "ro": "Consum redus de combustibil pe oră de lucru",
+        "ru": "Низкий расход топлива на моточас"
+      },
+      {
+        "ro": "Vopsea rezistentă la zgârieturi",
+        "ru": "Краска, устойчивая к царапинам"
+      },
+      {
+        "ro": "Cabină ROPS/FOPS cu acces prin două uși",
+        "ru": "Кабина ROPS/FOPS с двумя дверями"
+      },
+      {
+        "ro": "Întreținere simplă și ieftină",
+        "ru": "Простое и недорогое обслуживание"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor (de bază)",
+              "ru": "Двигатель (базовый)"
+            },
+            "v": {
+              "ro": "Kirloskar 4R1190 BS V, 4 cilindri",
+              "ru": "Kirloskar 4R1190 BS V, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "75 CP (54,8 kW) la 2200 rpm",
+              "ru": "75 л.с. (54,8 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "300 Nm la 1300 rpm",
+              "ru": "300 Н·м при 1300 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Motor (variantă)",
+              "ru": "Двигатель (вариант)"
+            },
+            "v": {
+              "ro": "Ashok Leyland H4 Turbo CEV V: 74 CP (54,6 kW), 400 Nm la 1200 rpm",
+              "ru": "Ashok Leyland H4 Turbo CEV V: 74 л.с. (54,6 кВт), 400 Н·м при 1200 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Carraro synchro-shuttle, 4 trepte sincronizate, convertizor de cuplu integrat",
+              "ru": "Carraro synchro-shuttle, 4 синхронизированные передачи, встроенный гидротрансформатор"
+            }
+          },
+          {
+            "k": {
+              "ro": "Inversor",
+              "ru": "Реверс"
+            },
+            "v": {
+              "ro": "Electric, înainte/înapoi",
+              "ru": "Электрический, вперёд/назад"
+            }
+          },
+          {
+            "k": {
+              "ro": "Opțional",
+              "ru": "Опция"
+            },
+            "v": {
+              "ro": "SMART HTS, transmisie hidrostatică",
+              "ru": "SMART HTS, гидростатическая трансмиссия"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "2WD / 4WD"
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "40 km/h înainte · 9,3 km/h înapoi",
+              "ru": "40 км/ч вперёд · 9,3 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Pompă",
+              "ru": "Насос"
+            },
+            "v": {
+              "ro": "Cu piston, debit variabil, load sensing",
+              "ru": "Аксиально-поршневой, переменной производительности, Load Sensing"
+            }
+          },
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit maxim",
+              "ru": "Макс. расход"
+            },
+            "v": {
+              "ro": "130 l/min",
+              "ru": "130 л/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Adâncime maximă de săpare",
+              "ru": "Макс. глубина копания"
+            },
+            "v": {
+              "ro": "4,6 m (5,6 m cu braț extensibil)",
+              "ru": "4,6 м (5,6 м с телескопической рукоятью)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime maximă de lucru",
+              "ru": "Макс. рабочая высота"
+            },
+            "v": {
+              "ro": "5,92 m (6,77 m cu braț extensibil)",
+              "ru": "5,92 м (6,77 м с телескопической рукоятью)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă excavator",
+              "ru": "Ковш экскаватора"
+            },
+            "v": {
+              "ro": "0,23 m³ (opțional 0,12 / 0,17 / 0,21 m³)",
+              "ru": "0,23 м³ (опционально 0,12 / 0,17 / 0,21 м³)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime de descărcare (încărcător)",
+              "ru": "Высота выгрузки (погрузчик)"
+            },
+            "v": {
+              "ro": "2,93–2,96 m",
+              "ru": "2,93–2,96 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțimea bolțului",
+              "ru": "Высота шарнира ковша"
+            },
+            "v": {
+              "ro": "3,61 m",
+              "ru": "3,61 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă booster",
+              "ru": "Ковш Booster"
+            },
+            "v": {
+              "ro": "descărcare la 3,96 m",
+              "ru": "высота выгрузки 3,96 м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "8.010 kg (cu cupă standard)",
+              "ru": "8 010 кг (со стандартным ковшом)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lungime totală",
+              "ru": "Общая длина"
+            },
+            "v": {
+              "ro": "6,04 m",
+              "ru": "6,04 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Ampatament",
+              "ru": "Колёсная база"
+            },
+            "v": {
+              "ro": "2,22 m",
+              "ru": "2,22 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime până la cabină",
+              "ru": "Высота по кабине"
+            },
+            "v": {
+              "ro": "3,00 m",
+              "ru": "3,00 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lățime peste cupă",
+              "ru": "Ширина по ковшу"
+            },
+            "v": {
+              "ro": "2,35 m",
+              "ru": "2,35 м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "115 l",
+              "ru": "115 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rezervor hidraulic",
+              "ru": "Гидробак"
+            },
+            "v": {
+              "ro": "115 l",
+              "ru": "115 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Anvelope față",
+              "ru": "Передние шины"
+            },
+            "v": "2WD: 9.00×16 · 4WD: 12.5/80×18"
+          },
+          {
+            "k": {
+              "ro": "Anvelope spate",
+              "ru": "Задние шины"
+            },
+            "v": {
+              "ro": "16.9×28 (industrial) sau 14.00-20 PR (heavy duty)",
+              "ru": "16.9×28 (индустриальные) или 14.00-20 PR (heavy duty)"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/sd76-all-new-high-speed.pdf",
+    "videos": [
+      {
+        "id": "uguJY_JSvbM",
+        "title": {
+          "ro": "BULL SD76 Super Smart, seria High Speed",
+          "ru": "BULL SD76 Super Smart, серия High Speed"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": [
+      "Putere: pe card se afișează clasa de 76 CP (regula numelui de model); motorul Kirloskar 4R1190 are 75 CP / 54,8 kW. De confirmat cu BULL."
+    ]
+  },
+  {
+    "id": "bull-ch76-challenger",
+    "order": 2,
+    "category": "buldoexcavatoare",
+    "name": "BULL CH76 Challenger",
+    "model": "CH76",
+    "series": "High Speed",
+    "isNew": false,
+    "type": {
+      "ro": "Buldoexcavator",
+      "ru": "Экскаватор-погрузчик"
+    },
+    "tagline": {
+      "ro": "Buldoexcavatorul economic din seria High Speed",
+      "ru": "Экономичный экскаватор-погрузчик серии High Speed"
+    },
+    "summary": {
+      "ro": "Model 2WD cu motor turbo Ashok Leyland de 76 CP și transmisie Carraro. Pentru construcții, infrastructură și terasamente, cu cost redus pe oră de lucru.",
+      "ru": "Модель 2WD с турбодвигателем Ashok Leyland 76 л.с. и трансмиссией Carraro. Для стройки, инфраструктуры и земляных работ с низкой стоимостью моточаса."
+    },
+    "image": "produse/buldoexcavator-bull-ch76-challenger.webp",
+    "alt": {
+      "ro": "Buldoexcavator BULL CH76 Challenger cu cupă frontală și braț de săpare",
+      "ru": "Экскаватор-погрузчик BULL CH76 Challenger с фронтальным ковшом и экскаваторной стрелой"
+    },
+    "scenes": [
+      "santier/buldoexcavator-bull-ch76-santier-moldova.webp"
+    ],
+    "blueprint": null,
+    "gallery": [],
+    "key": {
+      "powerHp": 76,
+      "powerKw": null,
+      "weightKg": 8010,
+      "digDepthM": null,
+      "digDepthExtM": null,
+      "speedKmh": 36,
+      "drive": [
+        "2WD"
+      ],
+      "flowLpm": 108,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Ashok Leyland",
+      "Carraro"
+    ],
+    "advantages": [
+      {
+        "ro": "Motor turbo Ashok Leyland BS-V (CEV), 290 Nm la doar 1200 rpm",
+        "ru": "Турбодвигатель Ashok Leyland BS-V (CEV), 290 Н·м уже при 1200 об/мин"
+      },
+      {
+        "ro": "Transmisie Carraro synchro-shuttle cu convertizor de cuplu",
+        "ru": "Трансмиссия Carraro synchro-shuttle с гидротрансформатором"
+      },
+      {
+        "ro": "Hidraulică load sensing, 230 bar",
+        "ru": "Гидравлика Load Sensing, 230 бар"
+      },
+      {
+        "ro": "Servodirecție și 36 km/h pe drum",
+        "ru": "Гидроусилитель руля и 36 км/ч на дороге"
+      },
+      {
+        "ro": "Cost de achiziție și de exploatare redus",
+        "ru": "Низкая цена покупки и эксплуатации"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Ashok Leyland H4CSE5520 BS-V (CEV), turbo",
+              "ru": "Ashok Leyland H4CSE5520 BS-V (CEV), турбо"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "76 CP",
+              "ru": "76 л.с."
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "290 Nm la 1200 rpm",
+              "ru": "290 Н·м при 1200 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Carraro synchro-shuttle cu convertizor de cuplu",
+              "ru": "Carraro synchro-shuttle с гидротрансформатором"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "2WD"
+          },
+          {
+            "k": {
+              "ro": "Direcție",
+              "ru": "Рулевое управление"
+            },
+            "v": {
+              "ro": "Servodirecție hidraulică",
+              "ru": "Гидроусилитель"
+            }
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "36 km/h înainte · 9,3 km/h înapoi",
+              "ru": "36 км/ч вперёд · 9,3 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Pompă",
+              "ru": "Насос"
+            },
+            "v": {
+              "ro": "Cu piston, debit variabil, load sensing",
+              "ru": "Аксиально-поршневой, переменной производительности, Load Sensing"
+            }
+          },
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit",
+              "ru": "Расход"
+            },
+            "v": {
+              "ro": "108 l/min la 2000 rpm (119 l/min la turație mare)",
+              "ru": "108 л/мин при 2000 об/мин (119 л/мин на высоких оборотах)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Înălțime de descărcare (încărcător)",
+              "ru": "Высота выгрузки (погрузчик)"
+            },
+            "v": {
+              "ro": "2,96 m",
+              "ru": "2,96 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțimea bolțului",
+              "ru": "Высота шарнира ковша"
+            },
+            "v": {
+              "ro": "3,61 m",
+              "ru": "3,61 м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "8.010 kg (2WD, cupă standard)",
+              "ru": "8 010 кг (2WD, стандартный ковш)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Baterie",
+              "ru": "Аккумулятор"
+            },
+            "v": {
+              "ro": "12 V, 150 Ah",
+              "ru": "12 В, 150 А·ч"
+            }
+          },
+          {
+            "k": {
+              "ro": "Anvelope față",
+              "ru": "Передние шины"
+            },
+            "v": "9.00×16"
+          },
+          {
+            "k": {
+              "ro": "Anvelope spate",
+              "ru": "Задние шины"
+            },
+            "v": {
+              "ro": "16.9×28 (industrial) sau 14×25 (heavy duty)",
+              "ru": "16.9×28 (индустриальные) или 14×25 (heavy duty)"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/ch76-new.pdf",
+    "videos": [
+      {
+        "id": "ToEVhtNICXM",
+        "title": {
+          "ro": "BULL CH76 Challenger, seria High Speed",
+          "ru": "BULL CH76 Challenger, серия High Speed"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": [
+      "Adâncimea de săpare și dimensiunile nu sunt în Anexa B: de extras din broșura ch76-new.pdf (format imagine)."
+    ]
+  },
+  {
+    "id": "bull-grandia-dlx",
+    "order": 3,
+    "category": "buldoexcavatoare",
+    "name": "BULL Grandia DLX",
+    "model": "Grandia DLX",
+    "series": "High Speed",
+    "isNew": true,
+    "type": {
+      "ro": "Buldoexcavator premium",
+      "ru": "Экскаватор-погрузчик премиум-класса"
+    },
+    "tagline": {
+      "ro": "Putere și confort de clasă premium, 4WD",
+      "ru": "Мощность и комфорт премиум-класса, 4WD"
+    },
+    "summary": {
+      "ro": "Versiunea complet echipată a seriei High Speed: 4WD, motor Kirloskar de 74,5 CP, cabină cu aer condiționat, joystick și componente Carraro, Parker, Walvoil.",
+      "ru": "Максимальная комплектация серии High Speed: 4WD, двигатель Kirloskar 74,5 л.с., кабина с кондиционером, джойстики и компоненты Carraro, Parker, Walvoil."
+    },
+    "image": "produse/buldoexcavator-bull-grandia-dlx.webp",
+    "alt": {
+      "ro": "Buldoexcavator premium BULL Grandia DLX în culori alb-negru, cu cupă 6 în 1",
+      "ru": "Экскаватор-погрузчик премиум-класса BULL Grandia DLX в чёрно-белой окраске с ковшом 6 в 1"
+    },
+    "scenes": [],
+    "blueprint": null,
+    "gallery": [],
+    "key": {
+      "powerHp": 74.5,
+      "powerKw": 54.8,
+      "weightKg": null,
+      "digDepthM": null,
+      "digDepthExtM": null,
+      "speedKmh": null,
+      "drive": [
+        "4WD"
+      ],
+      "flowLpm": null,
+      "pressureBar": null
+    },
+    "brands": [
+      "Kirloskar",
+      "Carraro",
+      "Parker",
+      "Walvoil"
+    ],
+    "advantages": [
+      {
+        "ro": "Cupă Square Cut pentru fundații la 90°",
+        "ru": "Ковш Square Cut для котлованов под 90°"
+      },
+      {
+        "ro": "Forță de rupere la cupă record în clasa sa (date BULL)",
+        "ru": "Рекордное в классе усилие отрыва ковша (данные BULL)"
+      },
+      {
+        "ro": "Masă mare pentru stabilitate la încărcare",
+        "ru": "Большая масса для устойчивости при погрузке"
+      },
+      {
+        "ro": "Volan reglabil, joystick, aer condiționat și scaun cu suspensie pneumatică",
+        "ru": "Регулируемая рулевая колонка, джойстики, кондиционер и сиденье с пневмоподвеской"
+      },
+      {
+        "ro": "Opțiuni multiple de cupe, inclusiv 6 în 1",
+        "ru": "Множество вариантов ковшей, включая 6 в 1"
+      },
+      {
+        "ro": "Consum redus de combustibil",
+        "ru": "Низкий расход топлива"
+      },
+      {
+        "ro": "Vopsea rezistentă la zgârieturi, bolțuri și bucșe cu durată de viață triplă",
+        "ru": "Краска, устойчивая к царапинам, пальцы и втулки с трёхкратным ресурсом"
+      },
+      {
+        "ro": "Cabină ROPS/FOPS și capotă cu deschidere frontală pentru service rapid",
+        "ru": "Кабина ROPS/FOPS и капот с фронтальным открытием для быстрого сервиса"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Kirloskar, BS V (CEV Stage V)",
+              "ru": "Kirloskar, BS V (CEV Stage V)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "74,5 CP (54,8 kW)",
+              "ru": "74,5 л.с. (54,8 кВт)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Carraro synchro-shuttle cu convertizor de cuplu",
+              "ru": "Carraro synchro-shuttle с гидротрансформатором"
+            }
+          },
+          {
+            "k": {
+              "ro": "Punți",
+              "ru": "Мосты"
+            },
+            "v": "Carraro"
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "4WD"
+          },
+          {
+            "k": {
+              "ro": "Frâne",
+              "ru": "Тормоза"
+            },
+            "v": "Carlisle"
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Pompă",
+              "ru": "Насос"
+            },
+            "v": "Parker"
+          },
+          {
+            "k": {
+              "ro": "Distribuitor",
+              "ru": "Гидрораспределитель"
+            },
+            "v": "Walvoil"
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/grandia-dlx-new.pdf",
+    "videos": [
+      {
+        "id": "UHKTUwBiugI",
+        "title": {
+          "ro": "BULL Grandia, seria High Speed",
+          "ru": "BULL Grandia, серия High Speed"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": [
+      "Broșura grandia-dlx-new.pdf (sep. 2025) indică „74.5 HP Kirloskar Engine”; pagina de produs bullindia.com indică 76 CP / 54,8 kW.",
+      "Broșura nu conține tabel de specificații: greutatea, viteza, hidraulica și dimensiunile trebuie cerute de la BULL."
+    ]
+  },
+  {
+    "id": "bull-grandia",
+    "order": 4,
+    "category": "buldoexcavatoare",
+    "name": "BULL Grandia",
+    "model": "Grandia",
+    "series": "4WS",
+    "isNew": false,
+    "type": {
+      "ro": "Buldoexcavator cu 4 roți directoare",
+      "ru": "Экскаватор-погрузчик с 4 управляемыми колёсами"
+    },
+    "tagline": {
+      "ro": "100 CP Perkins și direcție pe toate cele 4 roți",
+      "ru": "100 л.с. Perkins и управление всеми четырьмя колёсами"
+    },
+    "summary": {
+      "ro": "Buldoexcavator de 9,7 t cu motor Perkins de 100 CP, transmisie automată Carraro și roți egale. Trei moduri de direcție: circular, crab și 2 roți directoare.",
+      "ru": "Экскаватор-погрузчик 9,7 т с двигателем Perkins 100 л.с., автоматической трансмиссией Carraro и равными колёсами. Три режима поворота: круговой, «краб» и 2 управляемых колеса."
+    },
+    "image": "produse/buldoexcavator-bull-grandia-4x4.webp",
+    "alt": {
+      "ro": "Buldoexcavator BULL Grandia cu patru roți egale și direcție integrală",
+      "ru": "Экскаватор-погрузчик BULL Grandia с четырьмя равными колёсами и полноуправляемым шасси"
+    },
+    "scenes": [
+      "santier/buldoexcavator-bull-grandia-4-roti-directoare.webp",
+      "santier/buldoexcavator-bull-grandia-teren-accidentat.webp",
+      "santier/buldoexcavator-bull-grandia-cariera.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-grandia.webp",
+    "gallery": [
+      "galerie/buldoexcavator-bull-grandia-1.webp",
+      "galerie/buldoexcavator-bull-grandia-2.webp",
+      "galerie/buldoexcavator-bull-grandia-3.webp",
+      "galerie/buldoexcavator-bull-grandia-4.webp",
+      "galerie/buldoexcavator-bull-grandia-5.webp"
+    ],
+    "key": {
+      "powerHp": 100,
+      "powerKw": 74.5,
+      "weightKg": 9700,
+      "digDepthM": 4.6,
+      "digDepthExtM": 5.6,
+      "speedKmh": 36,
+      "drive": [
+        "4WD"
+      ],
+      "flowLpm": 145,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Perkins",
+      "Carraro"
+    ],
+    "advantages": [
+      {
+        "ro": "Direcție pe 4 roți cu 3 moduri: circular, crab și 2 roți directoare",
+        "ru": "Управление 4 колёсами в 3 режимах: круговой, «краб» и 2 управляемых колеса"
+      },
+      {
+        "ro": "Motor Perkins de 4,4 l, 410 Nm la 1400 rpm",
+        "ru": "Двигатель Perkins 4,4 л, 410 Н·м при 1400 об/мин"
+      },
+      {
+        "ro": "Transmisie automată Carraro cu convertizor de cuplu",
+        "ru": "Автоматическая трансмиссия Carraro с гидротрансформатором"
+      },
+      {
+        "ro": "Roți egale 16.9×28: tracțiune maximă pe teren moale",
+        "ru": "Равные колёса 16.9×28: максимальное сцепление на мягком грунте"
+      },
+      {
+        "ro": "Hidraulică de 145 l/min pentru cicluri rapide",
+        "ru": "Гидравлика 145 л/мин для быстрых рабочих циклов"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Perkins 1104D-44TA, 4.400 cm³, Euro III/3A, 4 cilindri",
+              "ru": "Perkins 1104D-44TA, 4 400 см³, Euro III/3A, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "100 CP (74,5 kW) la 2200 rpm",
+              "ru": "100 л.с. (74,5 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "410 Nm la 1400 rpm",
+              "ru": "410 Н·м при 1400 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Carraro automată, cu convertizor de cuplu",
+              "ru": "Carraro автоматическая, с гидротрансформатором"
+            }
+          },
+          {
+            "k": {
+              "ro": "Direcție",
+              "ru": "Рулевое управление"
+            },
+            "v": {
+              "ro": "Pe toate cele 4 roți: circular, crab, 2 roți directoare",
+              "ru": "На все 4 колеса: круговой, «краб», 2 управляемых колеса"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "4WD"
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "36 km/h înainte · 18 km/h înapoi",
+              "ru": "36 км/ч вперёд · 18 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit maxim",
+              "ru": "Макс. расход"
+            },
+            "v": {
+              "ro": "145 l/min la 2200 rpm",
+              "ru": "145 л/мин при 2200 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Adâncime maximă de săpare",
+              "ru": "Макс. глубина копания"
+            },
+            "v": {
+              "ro": "4,6 m (5,6 m cu braț extensibil)",
+              "ru": "4,6 м (5,6 м с телескопической рукоятью)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă excavator",
+              "ru": "Ковш экскаватора"
+            },
+            "v": {
+              "ro": "0,22 m³",
+              "ru": "0,22 м³"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă booster",
+              "ru": "Ковш Booster"
+            },
+            "v": {
+              "ro": "descărcare la 3,94 m",
+              "ru": "высота выгрузки 3,94 м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "9.700 kg",
+              "ru": "9 700 кг"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "115 l",
+              "ru": "115 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rezervor hidraulic",
+              "ru": "Гидробак"
+            },
+            "v": {
+              "ro": "120 l",
+              "ru": "120 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Baterie",
+              "ru": "Аккумулятор"
+            },
+            "v": {
+              "ro": "12 V, 180 Ah",
+              "ru": "12 В, 180 А·ч"
+            }
+          },
+          {
+            "k": {
+              "ro": "Anvelope",
+              "ru": "Шины"
+            },
+            "v": {
+              "ro": "16.9×28 față și spate (roți egale)",
+              "ru": "16.9×28 спереди и сзади (равные колёса)"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/bull-grandia-brochure.pdf",
+    "videos": [
+      {
+        "id": "bvptPBS75zY",
+        "title": {
+          "ro": "BULL Grandia cu direcție pe 4 roți",
+          "ru": "BULL Grandia с управлением всеми колёсами"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": []
+  },
+  {
+    "id": "bull-hd96-4wd",
+    "order": 5,
+    "category": "buldoexcavatoare",
+    "name": "BULL HD96 4WD",
+    "model": "HD96",
+    "series": "Heavy Duty",
+    "isNew": false,
+    "type": {
+      "ro": "Buldoexcavator heavy-duty",
+      "ru": "Экскаватор-погрузчик Heavy Duty"
+    },
+    "tagline": {
+      "ro": "96 CP și 240 bar pentru lucru greu, zi de zi",
+      "ru": "96 л.с. и 240 бар для тяжёлой работы каждый день"
+    },
+    "summary": {
+      "ro": "Buldoexcavator heavy-duty de 96 CP cu motor Kirloskar turbo, hidraulică de 240 bar și cupă standard de 0,30 m³. Rezervor de 150 l pentru ture lungi.",
+      "ru": "Экскаватор-погрузчик Heavy Duty 96 л.с. с турбодвигателем Kirloskar, гидравликой 240 бар и стандартным ковшом 0,30 м³. Бак 150 л для длинных смен."
+    },
+    "image": "produse/buldoexcavator-bull-hd96-4wd.webp",
+    "alt": {
+      "ro": "Buldoexcavator heavy-duty BULL HD96 4WD cu cupă cu gheară",
+      "ru": "Экскаватор-погрузчик BULL HD96 4WD с челюстным ковшом"
+    },
+    "scenes": [
+      "santier/buldoexcavator-bull-hd96-sapare-fundatie.webp",
+      "santier/buldoexcavator-bull-hd96-santier.webp",
+      "santier/buldoexcavator-bull-hd96-cariera.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-hd96.webp",
+    "gallery": [
+      "galerie/buldoexcavator-bull-hd96-1.webp",
+      "galerie/buldoexcavator-bull-hd96-2.webp",
+      "galerie/buldoexcavator-bull-hd96-3.webp",
+      "galerie/buldoexcavator-bull-hd96-4.webp",
+      "galerie/buldoexcavator-bull-hd96-5.webp"
+    ],
+    "key": {
+      "powerHp": 96,
+      "powerKw": 71.6,
+      "weightKg": 8150,
+      "digDepthM": 4.6,
+      "digDepthExtM": 5.6,
+      "speedKmh": 40,
+      "drive": [
+        "2WD",
+        "4WD"
+      ],
+      "flowLpm": 134,
+      "pressureBar": 240
+    },
+    "brands": [
+      "Kirloskar",
+      "Carraro"
+    ],
+    "advantages": [
+      {
+        "ro": "Motor Kirloskar turbo de 96 CP, 377 Nm",
+        "ru": "Турбодвигатель Kirloskar 96 л.с., 377 Н·м"
+      },
+      {
+        "ro": "Hidraulică de 240 bar, 134 l/min",
+        "ru": "Гидравлика 240 бар, 134 л/мин"
+      },
+      {
+        "ro": "Cupă standard de 0,30 m³ pentru productivitate mare",
+        "ru": "Стандартный ковш 0,30 м³ для высокой производительности"
+      },
+      {
+        "ro": "Rezervor de 150 l: o tură întreagă fără realimentare",
+        "ru": "Бак 150 л: целая смена без дозаправки"
+      },
+      {
+        "ro": "Disponibil 2WD sau 4WD",
+        "ru": "Доступен в версии 2WD или 4WD"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Kirloskar 4R1040T, EU Stage II, 4 cilindri",
+              "ru": "Kirloskar 4R1040T, EU Stage II, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "96 CP (71,6 kW) la 2200 rpm",
+              "ru": "96 л.с. (71,6 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "377 Nm",
+              "ru": "377 Н·м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Carraro synchro-shuttle, 4 trepte, convertizor de cuplu",
+              "ru": "Carraro synchro-shuttle, 4 передачи, гидротрансформатор"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "2WD / 4WD"
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "40 km/h înainte · 9,3 km/h înapoi",
+              "ru": "40 км/ч вперёд · 9,3 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Pompă",
+              "ru": "Насос"
+            },
+            "v": {
+              "ro": "Cu roți dințate",
+              "ru": "Шестерённый"
+            }
+          },
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "240 bar",
+              "ru": "240 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit maxim",
+              "ru": "Макс. расход"
+            },
+            "v": {
+              "ro": "134 l/min",
+              "ru": "134 л/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Adâncime maximă de săpare",
+              "ru": "Макс. глубина копания"
+            },
+            "v": {
+              "ro": "4,6 m (5,6 m cu braț extensibil)",
+              "ru": "4,6 м (5,6 м с телескопической рукоятью)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă excavator",
+              "ru": "Ковш экскаватора"
+            },
+            "v": {
+              "ro": "0,30 m³ (opțional 0,10 / 0,22 / 0,31 m³)",
+              "ru": "0,30 м³ (опционально 0,10 / 0,22 / 0,31 м³)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "8.150 kg",
+              "ru": "8 150 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rază de întoarcere",
+              "ru": "Радиус поворота"
+            },
+            "v": {
+              "ro": "8,8 m (exterior cupă, cu frânare pe roțile interioare)",
+              "ru": "8,8 м (по ковшу, с подтормаживанием внутренних колёс)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "150 l",
+              "ru": "150 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rezervor hidraulic",
+              "ru": "Гидробак"
+            },
+            "v": {
+              "ro": "125 l",
+              "ru": "125 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Baterie",
+              "ru": "Аккумулятор"
+            },
+            "v": {
+              "ro": "12 V, 180 Ah",
+              "ru": "12 В, 180 А·ч"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/hd96-catalog.pdf",
+    "videos": [
+      {
+        "id": "ttnMjbMWgrw",
+        "title": {
+          "ro": "BULL Machines: film de prezentare a producătorului",
+          "ru": "BULL Machines: корпоративный фильм производителя"
+        },
+        "uploadDate": null
+      },
+      {
+        "id": "l6_r_7QfqNw",
+        "title": {
+          "ro": "BULL HD96: părerea unui client din Africa de Sud",
+          "ru": "BULL HD96: отзыв клиента из ЮАР"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": []
+  },
+  {
+    "id": "bull-hd-100",
+    "order": 6,
+    "category": "buldoexcavatoare",
+    "name": "BULL HD 100",
+    "model": "HD 100",
+    "series": "Heavy Duty",
+    "isNew": false,
+    "type": {
+      "ro": "Buldoexcavator heavy-duty",
+      "ru": "Экскаватор-погрузчик Heavy Duty"
+    },
+    "tagline": {
+      "ro": "100 CP Perkins și transmisie ZF Power Shift",
+      "ru": "100 л.с. Perkins и трансмиссия ZF Power Shift"
+    },
+    "summary": {
+      "ro": "Buldoexcavator de 100 CP cu motor Perkins, transmisie ZF Power Shift și 22 km/h în marșarier. Pentru șantiere mari, drumuri și cariere.",
+      "ru": "Экскаватор-погрузчик 100 л.с. с двигателем Perkins, трансмиссией ZF Power Shift и 22 км/ч задним ходом. Для крупных объектов, дорог и карьеров."
+    },
+    "image": "produse/buldoexcavator-bull-hd100.webp",
+    "alt": {
+      "ro": "Buldoexcavator BULL HD 100 cu motor Perkins de 100 CP",
+      "ru": "Экскаватор-погрузчик BULL HD 100 с двигателем Perkins 100 л.с."
+    },
+    "scenes": [
+      "santier/buldoexcavator-bull-hd100-sapare-retele.webp",
+      "santier/buldoexcavator-bull-hd100-cariera.webp",
+      "santier/buldoexcavator-bull-hd100-terasamente.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-hd100.webp",
+    "gallery": [
+      "galerie/buldoexcavator-bull-hd100-1.webp",
+      "galerie/buldoexcavator-bull-hd100-2.webp",
+      "galerie/buldoexcavator-bull-hd100-3.webp",
+      "galerie/buldoexcavator-bull-hd100-4.webp",
+      "galerie/buldoexcavator-bull-hd100-5.webp"
+    ],
+    "key": {
+      "powerHp": 100,
+      "powerKw": 74.5,
+      "weightKg": 8200,
+      "digDepthM": 4.6,
+      "digDepthExtM": 5.6,
+      "speedKmh": 40,
+      "drive": [
+        "4WD"
+      ],
+      "flowLpm": 145,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Perkins",
+      "ZF"
+    ],
+    "advantages": [
+      {
+        "ro": "Motor Perkins 1104D-44TA de 100 CP, 410 Nm la 1400 rpm",
+        "ru": "Двигатель Perkins 1104D-44TA 100 л.с., 410 Н·м при 1400 об/мин"
+      },
+      {
+        "ro": "Transmisie ZF Power Shift: schimbarea treptelor sub sarcină",
+        "ru": "Трансмиссия ZF Power Shift: переключение передач под нагрузкой"
+      },
+      {
+        "ro": "40 km/h înainte și 22 km/h înapoi: mutări rapide pe șantier",
+        "ru": "40 км/ч вперёд и 22 км/ч назад: быстрые перемещения по объекту"
+      },
+      {
+        "ro": "Hidraulică de 145 l/min",
+        "ru": "Гидравлика 145 л/мин"
+      },
+      {
+        "ro": "Rezervor de combustibil de 150 l",
+        "ru": "Топливный бак 150 л"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Perkins 1104D-44TA, Euro III A, 4 cilindri",
+              "ru": "Perkins 1104D-44TA, Euro III A, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "100 CP (74,5 kW) la 2200 rpm",
+              "ru": "100 л.с. (74,5 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "410 Nm la 1400 rpm",
+              "ru": "410 Н·м при 1400 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "ZF Power Shift, cu convertizor de cuplu",
+              "ru": "ZF Power Shift, с гидротрансформатором"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "4WD"
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "40 km/h înainte · 22 km/h înapoi",
+              "ru": "40 км/ч вперёд · 22 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit maxim",
+              "ru": "Макс. расход"
+            },
+            "v": {
+              "ro": "145 l/min",
+              "ru": "145 л/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Adâncime maximă de săpare",
+              "ru": "Макс. глубина копания"
+            },
+            "v": {
+              "ro": "4,6 m (5,6 m cu braț extensibil)",
+              "ru": "4,6 м (5,6 м с телескопической рукоятью)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă excavator",
+              "ru": "Ковш экскаватора"
+            },
+            "v": {
+              "ro": "0,27 m³ (opțional 0,12 / 0,17 / 0,21 m³)",
+              "ru": "0,27 м³ (опционально 0,12 / 0,17 / 0,21 м³)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "8.200 kg",
+              "ru": "8 200 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lungime totală",
+              "ru": "Общая длина"
+            },
+            "v": {
+              "ro": "7,46 m",
+              "ru": "7,46 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime până la cabină",
+              "ru": "Высота по кабине"
+            },
+            "v": {
+              "ro": "3,49 m",
+              "ru": "3,49 м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "150 l",
+              "ru": "150 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rezervor hidraulic",
+              "ru": "Гидробак"
+            },
+            "v": {
+              "ro": "120 l",
+              "ru": "120 л"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/images/pdf/bhl-hd76-hd96-hd100.pdf",
+    "videos": [
+      {
+        "id": "TeWmmhVxYmc",
+        "title": {
+          "ro": "BULL HD100 cu braț telescopic, model de export",
+          "ru": "BULL HD100 с телескопической рукоятью, экспортная модель"
+        },
+        "uploadDate": null
+      },
+      {
+        "id": "ITcMKf4AyAY",
+        "title": {
+          "ro": "BULL în Kenya: părerea dealerului",
+          "ru": "BULL в Кении: отзыв дилера"
+        },
+        "uploadDate": "2023-04-05"
+      }
+    ],
+    "verify": [
+      "Adâncimea de săpare (4,6 / 5,6 m) e preluată de pe pagina bullindia.com a modelului HD 100, nu din Anexa B. De confirmat cu broșura."
+    ]
+  },
+  {
+    "id": "bull-hd76-loader",
+    "order": 7,
+    "category": "incarcatoare-frontale",
+    "name": "BULL Loader HD76",
+    "model": "HD76",
+    "series": "Loader",
+    "isNew": false,
+    "type": {
+      "ro": "Încărcător frontal",
+      "ru": "Фронтальный погрузчик"
+    },
+    "tagline": {
+      "ro": "Încărcător frontal cu trei cupe pentru cariere, concasoare și drumuri",
+      "ru": "Фронтальный погрузчик с тремя ковшами для карьеров, дробилок и дорог"
+    },
+    "summary": {
+      "ro": "Încărcător frontal de 76 CP cu 2.400 kg sarcină utilă și cupe de 1,1–1,4 m³. Cupa Crusher King descarcă la 3,77 m, direct în concasor.",
+      "ru": "Фронтальный погрузчик 76 л.с. с грузоподъёмностью 2 400 кг и ковшами 1,1–1,4 м³. Ковш Crusher King выгружает на высоте 3,77 м прямо в дробилку."
+    },
+    "image": "produse/incarcator-frontal-bull-hd76.webp",
+    "alt": {
+      "ro": "Încărcător frontal BULL HD76 cu cupă ridicată",
+      "ru": "Фронтальный погрузчик BULL HD76 с поднятым ковшом"
+    },
+    "scenes": [
+      "santier/incarcator-frontal-bull-hd76-cariera-piatra.webp",
+      "santier/incarcator-frontal-bull-hd76-concasor.webp",
+      "santier/incarcator-frontal-bull-hd76-variante-cupa.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-incarcator-frontal-bull-hd76.webp",
+    "gallery": [
+      "galerie/incarcator-frontal-bull-hd76-1.webp",
+      "galerie/incarcator-frontal-bull-hd76-2.webp",
+      "galerie/incarcator-frontal-bull-hd76-3.webp",
+      "galerie/incarcator-frontal-bull-hd76-4.webp",
+      "galerie/incarcator-frontal-bull-hd76-5.webp"
+    ],
+    "key": {
+      "powerHp": 76,
+      "powerKw": 56.7,
+      "weightKg": 7850,
+      "payloadKg": 2400,
+      "bucketM3": 1.4,
+      "speedKmh": 41,
+      "drive": [
+        "2WD",
+        "4WD"
+      ],
+      "flowLpm": 113,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Kirloskar",
+      "Carraro"
+    ],
+    "advantages": [
+      {
+        "ro": "Trei cupe: Crusher King 1,4 m³, Heavy Duty 1,26 m³, Booster 1,1 m³",
+        "ru": "Три ковша: Crusher King 1,4 м³, Heavy Duty 1,26 м³, Booster 1,1 м³"
+      },
+      {
+        "ro": "Forță de rupere la cupă de 8.183 kgf",
+        "ru": "Усилие отрыва ковша 8 183 кгс"
+      },
+      {
+        "ro": "Descărcare până la 4,00 m cu cupa booster",
+        "ru": "Высота выгрузки до 4,00 м с ковшом Booster"
+      },
+      {
+        "ro": "41 km/h pe drum între obiective",
+        "ru": "41 км/ч по дороге между объектами"
+      },
+      {
+        "ro": "Disponibil 2WD sau 4WD",
+        "ru": "Доступен в версии 2WD или 4WD"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Kirloskar 4R1040 TC, Euro III A, 4 cilindri",
+              "ru": "Kirloskar 4R1040 TC, Euro III A, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "76 CP (56,7 kW) la 2200 rpm",
+              "ru": "76 л.с. (56,7 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "300 Nm la 1500 rpm",
+              "ru": "300 Н·м при 1500 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": "Carraro synchro-shuttle"
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": "2WD / 4WD"
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "41 km/h înainte · 9 km/h înapoi",
+              "ru": "41 км/ч вперёд · 9 км/ч назад"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Presiune de lucru",
+              "ru": "Рабочее давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit maxim",
+              "ru": "Макс. расход"
+            },
+            "v": {
+              "ro": "113 l/min",
+              "ru": "113 л/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Cupă Crusher King",
+              "ru": "Ковш Crusher King"
+            },
+            "v": {
+              "ro": "1,4 m³ · descărcare la 3,77 m",
+              "ru": "1,4 м³ · высота выгрузки 3,77 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă Heavy Duty",
+              "ru": "Ковш Heavy Duty"
+            },
+            "v": {
+              "ro": "1,26 m³ · descărcare la 2,96 m",
+              "ru": "1,26 м³ · высота выгрузки 2,96 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă Booster",
+              "ru": "Ковш Booster"
+            },
+            "v": {
+              "ro": "1,1 m³ · descărcare la 4,00 m",
+              "ru": "1,1 м³ · высота выгрузки 4,00 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Forță de rupere la cupă",
+              "ru": "Усилие отрыва ковша"
+            },
+            "v": {
+              "ro": "8.183 kgf",
+              "ru": "8 183 кгс"
+            }
+          },
+          {
+            "k": {
+              "ro": "Forță de rupere la braț",
+              "ru": "Усилие отрыва стрелы"
+            },
+            "v": {
+              "ro": "5.251–5.315 kgf",
+              "ru": "5 251–5 315 кгс"
+            }
+          },
+          {
+            "k": {
+              "ro": "Sarcină utilă",
+              "ru": "Грузоподъёмность"
+            },
+            "v": {
+              "ro": "2.400 kg",
+              "ru": "2 400 кг"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "7.850 kg",
+              "ru": "7 850 кг"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/bull76-loader-new.pdf",
+    "videos": [
+      {
+        "id": "qUYmKJjrCC8",
+        "title": {
+          "ro": "Încărcătorul BULL la manipularea materialelor",
+          "ru": "Погрузчик BULL на перевалке сыпучих материалов"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": []
+  },
+  {
+    "id": "bull-av490",
+    "order": 8,
+    "category": "miniincarcatoare-skid-steer",
+    "name": "BULL AV490",
+    "model": "AV490",
+    "series": "Skid Steer",
+    "isNew": false,
+    "type": {
+      "ro": "Miniîncărcător skid steer",
+      "ru": "Мини-погрузчик с бортовым поворотом"
+    },
+    "tagline": {
+      "ro": "Compact, agil, cu zeci de atașamente",
+      "ru": "Компактный, манёвренный, с десятками навесных орудий"
+    },
+    "summary": {
+      "ro": "Skid steer de 3 t cu motor Kubota turbo de 52 CP, transmisie hidrostatică 4WD și 655 kg sarcină nominală. Joystick, ecran tactil și cameră de mers înapoi.",
+      "ru": "Мини-погрузчик 3 т с турбодвигателем Kubota 52 л.с., гидростатической трансмиссией 4WD и номинальной нагрузкой 655 кг. Джойстики, сенсорный экран и камера заднего вида."
+    },
+    "image": "produse/miniincarcator-skid-steer-bull-av490.webp",
+    "alt": {
+      "ro": "Miniîncărcător skid steer BULL AV490 cu cupă standard",
+      "ru": "Мини-погрузчик BULL AV490 со стандартным ковшом"
+    },
+    "scenes": [
+      "santier/miniincarcator-skid-steer-bull-av490-lucru.webp",
+      "santier/miniincarcator-skid-steer-bull-av490-santier.webp",
+      "santier/miniincarcator-skid-steer-bull-av490-depozit.webp",
+      "santier/miniincarcator-skid-steer-bull-av490-hala.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-skid-steer-bull-av490.webp",
+    "gallery": [
+      "galerie/miniincarcator-skid-steer-bull-av490-1.webp",
+      "galerie/miniincarcator-skid-steer-bull-av490-2.webp",
+      "galerie/miniincarcator-skid-steer-bull-av490-3.webp",
+      "galerie/miniincarcator-skid-steer-bull-av490-4.webp",
+      "galerie/miniincarcator-skid-steer-bull-av490-5.webp"
+    ],
+    "key": {
+      "powerHp": 52,
+      "powerKw": 39,
+      "weightKg": 3000,
+      "ratedLoadKg": 655,
+      "tippingLoadKg": 1310,
+      "speedKmh": 12,
+      "drive": [
+        "4WD"
+      ],
+      "flowLpm": 57,
+      "flowHighLpm": 82,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Kubota"
+    ],
+    "advantages": [
+      {
+        "ro": "Transmisie hidrostatică 4WD cu lanț, întoarcere pe loc",
+        "ru": "Гидростатическая трансмиссия 4WD с цепным приводом, разворот на месте"
+      },
+      {
+        "ro": "Comenzi pe joystick, ecran tactil și cameră de mers înapoi",
+        "ru": "Управление джойстиками, сенсорный экран и камера заднего вида"
+      },
+      {
+        "ro": "Prindere rapidă a atașamentelor",
+        "ru": "Быстросъёмное крепление навесного оборудования"
+      },
+      {
+        "ro": "Debit hidraulic mare opțional: 82 l/min pentru freze și perii",
+        "ru": "Опциональный высокий поток: 82 л/мин для фрез и щёток"
+      },
+      {
+        "ro": "Opțional: autonivelare, anti-calare și cabină cu aer condiționat",
+        "ru": "Опционально: автовыравнивание, защита от заглохания и кабина с кондиционером"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Kubota BS V, turbo diesel, 4 cilindri",
+              "ru": "Kubota BS V, турбодизель, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "52 CP (39 kW) la 2200 rpm",
+              "ru": "52 л.с. (39 кВт) при 2200 об/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "198,5 Nm la 1500 rpm",
+              "ru": "198,5 Н·м при 1500 об/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Transmisie",
+              "ru": "Трансмиссия"
+            },
+            "v": {
+              "ro": "Hidrostatică: pompă tandem cu deplasare variabilă, motoare cu pistoane radiale",
+              "ru": "Гидростатическая: тандемный насос переменной производительности, радиально-поршневые гидромоторы"
+            }
+          },
+          {
+            "k": {
+              "ro": "Tracțiune",
+              "ru": "Привод"
+            },
+            "v": {
+              "ro": "4WD cu lanț",
+              "ru": "4WD, цепной"
+            }
+          },
+          {
+            "k": {
+              "ro": "Viteză maximă",
+              "ru": "Макс. скорость"
+            },
+            "v": {
+              "ro": "12 km/h",
+              "ru": "12 км/ч"
+            }
+          },
+          {
+            "k": {
+              "ro": "Comenzi",
+              "ru": "Управление"
+            },
+            "v": {
+              "ro": "Joystick: stânga deplasare, dreapta braț/cupă",
+              "ru": "Джойстики: левый — движение, правый — стрела/ковш"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Debit standard",
+              "ru": "Стандартный поток"
+            },
+            "v": {
+              "ro": "57 l/min",
+              "ru": "57 л/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit mare (opțional)",
+              "ru": "Высокий поток (опция)"
+            },
+            "v": {
+              "ro": "82 l/min",
+              "ru": "82 л/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Presiune",
+              "ru": "Давление"
+            },
+            "v": {
+              "ro": "23 MPa (230 bar)",
+              "ru": "23 МПа (230 бар)"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Sarcină nominală",
+              "ru": "Номинальная нагрузка"
+            },
+            "v": {
+              "ro": "655 kg",
+              "ru": "655 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Sarcină de basculare",
+              "ru": "Опрокидывающая нагрузка"
+            },
+            "v": {
+              "ro": "1.310 kg",
+              "ru": "1 310 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime de descărcare",
+              "ru": "Высота выгрузки"
+            },
+            "v": {
+              "ro": "2.160 mm",
+              "ru": "2 160 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțimea bolțului",
+              "ru": "Высота шарнира"
+            },
+            "v": {
+              "ro": "2.813 mm",
+              "ru": "2 813 мм"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "3.000 kg",
+              "ru": "3 000 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lungime (cu / fără atașament)",
+              "ru": "Длина (с орудием / без)"
+            },
+            "v": {
+              "ro": "3.282 / 2.511 mm",
+              "ru": "3 282 / 2 511 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime",
+              "ru": "Высота"
+            },
+            "v": {
+              "ro": "1.970 mm",
+              "ru": "1 970 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lățime peste anvelope",
+              "ru": "Ширина по шинам"
+            },
+            "v": {
+              "ro": "1.500 mm",
+              "ru": "1 500 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lățime cupă",
+              "ru": "Ширина ковша"
+            },
+            "v": {
+              "ro": "1.580 mm",
+              "ru": "1 580 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Gardă la sol",
+              "ru": "Дорожный просвет"
+            },
+            "v": {
+              "ro": "204 mm",
+              "ru": "204 мм"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "48 l",
+              "ru": "48 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Sistem hidraulic",
+              "ru": "Гидросистема"
+            },
+            "v": {
+              "ro": "65 l",
+              "ru": "65 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Anvelope",
+              "ru": "Шины"
+            },
+            "v": {
+              "ro": "10×16,5 · 12×16,5 (opțional) · solide",
+              "ru": "10×16,5 · 12×16,5 (опция) · цельнолитые"
+            }
+          },
+          {
+            "k": {
+              "ro": "Opțiuni",
+              "ru": "Опции"
+            },
+            "v": {
+              "ro": "Autonivelare, anti-calare, cabină cu aer condiționat, debit hidraulic mare, cabină ROPS/FOPS nivel 1",
+              "ru": "Автовыравнивание, защита от заглохания, кабина с кондиционером, высокий гидропоток, кабина ROPS/FOPS уровня 1"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/skid-new.pdf",
+    "videos": [
+      {
+        "id": "3SVIaJpAJZQ",
+        "title": {
+          "ro": "Noul BULL AV490 skid steer, cu cabină climatizată",
+          "ru": "Новый мини-погрузчик BULL AV490 с кондиционером"
+        },
+        "uploadDate": null
+      },
+      {
+        "id": "6UeSTvTOTvg",
+        "title": {
+          "ro": "BULL AV490 la săpături pentru fundații",
+          "ru": "BULL AV490 на земляных работах под фундамент"
+        },
+        "uploadDate": null
+      }
+    ],
+    "verify": [
+      "Putere: pagina de produs indică 52 CP / 39 kW, pagina de listare 50 CP / 36,5 kW. De confirmat cu BULL."
+    ]
+  },
+  {
+    "id": "bull-av740",
+    "order": 9,
+    "category": "miniincarcatoare-skid-steer",
+    "name": "BULL AV740",
+    "model": "AV740",
+    "series": "Vertical Lift",
+    "isNew": true,
+    "type": {
+      "ro": "Încărcător compact cu ridicare verticală",
+      "ru": "Компактный погрузчик с вертикальным подъёмом"
+    },
+    "tagline": {
+      "ro": "Ridicare verticală puternică, care încape oriunde",
+      "ru": "Мощь вертикального подъёма, которая пройдёт везде"
+    },
+    "summary": {
+      "ro": "Încărcător compact de 4,3 t cu motor Kubota turbo de 74 CP și 1.347 kg sarcină nominală. Brațul cu ridicare verticală încarcă camioane până la 2,57 m.",
+      "ru": "Компактный погрузчик 4,3 т с турбодвигателем Kubota 74 л.с. и номинальной нагрузкой 1 347 кг. Стрела с вертикальным подъёмом загружает самосвалы на высоту до 2,57 м."
+    },
+    "image": "produse/incarcator-compact-bull-av740.webp",
+    "alt": {
+      "ro": "Încărcător compact cu ridicare verticală BULL AV740",
+      "ru": "Компактный погрузчик с вертикальным подъёмом BULL AV740"
+    },
+    "scenes": [
+      "santier/incarcator-compact-bull-av740-santier.webp"
+    ],
+    "blueprint": "desene/desen-tehnic-incarcator-compact-bull-av740.webp",
+    "gallery": [],
+    "key": {
+      "powerHp": 74.3,
+      "powerKw": 55.4,
+      "weightKg": 4272,
+      "ratedLoadKg": 1347,
+      "tippingLoadKg": 2694,
+      "speedKmh": 14,
+      "drive": [
+        "4WD"
+      ],
+      "flowLpm": 102,
+      "flowHighLpm": 131,
+      "pressureBar": 230
+    },
+    "brands": [
+      "Kubota"
+    ],
+    "advantages": [
+      {
+        "ro": "Braț cu ridicare verticală: sarcină constantă pe toată înălțimea",
+        "ru": "Стрела с вертикальным подъёмом: постоянная нагрузка по всей высоте"
+      },
+      {
+        "ro": "1.347 kg sarcină nominală, 2.694 kg sarcină de basculare",
+        "ru": "Номинальная нагрузка 1 347 кг, опрокидывающая 2 694 кг"
+      },
+      {
+        "ro": "Hidraulică de 102 l/min, opțional 131 l/min",
+        "ru": "Гидравлика 102 л/мин, опционально 131 л/мин"
+      },
+      {
+        "ro": "Standard: cabină ROPS/FOPS, autonivelare, lumini LED, imobilizator",
+        "ru": "Стандартно: кабина ROPS/FOPS, автовыравнивание, LED-фары, иммобилайзер"
+      },
+      {
+        "ro": "Opțional: HVAC, 2 viteze, Ride Control, telematică",
+        "ru": "Опционально: HVAC, 2 скорости, Ride Control, телематика"
+      }
+    ],
+    "specs": [
+      {
+        "group": "engine",
+        "rows": [
+          {
+            "k": {
+              "ro": "Motor",
+              "ru": "Двигатель"
+            },
+            "v": {
+              "ro": "Kubota V3307-DI-T turbo, 3.331 cm³, 4 cilindri",
+              "ru": "Kubota V3307-DI-T турбо, 3 331 см³, 4 цилиндра"
+            }
+          },
+          {
+            "k": {
+              "ro": "Putere",
+              "ru": "Мощность"
+            },
+            "v": {
+              "ro": "74,3 CP (55,4 kW) brut · 61,1 CP net",
+              "ru": "74,3 л.с. (55,4 кВт) брутто · 61,1 л.с. нетто"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cuplu maxim",
+              "ru": "Макс. крутящий момент"
+            },
+            "v": {
+              "ro": "265 Nm",
+              "ru": "265 Н·м"
+            }
+          }
+        ]
+      },
+      {
+        "group": "transmission",
+        "rows": [
+          {
+            "k": {
+              "ro": "Viteză",
+              "ru": "Скорость"
+            },
+            "v": {
+              "ro": "14 km/h (treapta lentă), opțional 2 viteze",
+              "ru": "14 км/ч (низшая), опционально 2 скорости"
+            }
+          },
+          {
+            "k": {
+              "ro": "Traiectoria brațului",
+              "ru": "Траектория стрелы"
+            },
+            "v": {
+              "ro": "Verticală",
+              "ru": "Вертикальная"
+            }
+          }
+        ]
+      },
+      {
+        "group": "hydraulics",
+        "rows": [
+          {
+            "k": {
+              "ro": "Presiune",
+              "ru": "Давление"
+            },
+            "v": {
+              "ro": "230 bar",
+              "ru": "230 бар"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit standard",
+              "ru": "Стандартный поток"
+            },
+            "v": {
+              "ro": "102 l/min",
+              "ru": "102 л/мин"
+            }
+          },
+          {
+            "k": {
+              "ro": "Debit mare",
+              "ru": "Высокий поток"
+            },
+            "v": {
+              "ro": "131 l/min",
+              "ru": "131 л/мин"
+            }
+          }
+        ]
+      },
+      {
+        "group": "performance",
+        "rows": [
+          {
+            "k": {
+              "ro": "Sarcină nominală",
+              "ru": "Номинальная нагрузка"
+            },
+            "v": {
+              "ro": "1.347 kg",
+              "ru": "1 347 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Sarcină de basculare",
+              "ru": "Опрокидывающая нагрузка"
+            },
+            "v": {
+              "ro": "2.694 kg",
+              "ru": "2 694 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă",
+              "ru": "Ковш"
+            },
+            "v": {
+              "ro": "0,44 m³ (opțional 0,58 m³ heavy duty)",
+              "ru": "0,44 м³ (опционально 0,58 м³ heavy duty)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime de descărcare",
+              "ru": "Высота выгрузки"
+            },
+            "v": {
+              "ro": "2.570 mm",
+              "ru": "2 570 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime de lucru",
+              "ru": "Рабочая высота"
+            },
+            "v": {
+              "ro": "4.150 mm",
+              "ru": "4 150 мм"
+            }
+          }
+        ]
+      },
+      {
+        "group": "dimensions",
+        "rows": [
+          {
+            "k": {
+              "ro": "Greutate operațională",
+              "ru": "Эксплуатационная масса"
+            },
+            "v": {
+              "ro": "4.272 kg",
+              "ru": "4 272 кг"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lungime cu cupă",
+              "ru": "Длина с ковшом"
+            },
+            "v": {
+              "ro": "3.644 mm",
+              "ru": "3 644 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime cu cabină",
+              "ru": "Высота по кабине"
+            },
+            "v": {
+              "ro": "2.086 mm",
+              "ru": "2 086 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lățime peste cupă",
+              "ru": "Ширина по ковшу"
+            },
+            "v": {
+              "ro": "1.875 mm",
+              "ru": "1 875 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rază de întoarcere",
+              "ru": "Радиус поворота"
+            },
+            "v": {
+              "ro": "2.216 mm",
+              "ru": "2 216 мм"
+            }
+          },
+          {
+            "k": {
+              "ro": "Gardă la sol",
+              "ru": "Дорожный просвет"
+            },
+            "v": {
+              "ro": "238 mm",
+              "ru": "238 мм"
+            }
+          }
+        ]
+      },
+      {
+        "group": "capacities",
+        "rows": [
+          {
+            "k": {
+              "ro": "Rezervor combustibil",
+              "ru": "Топливный бак"
+            },
+            "v": {
+              "ro": "79 l",
+              "ru": "79 л"
+            }
+          },
+          {
+            "k": {
+              "ro": "Anvelope",
+              "ru": "Шины"
+            },
+            "v": {
+              "ro": "12×16,5 tubeless",
+              "ru": "12×16,5 бескамерные"
+            }
+          },
+          {
+            "k": {
+              "ro": "Dotări standard",
+              "ru": "Стандартное оснащение"
+            },
+            "v": {
+              "ro": "Cabină ROPS/FOPS, lumini LED de lucru față/spate, ieșiri de urgență față/spate, autonivelare, imobilizator, girofar",
+              "ru": "Кабина ROPS/FOPS, рабочие LED-фары спереди/сзади, аварийные выходы спереди/сзади, автовыравнивание, иммобилайзер, проблесковый маячок"
+            }
+          },
+          {
+            "k": {
+              "ro": "Opțiuni",
+              "ru": "Опции"
+            },
+            "v": {
+              "ro": "Cabină HVAC, 2 viteze, Ride Control, cupă heavy duty, ușă frontală cu senzori, telematică",
+              "ru": "Кабина HVAC, 2 скорости, Ride Control, усиленный ковш, передняя дверь с датчиками, телематика"
+            }
+          }
+        ]
+      }
+    ],
+    "brochure": "https://bullindia.com/brochure/all-new-av-740.pdf",
+    "videos": [],
+    "verify": []
+  }
+]

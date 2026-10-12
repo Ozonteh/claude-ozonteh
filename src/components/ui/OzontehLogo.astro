@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+import { asset } from '../../lib/images';
+interface Props { variant?: 'white' | 'blue'; height?: number; class?: string; eager?: boolean }
+const { variant = 'white', height = 24, class: cls, eager = false } = Astro.props;
+const src = asset(variant === 'white' ? 'logo/ozonteh-logo-alb.png' : 'logo/ozonteh-logo.png');
+const width = Math.round((src.width / src.height) * height);
+---
+<Image
+  src={src}
+  alt="Ozonteh"
+  width={width}
+  height={height}
+  densities={[1, 2, 3]}
+  format="webp"
+  class={cls}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+/>

@@ -1,0 +1,18 @@
+# build
+dist/
+.astro/
+.netlify/
+# deps
+node_modules/
+# env
+.env
+.env.*
+!.env.example
+# logs & OS
+npm-debug.log*
+.DS_Store
+# rapoarte locale
+reports/tmp/
+
+# rapoarte Lighthouse HTML (se regenerează local, vezi README)
+reports/lighthouse/*.html

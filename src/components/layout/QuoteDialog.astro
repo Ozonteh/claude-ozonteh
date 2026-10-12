@@ -1,0 +1,106 @@
+---
+// „Cere ofertă" ca bottom-sheet pe mobil și panou lateral pe desktop.
+// Se deschide din orice element [data-quote] (opțional data-model="bull-hd-100", data-demo).
+import Icon from '../ui/Icon.astro';
+import QuoteForm from './QuoteForm.astro';
+import { company } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+---
+
+<dialog id="quote-dialog" class="sheet" aria-labelledby="quote-title" data-quote-dialog>
+  <div class="hazard hazard-thin" aria-hidden="true"></div>
+  <div class="sheet-inner">
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <header class="sheet-head">
+      <div>
+        <p class="t-eyebrow"><span class="idx">BULL</span> {ui.badges.official}</p>
+        <h2 id="quote-title" class="t-h3 sheet-title">{ui.form.title}</h2>
+      </div>
+      <button type="button" class="sheet-close" data-quote-close aria-label={ui.a11y.close}>
+        <Icon name="close" />
+      </button>
+    </header>
+    <p class="sheet-sub">{ui.form.subtitle}</p>
+    <p class="badge badge-warranty sheet-badge"><Icon name="shield" /> {ui.badges.warranty}</p>
+    <QuoteForm lang={lang} id="dlg" variant="graphite" />
+    <div class="sheet-alt">
+      <span class="t-body-muted">{ui.form.orCall}</span>
+      <a href={`tel:${company.phone.tel}`} class="t-mono sheet-phone" data-track-loc="quote-sheet">{company.phone.display}</a>
+      <a href={company.whatsapp} target="_blank" rel="noopener" class="sheet-wa" aria-label="WhatsApp" data-track-loc="quote-sheet"><Icon name="whatsapp" /></a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: min(94dvh, 100%);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--color-bone);
+    background: var(--color-asphalt);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translate3d(0, 100%, 0);
+    transition:
+      transform 0.5s var(--ease-hydraulic),
+      overlay 0.5s allow-discrete,
+      display 0.5s allow-discrete;
+  }
+  .sheet[open] { transform: none; }
+  @starting-style {
+    .sheet[open] { transform: translate3d(0, 100%, 0); }
+  }
+  .sheet::backdrop {
+    background: rgb(8 9 10 / 0);
+    transition: background-color 0.4s, overlay 0.4s allow-discrete, display 0.4s allow-discrete;
+  }
+  .sheet[open]::backdrop { background: rgb(8 9 10 / 0.72); }
+  @starting-style {
+    .sheet[open]::backdrop { background: rgb(8 9 10 / 0); }
+  }
+  .sheet-inner { display: grid; gap: 1rem; padding: 0.5rem var(--gutter) calc(1.5rem + env(safe-area-inset-bottom)); }
+  .sheet-grip { width: 44px; height: 4px; background: rgb(231 228 221 / 0.25); justify-self: center; margin-bottom: 0.25rem; }
+  .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .sheet-title { margin-top: 0.5rem; }
+  .sheet-close {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    flex: none;
+    color: var(--color-bone);
+    background: var(--color-graphite);
+    border: 0;
+  }
+  .sheet-close:hover { color: var(--color-bull-yellow); }
+  .sheet-sub { color: var(--color-steel); font-size: 0.9375rem; }
+  .sheet-badge { width: fit-content; }
+  .sheet-alt { display: flex; align-items: center; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--color-line); font-size: 0.875rem; }
+  .sheet-phone { color: var(--color-bull-yellow); font-size: 1.05rem; min-height: 44px; display: inline-flex; align-items: center; }
+  .sheet-wa { margin-left: auto; display: grid; place-items: center; width: 44px; height: 44px; color: #25d366; box-shadow: inset 0 0 0 1px var(--color-line); }
+
+  @media (min-width: 48rem) {
+    .sheet {
+      inset: 0 0 0 auto;
+      width: min(520px, 100%);
+      max-height: 100dvh;
+      height: 100dvh;
+      transform: translate3d(100%, 0, 0);
+    }
+    @starting-style {
+      .sheet[open] { transform: translate3d(100%, 0, 0); }
+    }
+    .sheet-inner { padding: 2rem 2.25rem 2.5rem; gap: 1.25rem; }
+    .sheet-grip { display: none; }
+  }
+</style>

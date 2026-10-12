@@ -1,0 +1,108 @@
+---
+// Video-uri YouTube cu facade: poster propriu (auto-găzduit) + buton Play; iframe-ul youtube-nocookie
+// se creează doar la click. Zero cereri către YouTube la încărcarea paginii.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { asset } from '../../lib/images';
+import { getProduct, type Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const v = t(lang).home.videos;
+
+const featured = [
+  { product: 'bull-sd76-super-smart', video: 'uguJY_JSvbM', poster: 'santier/buldoexcavator-bull-sd76-santier-constructii.webp' },
+  { product: 'bull-hd-100', video: 'TeWmmhVxYmc', poster: 'santier/buldoexcavator-bull-hd100-sapare-retele.webp' },
+  { product: 'bull-av490', video: '3SVIaJpAJZQ', poster: 'santier/miniincarcator-skid-steer-bull-av490-santier.webp' },
+].map((f) => {
+  const p = getProduct(f.product) as Product;
+  return { ...f, p, meta: p.videos.find((x) => x.id === f.video)! };
+});
+---
+
+<section class="videos section on-graphite cv-auto" aria-labelledby="videos-title">
+  <div class="wrap">
+    <div class="section-head split">
+      <div class="videos-titles" data-reveal>
+        <p class="t-eyebrow"><span class="idx">07</span> {v.eyebrow}</p>
+        <h2 id="videos-title" class="t-h2">{v.title}</h2>
+      </div>
+      <p class="t-body-muted videos-note" data-reveal style="--d:1">{v.note}</p>
+    </div>
+    <ul class="videos-grid no-scrollbar" role="list">
+      {
+        featured.map((f, i) => (
+          <li class="video" data-reveal style={`--d:${i}`}>
+            <div class="video-frame" data-yt={f.video} data-yt-title={f.meta.title[lang]}>
+              <Image src={asset(f.poster)} alt="" widths={[400, 640, 900]} sizes="(min-width: 1024px) 31vw, 86vw" class="video-poster" loading="lazy" />
+              <button type="button" class="video-play" aria-label={`${v.play}: ${f.meta.title[lang]}`}>
+                <span class="video-play-icon"><Icon name="play" size={26} /></span>
+              </button>
+              <span class="video-tag t-mono">YouTube</span>
+            </div>
+            <p class="video-title">{f.meta.title[lang]}</p>
+            <p class="t-mono video-model">{f.p.name}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-yt]').forEach((frame) => {
+    frame.querySelector('button')?.addEventListener('click', () => {
+      const id = frame.dataset.yt!;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      iframe.title = frame.dataset.ytTitle ?? 'YouTube';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'video-iframe';
+      frame.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+  .videos-titles { display: grid; gap: 1.1rem; }
+  .videos-note { font-size: 0.875rem; max-width: 30rem; }
+  .videos-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(86vw, 420px);
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .video { scroll-snap-align: start; display: grid; gap: 0.6rem; align-content: start; }
+  .video-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-asphalt); }
+  .video-poster { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-hydraulic), filter 0.4s; filter: saturate(0.9) brightness(0.8); }
+  .video-frame:hover .video-poster { transform: scale(1.04); filter: none; }
+  .video-play { position: absolute; inset: 0; display: grid; place-items: center; background: none; border: 0; color: var(--color-asphalt); }
+  .video-play-icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    background: var(--color-bull-yellow);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: transform 0.3s var(--ease-press);
+  }
+  .video-play:hover .video-play-icon { transform: scale(1.08); }
+  .video-play:active .video-play-icon { transform: scale(0.94); }
+  .video-tag { position: absolute; left: 10px; top: 10px; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; background: rgb(18 19 20 / 0.7); padding: 4px 6px; }
+  .video-frame :global(.video-iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-title { font-weight: 600; line-height: 1.35; }
+  .video-model { font-size: 0.75rem; color: var(--color-steel); }
+
+  @media (min-width: 64rem) {
+    .videos-grid { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; margin: 0; padding: 0; }
+  }
+</style>

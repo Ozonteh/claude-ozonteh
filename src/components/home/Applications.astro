@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import { asset } from '../../lib/images';
+import { getProduct } from '../../lib/products';
+import { productPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const a = t(lang).home.applications;
+
+const tiles = [
+  { key: 'constructii', img: 'santier/buldoexcavator-bull-sd76-sapare-sant.webp', models: ['bull-sd76-super-smart', 'bull-hd96-4wd', 'bull-hd-100'] },
+  { key: 'drumuri', img: 'santier/buldoexcavator-bull-hd100-terasamente.webp', models: ['bull-hd-100', 'bull-grandia', 'bull-ch76-challenger'] },
+  { key: 'agricultura', img: 'galerie/incarcator-frontal-bull-hd76-2.webp', models: ['bull-av490', 'bull-hd76-loader', 'bull-ch76-challenger'] },
+  { key: 'cariere', img: 'santier/incarcator-frontal-bull-hd76-cariera-piatra.webp', models: ['bull-hd76-loader', 'bull-hd-100', 'bull-hd96-4wd'] },
+  { key: 'demolare', img: 'santier/buldoexcavator-bull-hd100-cariera.webp', models: ['bull-hd96-4wd', 'bull-av740', 'bull-av490'] },
+  { key: 'peisagistica', img: 'santier/miniincarcator-skid-steer-bull-av490-lucru.webp', models: ['bull-av490', 'bull-av740'] },
+] as const;
+---
+
+<section class="apps section on-dark cv-auto" aria-labelledby="apps-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="t-eyebrow" data-reveal><span class="idx">05</span> {a.eyebrow}</p>
+      <h2 id="apps-title" class="t-h2" data-reveal style="--d:1">{a.title}</h2>
+    </div>
+    <ul class="apps-grid" role="list">
+      {
+        tiles.map((tile, i) => {
+          const item = a.items[tile.key];
+          return (
+            <li class="app" data-reveal style={`--d:${i % 3}`}>
+              <Image
+                src={asset(tile.img)}
+                alt=""
+                widths={[420, 640, 900, 1200]}
+                sizes={[0, 3, 4].includes(i) ? '(min-width: 1024px) 66vw, (min-width: 768px) 50vw, 100vw' : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'}
+                class="app-img"
+                loading="lazy"
+              />
+              <div class="app-scrim" aria-hidden="true" />
+              <div class="app-body">
+                <span class="t-mono app-idx">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="app-title">{item.title}</h3>
+                <p class="app-text">{item.text}</p>
+                <p class="app-models">
+                  {tile.models.map((id) => {
+                    const p = getProduct(id)!;
+                    return (
+                      <a class="chip" href={productPath(p, lang)}>
+                        {p.model}
+                      </a>
+                    );
+                  })}
+                </p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .apps-grid { display: grid; gap: 10px; }
+  .app { position: relative; overflow: hidden; min-height: 320px; display: grid; align-items: end; background: var(--color-graphite); }
+  .app-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease-hydraulic); }
+  .app:hover .app-img { transform: scale(1.05); }
+  .app-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgb(18 19 20 / 0.96) 8%, rgb(18 19 20 / 0.55) 48%, rgb(18 19 20 / 0.1) 80%); }
+  .app-body { position: relative; display: grid; gap: 0.6rem; padding: 1.25rem; }
+  .app-idx { font-size: 0.75rem; color: var(--color-bull-yellow); }
+  .app-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: calc(clamp(1.9rem, 1.5rem + 1.6vw, 2.75rem) * var(--display-scale));
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  :global(html:lang(ru)) .app-title { font-weight: 600; }
+  .app-text { color: color-mix(in oklab, var(--color-bone) 82%, transparent); font-size: 0.9375rem; max-width: 34rem; }
+  .app-models { display: flex; flex-wrap: wrap; gap: 6px; }
+  .app-models .chip { background: rgb(18 19 20 / 0.5); }
+
+  @media (min-width: 48rem) {
+    .apps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .app { min-height: 360px; }
+  }
+  @media (min-width: 64rem) {
+    .apps-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(320px, 26vw); }
+    .app:nth-child(1),
+    .app:nth-child(4),
+    .app:nth-child(5) { grid-column: span 2; }
+    .app { min-height: 0; }
+    .app-body { padding: 1.75rem; }
+    .app-text, .app-models { transition: opacity 0.4s, transform 0.5s var(--ease-hydraulic); }
+  }
+</style>

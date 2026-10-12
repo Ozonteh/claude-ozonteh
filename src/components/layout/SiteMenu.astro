@@ -1,0 +1,217 @@
+---
+// Meniu full-screen (mobil + desktop „Utilaje"): <dialog> nativ → focus trap, Esc, fundal inert.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import OzontehLogo from '../ui/OzontehLogo.astro';
+import LangSwitch from './LangSwitch.astro';
+import { products, fmt } from '../../lib/products';
+import { asset } from '../../lib/images';
+import { company } from '../../data/site';
+import { route, productPath, categoryPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang; alternates: Partial<Record<Lang, string>> }
+const { lang, alternates } = Astro.props;
+const ui = t(lang);
+const links = [
+  { href: route('catalog', lang), label: ui.nav.catalog },
+  { href: categoryPath('buldoexcavatoare', lang), label: ui.categories.buldoexcavatoare.plural },
+  { href: categoryPath('incarcatoare-frontale', lang), label: ui.categories['incarcatoare-frontale'].plural },
+  { href: categoryPath('miniincarcatoare-skid-steer', lang), label: ui.categories['miniincarcatoare-skid-steer'].plural },
+  { href: route('attachments', lang), label: ui.nav.attachments },
+  { href: route('compare', lang), label: ui.nav.compare },
+  { href: route('service', lang), label: ui.nav.service },
+  { href: route('about', lang), label: ui.nav.about },
+  { href: route('blog', lang), label: ui.nav.blog },
+  { href: route('contact', lang), label: ui.nav.contact },
+];
+---
+
+<dialog id="site-menu" class="menu" aria-label={ui.menu.title} data-menu>
+  <div class="menu-top wrap">
+    <a href={route('home', lang)} aria-label={ui.a11y.home} class="menu-logo"><OzontehLogo height={22} /></a>
+    <LangSwitch lang={lang} alternates={alternates} />
+    <button type="button" class="menu-close" data-menu-close aria-label={ui.a11y.menuClose}>
+      <Icon name="close" size={26} />
+    </button>
+  </div>
+
+  <div class="menu-body wrap">
+    <section class="menu-models" aria-labelledby="menu-models-title">
+      <p id="menu-models-title" class="t-eyebrow"><span class="idx">{String(products.length).padStart(2, '0')}</span> {ui.menu.models}</p>
+      <ul class="models-grid" role="list">
+        {
+          products.map((p, i) => (
+            <li style={`--i:${i}`}>
+              <a href={productPath(p, lang)} class="model-tile">
+                <span class="model-img">
+                  <Image src={asset(p.image)} alt="" widths={[200, 320, 440]} sizes="(min-width: 1280px) 220px, (min-width: 768px) 30vw, 46vw" loading="lazy" />
+                </span>
+                <span class="model-meta">
+                  <span class="model-name">{p.name.replace('BULL ', '')}</span>
+                  <span class="model-type">
+                    {p.type[lang]} · {fmt(p.key.powerHp, lang)} {ui.units.hp}
+                  </span>
+                </span>
+                {p.isNew && <span class="badge badge-new model-new">{ui.badges.new}</span>}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <nav class="menu-nav" aria-label={ui.menu.title}>
+      <ul role="list">
+        {
+          links.map((l, i) => (
+            <li style={`--i:${i + 4}`}>
+              <a href={l.href} class="menu-link">
+                <span class="menu-idx t-mono">{String(i + 1).padStart(2, '0')}</span>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu-contact">
+      <p class="t-eyebrow">{ui.menu.contact}</p>
+      <a href={`tel:${company.phone.tel}`} class="menu-phone t-mono" data-track-loc="menu">{company.phone.intl}</a>
+      <div class="menu-cta">
+        <a href={company.whatsapp} class="btn btn-outline" target="_blank" rel="noopener" data-track-loc="menu">
+          <Icon name="whatsapp" /> {ui.cta.whatsapp}
+        </a>
+        <button type="button" class="btn btn-primary" data-quote data-menu-close>
+          <Icon name="quote" /> {ui.cta.quote}
+        </button>
+      </div>
+      <p class="menu-address t-body-muted">
+        {company.address.street}, {company.address.locality}<br />
+        {ui.footer.hours.join(' · ')}
+      </p>
+    </div>
+  </div>
+  <div class="hazard menu-hazard" aria-hidden="true"></div>
+</dialog>
+
+<style>
+  .menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--color-asphalt);
+    color: var(--color-bone);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition:
+      clip-path 0.6s cubic-bezier(0.7, 0, 0.2, 1),
+      overlay 0.6s allow-discrete,
+      display 0.6s allow-discrete;
+  }
+  .menu[open] { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  @starting-style {
+    .menu[open] { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
+  }
+  .menu::backdrop { background: transparent; }
+
+  .menu-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: var(--header-h);
+    background: var(--color-asphalt);
+    box-shadow: 0 1px 0 var(--color-line);
+  }
+  .menu-logo { margin-right: auto; display: flex; align-items: center; min-height: 48px; }
+  .menu-close {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--color-asphalt);
+    background: var(--color-bull-yellow);
+    border: 0;
+    transition: transform 0.3s var(--ease-press);
+  }
+  .menu-close:active { transform: scale(0.92); }
+
+  .menu-body { display: grid; gap: 2.5rem; padding-block: 1.75rem 3rem; }
+
+  .models-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 1rem; }
+  .model-tile {
+    position: relative;
+    display: grid;
+    height: 100%;
+    background: var(--color-graphite);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+    transition: box-shadow 0.25s, background-color 0.25s;
+  }
+  .model-tile:hover { box-shadow: inset 0 0 0 1px var(--color-bull-yellow); background: var(--color-graphite-2); }
+  .model-img { display: block; aspect-ratio: 17 / 9; padding: 6px 4px 0; }
+  .model-img :global(img) { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s var(--ease-hydraulic); }
+  .model-tile:hover .model-img :global(img) { transform: scale(1.05) translateX(2%); }
+  .model-meta { display: grid; gap: 2px; padding: 6px 10px 10px; }
+  .model-name { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; line-height: 1; text-transform: uppercase; }
+  :global(html:lang(ru)) .model-name { font-weight: 600; font-size: 1.05rem; }
+  .model-type { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-steel); line-height: 1.35; }
+  .model-new { position: absolute; top: 6px; left: 6px; }
+
+  .menu-nav ul { display: grid; }
+  .menu-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.7rem 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: calc(clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem) * var(--display-scale));
+    line-height: 1;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-line);
+    transition: color 0.2s, padding-left 0.3s var(--ease-hydraulic);
+  }
+  :global(html:lang(ru)) .menu-link { font-weight: 600; }
+  .menu-link:hover { color: var(--color-bull-yellow); padding-left: 0.5rem; }
+  .menu-idx { font-size: 0.75rem; color: var(--color-bull-yellow); }
+
+  .menu-contact { display: grid; gap: 1rem; align-content: start; }
+  .menu-phone { font-size: 1.5rem; color: var(--color-bull-yellow); }
+  .menu-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .menu-cta .btn { padding-inline: 0.75rem; }
+  .menu-address { font-size: 0.875rem; }
+  .menu-hazard { position: sticky; bottom: 0; }
+
+  /* Intrare decalată a elementelor */
+  .menu[open] .models-grid li,
+  .menu[open] .menu-nav li {
+    animation: menu-in 0.6s var(--ease-hydraulic) both;
+    animation-delay: calc(0.18s + var(--i) * 0.035s);
+  }
+  @keyframes menu-in {
+    from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  }
+
+  @media (min-width: 48rem) {
+    .models-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .menu-body { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); column-gap: 4rem; padding-block: 2.5rem 4rem; }
+    .menu-models { grid-row: span 2; }
+    .models-grid { gap: 12px; }
+  }
+  @media (min-width: 80rem) {
+    .models-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

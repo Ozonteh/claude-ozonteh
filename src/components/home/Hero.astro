@@ -1,0 +1,248 @@
+---
+// Hero: poster (LCP, încărcat imediat) + video în buclă doar pe desktop (pornit după încărcare, în idle).
+// Pe mobil: poster cu efect Ken Burns. Titlul apare cu reveal pe litere, în CSS pur (nu blochează LCP).
+import Icon from '../ui/Icon.astro';
+import { heroSources, HERO_MOBILE_MAX } from '../../lib/hero';
+import { heroVideo } from '../../data/site';
+import { products } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const h = ui.home.hero;
+
+const { mob, mobAvif, mobWebp, deskAvif, deskWebp, fallback } = await heroSources();
+
+// Titlul: linii marcate cu „|" în dicționar → mască pe linie, litere decalate cu 0,03 s.
+const lines = (lang === 'ro' ? 'Utilaje BULL.|Acum oficial|în Moldova.' : 'Техника BULL.|Теперь официально|в Молдове.').split('|');
+let i = 0;
+const split = lines.map((line) => line.split(' ').map((word) => [...word].map((ch) => ({ ch, i: i++ }))));
+---
+
+<section class="hero" data-hero aria-labelledby="hero-title">
+  <div class="hero-media">
+    <picture>
+      <source type="image/avif" media={HERO_MOBILE_MAX} srcset={mobAvif} sizes="100vw" />
+      <source type="image/webp" media={HERO_MOBILE_MAX} srcset={mobWebp} sizes="100vw" />
+      <source type="image/avif" srcset={deskAvif} sizes="100vw" />
+      <source type="image/webp" srcset={deskWebp} sizes="100vw" />
+      <img
+        class="hero-img"
+        src={fallback.src}
+        width={mob.width}
+        height={mob.height}
+        alt={h.imageAlt}
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+    {
+      heroVideo && (
+        <video
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+          tabindex="-1"
+          data-hero-video
+          data-webm={heroVideo.webm}
+          data-mp4={heroVideo.mp4}
+        />
+      )
+    }
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-grid blueprint" aria-hidden="true"></div>
+  </div>
+
+  <div class="wrap hero-content">
+    <p class="t-eyebrow fade-up" style="--delay:.05s">{h.eyebrow}</p>
+    <h1 id="hero-title" class="t-hero hero-title" aria-label={h.title}>
+      {
+        split.map((words) => (
+          <span class="split-line" aria-hidden="true">
+            {words.map((chars, wi) => (
+              <>
+                <span class="split-word">
+                  {chars.map((c) => (
+                    <span class:list={['split-char', { 'is-accent': c.ch === '.' }]} style={`--i:${c.i}`}>
+                      {c.ch}
+                    </span>
+                  ))}
+                </span>
+                {wi < words.length - 1 && ' '}
+              </>
+            ))}
+          </span>
+        ))
+      }
+    </h1>
+    <p class="t-lead hero-sub fade-up" style="--delay:.7s">{h.sub}</p>
+    <div class="hero-ctas fade-up" style="--delay:.85s">
+      <button type="button" class="btn btn-primary btn-lg" data-quote data-magnetic>
+        <Icon name="quote" />
+        {ui.cta.quote}
+      </button>
+      <button type="button" class="btn btn-outline btn-lg" data-quote data-demo>
+        {ui.cta.demo}
+        <Icon name="arrow" class="arrow" />
+      </button>
+    </div>
+    <ul class="hero-badges fade-up" style="--delay:1s" role="list">
+      <li class="badge badge-warranty"><Icon name="shield" /> {ui.badges.warranty}</li>
+      <li class="badge badge-muted">{products.length} {h.models} · 52–100 {ui.units.hp}</li>
+    </ul>
+  </div>
+
+  <a href="#gama" class="hero-scroll fade-up" style="--delay:1.3s" aria-label={h.scroll}>
+    <span class="t-mono">{h.scroll}</span>
+    <span class="hero-scroll-line" aria-hidden="true"></span>
+  </a>
+</section>
+
+<script>
+  // Video hero: doar desktop, fără reduced-motion / Save-Data; se încarcă în idle după LCP.
+  const v = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const ok =
+    v &&
+    matchMedia('(min-width: 64rem)').matches &&
+    !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !conn?.saveData;
+  if (v && ok) {
+    const start = () => {
+      const add = (src: string | undefined, type: string) => {
+        if (!src) return;
+        const s = document.createElement('source');
+        s.src = src;
+        s.type = type;
+        v.appendChild(s);
+      };
+      add(v.dataset.webm, 'video/webm');
+      add(v.dataset.mp4, 'video/mp4');
+      v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
+      v.load();
+      v.play().catch(() => {});
+      new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause())).observe(v);
+    };
+    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 3000 }) : setTimeout(start, 1500));
+    if (document.readyState === 'complete') idle();
+    else addEventListener('load', idle, { once: true });
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100svh;
+    padding-top: var(--header-h);
+    overflow: clip;
+    background: var(--color-asphalt);
+    isolation: isolate;
+  }
+  .hero-media {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    margin-inline: 0;
+    overflow: clip;
+    z-index: -1;
+  }
+  .hero-img,
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 60%;
+  }
+  .hero-img { animation: ken-burns 22s ease-in-out infinite alternate; transform-origin: 70% 60%; }
+  .hero-video { opacity: 0; transition: opacity 1.2s ease; }
+  .hero-video.is-playing { opacity: 1; }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, var(--color-asphalt) 0%, rgb(18 19 20 / 0.6) 22%, transparent 55%),
+      linear-gradient(to bottom, rgb(18 19 20 / 0.7) 0%, transparent 28%);
+  }
+  .hero-grid { position: absolute; inset: 0; opacity: 0.5; mask-image: linear-gradient(to bottom, #000, transparent 70%); }
+
+  .hero-content {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 1.1rem;
+    margin-top: -3.25rem;
+    padding-bottom: 5.5rem;
+  }
+  .hero-title { margin-top: 0.25rem; }
+  .split-word { display: inline-block; white-space: nowrap; }
+  .split-char.is-accent { color: var(--color-bull-yellow); }
+  .hero-sub { max-width: 40rem; }
+  .hero-ctas { display: grid; gap: 10px; margin-top: 0.5rem; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.25rem; }
+  .hero-scroll { display: none; }
+
+  @media (min-width: 30rem) {
+    .hero-ctas { grid-template-columns: auto auto; justify-content: start; }
+  }
+  @media (min-width: 48rem) {
+    .hero-media { aspect-ratio: 16 / 9; }
+    .hero-content { margin-top: -6rem; }
+  }
+
+  /* Desktop: imagine/video full-bleed, text în stânga (utilajul e în dreapta cadrului) */
+  @media (min-width: 64rem) {
+    .hero { grid-template-rows: 1fr; align-items: end; }
+    .hero-media { position: absolute; inset: 0; aspect-ratio: auto; }
+    .hero-img, .hero-video { object-position: 72% 55%; }
+    .hero-img { animation: none; }
+    :global(html:not(:has(.hero-video))) .hero-img { animation: ken-burns 26s ease-in-out infinite alternate; }
+    .hero-scrim {
+      background:
+        linear-gradient(90deg, rgb(18 19 20 / 0.94) 0%, rgb(18 19 20 / 0.72) 34%, rgb(18 19 20 / 0.1) 62%, transparent 75%),
+        linear-gradient(to top, var(--color-asphalt) 0%, transparent 30%),
+        linear-gradient(to bottom, rgb(18 19 20 / 0.65) 0%, transparent 22%);
+    }
+    .hero-grid { mask-image: linear-gradient(90deg, #000 0%, transparent 55%); opacity: 0.6; }
+    .hero-content { margin-top: 0; padding-block: 8rem 9rem; gap: 1.5rem; }
+    .hero-title { max-width: 11ch; }
+    :global(html:lang(ru)) .hero-title { max-width: 14ch; }
+    .hero-sub { max-width: 36rem; }
+    .hero-scroll {
+      position: absolute;
+      left: var(--gutter);
+      bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-steel);
+      min-height: 44px;
+    }
+    .hero-scroll-line { width: 64px; height: 1px; background: rgb(231 228 221 / 0.3); position: relative; overflow: hidden; }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-bull-yellow);
+      transform: translateX(-100%);
+      animation: scroll-hint 2.4s var(--ease-hydraulic) 1.6s infinite;
+    }
+    @keyframes scroll-hint {
+      60%, 100% { transform: translateX(100%); }
+    }
+  }
+  @media (min-width: 80rem) {
+    .hero-content { padding-block: 9rem 10rem; }
+  }
+</style>

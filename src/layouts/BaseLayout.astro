@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Seo from '../components/seo/Seo.astro';
+import Header from '../components/layout/Header.astro';
+import SiteMenu from '../components/layout/SiteMenu.astro';
+import Footer from '../components/layout/Footer.astro';
+import MobileBar from '../components/layout/MobileBar.astro';
+import QuoteDialog from '../components/layout/QuoteDialog.astro';
+import CookieConsent from '../components/layout/CookieConsent.astro';
+import { analytics } from '../data/site';
+import { organizationGraph } from '../lib/schema';
+import { asset } from '../lib/images';
+import type { Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  alternates: Partial<Record<Lang, string>>;
+  ogImage: ImageMetadata;
+  ogImageAlt: string;
+  type?: 'website' | 'product' | 'article';
+  noindex?: boolean;
+  jsonld?: (Record<string, unknown> | null)[];
+}
+
+const { lang, title, description, alternates, ogImage, ogImageAlt, type, noindex, jsonld = [] } = Astro.props;
+const ui = t(lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const logo = await getImage({ src: asset('logo/ozonteh-logo.png'), width: 600, format: 'png' });
+const graph = [...organizationGraph(site, lang, new URL(logo.src, site).href), ...jsonld];
+---
+
+<!doctype html>
+<html lang={lang} class="no-js" data-ga4={analytics.ga4} data-meta-pixel={analytics.metaPixel} data-tiktok-pixel={analytics.tiktokPixel}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    {
+      lang === 'ro' ? (
+        <Font cssVariable="--ff-display" preload={[{ subset: 'latin', weight: '800' }]} />
+      ) : (
+        <Font cssVariable="--ff-display" />
+      )
+    }
+    {lang === 'ru' ? <Font cssVariable="--ff-display-cyr" preload={[{ subset: 'cyrillic', weight: '600' }, { subset: 'latin', weight: '600' }]} /> : <Font cssVariable="--ff-display-cyr" />}
+    <Font cssVariable="--ff-sans" />
+    <Font cssVariable="--ff-mono" />
+    <Seo
+      lang={lang}
+      title={title}
+      description={description}
+      alternates={alternates}
+      image={ogImage}
+      imageAlt={ogImageAlt}
+      type={type}
+      noindex={noindex}
+      jsonld={graph}
+    />
+    <meta name="theme-color" content="#121314" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href={lang === 'ru' ? '/manifest-ru.webmanifest' : '/manifest.webmanifest'} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{ui.a11y.skip}</a>
+    <Header lang={lang} alternates={alternates} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <SiteMenu lang={lang} alternates={alternates} />
+    <MobileBar lang={lang} />
+    <QuoteDialog lang={lang} />
+    <CookieConsent lang={lang} />
+    <div class="grain" aria-hidden="true"></div>
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

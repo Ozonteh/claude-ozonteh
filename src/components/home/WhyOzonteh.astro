@@ -1,0 +1,110 @@
+---
+import Icon from '../ui/Icon.astro';
+import OzontehLogo from '../ui/OzontehLogo.astro';
+import { company } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const w = ui.home.whyOzonteh;
+const icons = ['badge', 'shield', 'tools', 'box', 'truck', 'calendar'] as const;
+---
+
+<section class="oz on-yellow cv-auto" aria-labelledby="oz-title">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="wrap section">
+    <div class="section-head split">
+      <div class="oz-titles" data-reveal>
+        <p class="t-eyebrow"><span class="idx">06</span> {w.eyebrow}</p>
+        <h2 id="oz-title" class="t-h2">{w.title}</h2>
+      </div>
+      <div class="oz-logo" data-reveal style="--d:1">
+        <OzontehLogo variant="blue" height={44} />
+        <p class="t-mono oz-since">{company.legalName} · {company.foundingYear}</p>
+      </div>
+    </div>
+
+    <ul class="oz-grid" role="list">
+      {
+        w.items.map((it, i) => (
+          <li class="oz-card" data-reveal style={`--d:${i % 3}`}>
+            <span class="oz-icon"><Icon name={icons[i]} size={30} /></span>
+            <h3 class="oz-title">{it.title}</h3>
+            <p class="oz-text">{it.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="oz-demo" data-reveal>
+      <div>
+        <p class="oz-demo-title">{w.demoTitle}</p>
+        <p class="oz-demo-text">{w.demoText}</p>
+      </div>
+      <div class="oz-demo-actions">
+        <button type="button" class="btn btn-primary btn-lg" data-quote data-demo data-magnetic>
+          {ui.cta.demo} <Icon name="arrow" class="arrow" />
+        </button>
+        <a href={`tel:${company.phone.tel}`} class="oz-phone t-mono" data-track-loc="why-ozonteh">
+          <Icon name="phone" size={20} /> {company.phone.display}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hazard" aria-hidden="true"></div>
+</section>
+
+<style>
+  .oz-titles { display: grid; gap: 1.1rem; }
+  .oz-logo { display: grid; gap: 0.6rem; justify-items: start; }
+  .oz-since { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-steel-ink); }
+  .oz-grid { display: grid; gap: 2px; background: var(--color-asphalt); box-shadow: 0 0 0 2px var(--color-asphalt); }
+  .oz-card { display: grid; gap: 0.75rem; align-content: start; padding: 1.5rem 1.25rem 1.75rem; background: var(--color-bull-yellow); transition: background-color 0.3s; }
+  .oz-card:hover { background: var(--color-bull-yellow-hi); }
+  .oz-icon { display: grid; place-items: center; width: 56px; height: 56px; background: var(--color-asphalt); color: var(--color-bull-yellow); }
+  .oz-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: calc(1.75rem * var(--display-scale) / 0.82);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  :global(html:lang(ru)) .oz-title { font-weight: 600; font-size: 1.35rem; line-height: 1.1; }
+  .oz-text { font-size: 0.9688rem; color: rgb(18 19 20 / 0.82); }
+
+  .oz-demo {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding: 1.5rem 1.25rem;
+    background: var(--color-asphalt);
+    color: var(--color-bone);
+  }
+  .oz-demo-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: calc(clamp(1.8rem, 1.4rem + 1.6vw, 2.75rem) * var(--display-scale));
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--color-bull-yellow);
+  }
+  :global(html:lang(ru)) .oz-demo-title { font-weight: 600; }
+  .oz-demo-text { color: var(--color-steel); margin-top: 0.5rem; }
+  .oz-demo-actions { display: grid; gap: 0.75rem; justify-items: start; }
+  .oz-demo :global(:focus-visible) { outline-color: var(--color-bull-yellow); }
+  .oz-phone { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 48px; font-size: 1.125rem; color: var(--color-bone); }
+  .oz-phone:hover { color: var(--color-bull-yellow); }
+
+  @media (min-width: 48rem) {
+    .oz-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .oz-logo { justify-items: end; }
+    .oz-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .oz-card { padding: 2.25rem 2rem 2.5rem; }
+    .oz-demo { grid-template-columns: 1fr auto; align-items: center; padding: 2.25rem 2.5rem; margin-top: 3rem; }
+    .oz-demo-actions { grid-auto-flow: column; align-items: center; gap: 1.5rem; }
+  }
+</style>

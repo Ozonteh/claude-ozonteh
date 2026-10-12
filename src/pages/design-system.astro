@@ -1,0 +1,190 @@
+---
+// Pagină internă (noindex) cu design system-ul: culori, tipografie, butoane, badge-uri, carduri, motive grafice.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/ui/Icon.astro';
+import OzontehLogo from '../components/ui/OzontehLogo.astro';
+import BullLogo from '../components/ui/BullLogo.astro';
+import QuoteForm from '../components/layout/QuoteForm.astro';
+import { asset } from '../lib/images';
+
+const colors = [
+  { name: '--asphalt', hex: '#121314', use: 'Fundal principal' },
+  { name: '--graphite', hex: '#1E2022', use: 'Carduri și secțiuni' },
+  { name: '--steel', hex: '#8A9099', use: 'Text secundar (pe închis)' },
+  { name: '--steel-ink', hex: '#565C64', use: 'Text secundar pe paper/galben (AA)' },
+  { name: '--bull-yellow', hex: '#FFC20E', use: 'Accent principal, CTA' },
+  { name: '--hazard', hex: '#FF6A00', use: 'Badge „Nou" (rar)' },
+  { name: '--paper', hex: '#F4F1EA', use: 'Secțiuni deschise' },
+  { name: '--bone', hex: '#E7E4DD', use: 'Text principal pe închis' },
+];
+const icons = ['phone', 'whatsapp', 'quote', 'arrow', 'shield', 'breakout', 'fuel', 'cabin', 'gear', 'bucket', 'wrench', 'badge', 'tools', 'box', 'truck', 'calendar', 'pin', 'clock', 'mail', 'download', 'play'] as const;
+---
+
+<BaseLayout
+  lang="ro"
+  title="Design system | BULL Moldova"
+  description="Design system-ul site-ului BULL Moldova: paletă, tipografie, componente."
+  alternates={{ ro: '/design-system/' }}
+  ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
+  ogImageAlt="BULL Moldova"
+  noindex
+>
+  <div class="ds">
+    <header class="wrap ds-head">
+      <p class="t-eyebrow"><span class="idx">DS</span> Industrial Heavy-Duty, cinematic</p>
+      <h1 class="t-hero">Design system</h1>
+      <p class="t-lead">„Forța care sapă Moldova": fond grafit, galben BULL pentru accente, tipografie condensată, cote tehnice și linii de blueprint.</p>
+    </header>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">01 · Paletă</h2>
+      <ul class="swatches" role="list">
+        {
+          colors.map((c) => (
+            <li class="swatch">
+              <span class="swatch-chip" style={`background:${c.hex}`} />
+              <span class="t-mono">{c.name}</span>
+              <span class="t-mono swatch-hex">{c.hex}</span>
+              <span class="swatch-use">{c.use}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">02 · Tipografie</h2>
+      <div class="type-grid">
+        <div>
+          <p class="t-eyebrow">Hero · Big Shoulders Display 800</p>
+          <p class="t-hero">Forța care sapă</p>
+        </div>
+        <div>
+          <p class="t-eyebrow">H2 · Big Shoulders Display 800</p>
+          <p class="t-h2">Buldoexcavatoare BULL</p>
+        </div>
+        <div>
+          <p class="t-eyebrow">H3 · 800</p>
+          <p class="t-h3">Cupă Square Cut la 90°</p>
+        </div>
+        <div lang="ru" class="ru-sample">
+          <p class="t-eyebrow">RU · Oswald 600 (chirilic)</p>
+          <p class="t-h2">Экскаватор-погрузчик</p>
+        </div>
+        <div>
+          <p class="t-eyebrow">Lead · IBM Plex Sans 400</p>
+          <p class="t-lead">Garanție 1 an, extensibilă la 3 ani. Livrare, service și piese direct de la Ozonteh, Strășeni. Diacritice: ă â î ș ț Ă Â Î Ș Ț</p>
+        </div>
+        <div>
+          <p class="t-eyebrow">Cifre tehnice · IBM Plex Mono 500</p>
+          <div class="stats">
+            <div class="stat"><span class="stat-v">100<small>CP</small></span><span class="stat-k">Putere</span></div>
+            <div class="stat"><span class="stat-v">8.200<small>kg</small></span><span class="stat-k">Greutate</span></div>
+            <div class="stat"><span class="stat-v">4,6<small>m</small></span><span class="stat-k">Adâncime săpare</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">03 · Butoane și link-uri</h2>
+      <div class="row">
+        <button class="btn btn-primary btn-lg" data-magnetic><Icon name="quote" /> Cere ofertă</button>
+        <button class="btn btn-primary">Cere ofertă</button>
+        <button class="btn btn-primary btn-sm">Cere ofertă</button>
+        <button class="btn btn-outline btn-lg">Programează o demonstrație <Icon name="arrow" class="arrow" /></button>
+        <a class="link-arrow" href="#">Detalii tehnice <Icon name="arrow" size={16} /></a>
+      </div>
+      <p class="t-body-muted ds-note">Colț teșit industrial · magnetic pe desktop · „presiune hidraulică" la apăsare (scale 0,96 + umbră interioară) · țintă de atingere ≥ 48 px.</p>
+      <div class="row on-yellow ds-pad">
+        <button class="btn btn-dark btn-lg">Sună acum</button>
+        <button class="btn btn-outline">WhatsApp</button>
+      </div>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">04 · Badge-uri, chip-uri, cote</h2>
+      <div class="row">
+        <span class="badge badge-new">Nou</span>
+        <span class="badge badge-warranty"><Icon name="shield" /> Garanție 1 an, extensibilă la 3 ani</span>
+        <span class="badge badge-official">Distribuitor oficial</span>
+        <span class="badge badge-muted">9 modele · 52–100 CP</span>
+        <span class="chip">HD 100</span>
+        <a class="chip" href="#">AV490</a>
+      </div>
+      <div class="dims">
+        <span class="dim"><span class="dim-k">A</span>7,46 m</span>
+        <span class="dim"><span class="dim-k">B</span>3,49 m</span>
+        <span class="dim"><span class="dim-k">C</span>4,6 m</span>
+      </div>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">05 · Texturi și separatoare</h2>
+      <div class="tex">
+        <div class="tex-box blueprint"><span class="t-mono">.blueprint</span></div>
+        <div class="tex-box card ticks"><span class="t-mono">.card .ticks</span></div>
+        <div class="tex-box on-light blueprint"><span class="t-mono">.on-light .blueprint</span></div>
+      </div>
+      <div class="hazard ds-hz"></div>
+      <div class="hazard hazard-thin ds-hz"></div>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">06 · Iconițe</h2>
+      <ul class="icons" role="list">
+        {
+          icons.map((n) => (
+            <li>
+              <Icon name={n} size={28} />
+              <span class="t-mono">{n}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">07 · Logo-uri</h2>
+      <div class="row">
+        <OzontehLogo height={36} />
+        <span class="ds-light"><OzontehLogo variant="blue" height={36} /></span>
+        <BullLogo height={20} />
+      </div>
+      <p class="t-body-muted ds-note">Logo BULL: doar PNG 200×39 public. Pentru producție, cereți vectorul (SVG) din brand book-ul BULL.</p>
+    </section>
+
+    <section class="wrap ds-sec">
+      <h2 class="t-h3 ds-title">08 · Formular</h2>
+      <div class="card ds-form"><QuoteForm lang="ro" id="ds" variant="graphite" /></div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .ds { padding-top: calc(var(--header-h) + 2rem); padding-bottom: 5rem; }
+  .ds-head { display: grid; gap: 1rem; padding-bottom: 2rem; }
+  .ds-sec { padding-block: 2.5rem; border-top: 1px solid var(--color-line); display: grid; gap: 1.25rem; }
+  .ds-title { color: var(--color-bull-yellow); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .swatch { display: grid; gap: 0.25rem; font-size: 0.8125rem; }
+  .swatch-chip { height: 88px; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .swatch-hex { color: var(--color-steel); }
+  .swatch-use { color: var(--color-steel); }
+  .type-grid { display: grid; gap: 2rem; }
+  .ru-sample { font-family: var(--ff-display-cyr); }
+  .ru-sample .t-h2 { font-family: var(--ff-display-cyr); font-weight: 600; font-size: calc(clamp(2.5rem, 1.55rem + 4.4vw, 6rem) * 0.74); line-height: 1.02; }
+  .stats { display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 0.5rem; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .ds-pad { padding: 1.25rem; }
+  .ds-note { font-size: 0.875rem; }
+  .dims { display: grid; gap: 1rem; max-width: 520px; }
+  .tex { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .tex-box { height: 160px; display: grid; place-items: center; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .ds-hz { margin-top: 0.5rem; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+  .icons li { display: grid; justify-items: center; gap: 0.5rem; padding: 1rem 0.5rem; background: var(--color-graphite); font-size: 0.6875rem; color: var(--color-steel); }
+  .icons li :global(svg) { color: var(--color-bull-yellow); }
+  .ds-light { background: var(--color-paper); padding: 0.75rem 1rem; }
+  .ds-form { padding: 1.5rem; max-width: 760px; }
+</style>

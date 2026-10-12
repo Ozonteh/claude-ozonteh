@@ -1,0 +1,12 @@
+---
+// Logo BULL Machines (doar PNG 200×39 disponibil public — de înlocuit cu vectorul din brand book).
+import { Image } from 'astro:assets';
+import { asset } from '../../lib/images';
+interface Props { height?: number; class?: string; eager?: boolean }
+const { height = 16, class: cls, eager = false } = Astro.props;
+const src = asset('logo/bull-machines-logo.png');
+const width = Math.round((src.width / src.height) * height);
+---
+<span class:list={['bull-plate', cls]}>
+  <Image src={src} alt="BULL Machines" width={width} height={height} densities={[1, 2]} format="webp" loading={eager ? 'eager' : 'lazy'} />
+</span>

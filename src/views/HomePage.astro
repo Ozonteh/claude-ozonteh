@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import Trust from '../components/home/Trust.astro';
+import Showroom from '../components/home/Showroom.astro';
+import WhyBull from '../components/home/WhyBull.astro';
+import Configurator from '../components/home/Configurator.astro';
+import Applications from '../components/home/Applications.astro';
+import WhyOzonteh from '../components/home/WhyOzonteh.astro';
+import Videos from '../components/home/Videos.astro';
+import Faq from '../components/home/Faq.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import { publishedFaq } from '../data/faq';
+import { faqGraph } from '../lib/schema';
+import { asset } from '../lib/images';
+import { heroSources, HERO_MOBILE_MAX, HERO_DESKTOP_MIN } from '../lib/hero';
+import { ROUTES, type Lang } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const faq = publishedFaq(lang);
+const hero = await heroSources();
+---
+
+<BaseLayout
+  lang={lang}
+  title={ui.meta.homeTitle}
+  description={ui.meta.homeDescription}
+  alternates={ROUTES.home}
+  ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
+  ogImageAlt={ui.meta.ogAlt}
+  jsonld={[faqGraph(faq)]}
+>
+  <Fragment slot="head">
+    <link rel="preload" as="image" type="image/avif" imagesrcset={hero.mobAvif} imagesizes="100vw" media={HERO_MOBILE_MAX} fetchpriority="high" />
+    <link rel="preload" as="image" type="image/avif" imagesrcset={hero.deskAvif} imagesizes="100vw" media={HERO_DESKTOP_MIN} fetchpriority="high" />
+  </Fragment>
+  <Hero lang={lang} />
+  <Trust lang={lang} />
+  <Showroom lang={lang} />
+  <WhyBull lang={lang} />
+  <Configurator lang={lang} />
+  <Applications lang={lang} />
+  <WhyOzonteh lang={lang} />
+  <Videos lang={lang} />
+  <Faq lang={lang} items={faq} />
+  <FinalCta lang={lang} />
+</BaseLayout>
