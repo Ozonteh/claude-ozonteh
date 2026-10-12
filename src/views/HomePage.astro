@@ -11,7 +11,9 @@ import Videos from '../components/home/Videos.astro';
 import Faq from '../components/home/Faq.astro';
 import FinalCta from '../components/home/FinalCta.astro';
 import { publishedFaq } from '../data/faq';
-import { faqGraph } from '../lib/schema';
+import { faqGraph, videoGraph } from '../lib/schema';
+import { getImage } from 'astro:assets';
+import { getVideo, FEATURED_VIDEOS } from '../data/videos';
 import { asset } from '../lib/images';
 import { heroSources, HERO_MOBILE_MAX, HERO_DESKTOP_MIN } from '../lib/hero';
 import { ROUTES, type Lang } from '../i18n/routes';
@@ -22,6 +24,22 @@ const { lang } = Astro.props;
 const ui = t(lang);
 const faq = publishedFaq(lang);
 const hero = await heroSources();
+const site = Astro.site ?? new URL(Astro.url.origin);
+const videoLd = await Promise.all(
+  FEATURED_VIDEOS.map(async (id) => {
+    const v = getVideo(id)!;
+    const thumb = await getImage({ src: asset(v.poster!), width: 1280, format: 'jpg', quality: 80 });
+    return videoGraph({
+      id: v.id,
+      name: v.title[lang],
+      description: v.description[lang],
+      thumbnailUrl: new URL(thumb.src, site).href,
+      uploadDate: v.uploadDate,
+      duration: v.duration,
+      inLanguage: 'ro',
+    });
+  })
+);
 ---
 
 <BaseLayout
@@ -31,7 +49,7 @@ const hero = await heroSources();
   alternates={ROUTES.home}
   ogImage={asset('santier/buldoexcavator-bull-ch76-santier-moldova.webp')}
   ogImageAlt={ui.meta.ogAlt}
-  jsonld={[faqGraph(faq)]}
+  jsonld={[faqGraph(faq), ...videoLd]}
 >
   <Fragment slot="head">
     <link rel="preload" as="image" type="image/avif" imagesrcset={hero.mobAvif} imagesizes="100vw" media={HERO_MOBILE_MAX} fetchpriority="high" />

@@ -4,7 +4,9 @@
 import { Image } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
 import { asset } from '../../lib/images';
-import { getProduct, type Product } from '../../lib/products';
+import { getProduct } from '../../lib/products';
+import { getVideo, FEATURED_VIDEOS, type ChannelVideo } from '../../data/videos';
+import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
 
@@ -12,14 +14,11 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const v = t(lang).home.videos;
 
-const featured = [
-  { product: 'bull-sd76-super-smart', video: 'uguJY_JSvbM', poster: 'santier/buldoexcavator-bull-sd76-santier-constructii.webp' },
-  { product: 'bull-hd-100', video: 'TeWmmhVxYmc', poster: 'santier/buldoexcavator-bull-hd100-sapare-retele.webp' },
-  { product: 'bull-av490', video: '3SVIaJpAJZQ', poster: 'santier/miniincarcator-skid-steer-bull-av490-santier.webp' },
-].map((f) => {
-  const p = getProduct(f.product) as Product;
-  return { ...f, p, meta: p.videos.find((x) => x.id === f.video)! };
-});
+// Clipurile de pe canalul YouTube Ozonteh (în limba română).
+const featured = FEATURED_VIDEOS.map((id) => getVideo(id) as ChannelVideo).map((vid) => ({
+  vid,
+  label: vid.product ? getProduct(vid.product)!.name : 'Ozonteh × BULL',
+}));
 ---
 
 <section class="videos section on-graphite cv-auto" aria-labelledby="videos-title">
@@ -35,19 +34,30 @@ const featured = [
       {
         featured.map((f, i) => (
           <li class="video" data-reveal style={`--d:${i}`}>
-            <div class="video-frame" data-yt={f.video} data-yt-title={f.meta.title[lang]}>
-              <Image src={asset(f.poster)} alt="" widths={[400, 640, 900]} sizes="(min-width: 1024px) 31vw, 86vw" class="video-poster" loading="lazy" />
-              <button type="button" class="video-play" aria-label={`${v.play}: ${f.meta.title[lang]}`}>
+            <div class="video-frame" data-yt={f.vid.id} data-yt-title={f.vid.title[lang]}>
+              <Image src={asset(f.vid.poster!)} alt="" widths={[400, 640, 960]} sizes="(min-width: 1024px) 31vw, 86vw" class="video-poster" loading="lazy" />
+              <button type="button" class="video-play" aria-label={`${v.play}: ${f.vid.title[lang]}`}>
                 <span class="video-play-icon"><Icon name="play" size={26} /></span>
               </button>
-              <span class="video-tag t-mono">YouTube</span>
+              <span class="video-tag t-mono">YouTube · Ozonteh</span>
             </div>
-            <p class="video-title">{f.meta.title[lang]}</p>
-            <p class="t-mono video-model">{f.p.name}</p>
+            <p class="video-title">{f.vid.title[lang]}</p>
+            <p class="t-mono video-model">
+              {f.label}
+              {v.langNote && <span class="video-lang"> · {v.langNote}</span>}
+            </p>
           </li>
         ))
       }
     </ul>
+    <div class="videos-cta" data-reveal>
+      <a href={company.youtubeChannel} class="btn btn-outline" target="_blank" rel="noopener" data-track="click_youtube" data-track-loc="videos">
+        <Icon name="youtube" /> {v.channel}
+      </a>
+      <a href={company.youtubeSubscribe} class="btn btn-ghost" target="_blank" rel="noopener" data-track="click_youtube_subscribe" data-track-loc="videos">
+        {v.subscribe} <Icon name="arrowUpRight" size={18} />
+      </a>
+    </div>
   </div>
 </section>
 
@@ -101,6 +111,9 @@ const featured = [
   .video-frame :global(.video-iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .video-title { font-weight: 600; line-height: 1.35; }
   .video-model { font-size: 0.75rem; color: var(--color-steel); }
+  .videos-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 1rem; margin-top: 2rem; }
+  .videos-cta :global(svg) { color: #ff3d3d; }
+  .videos-cta .btn-ghost :global(svg) { color: inherit; }
 
   @media (min-width: 64rem) {
     .videos-grid { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; margin: 0; padding: 0; }

@@ -1,0 +1,10 @@
+---
+// Logotipul comun OZONTEH × BULL (vector, furnizat de Ozonteh). Ca <img>: e mare (~120 KB), se descarcă lazy și se cache-uiește.
+import lockupColor from '../../assets/brand/ozonteh-bull-logo.svg';
+import lockupInvers from '../../assets/brand/ozonteh-bull-logo-invers.svg';
+interface Props { height?: number; variant?: 'invers' | 'color'; class?: string; eager?: boolean }
+const { height = 80, variant = 'invers', class: cls, eager = false } = Astro.props;
+const src = variant === 'color' ? lockupColor : lockupInvers;
+const width = Math.round((1243 / 500) * height);
+---
+<img src={src.src} width={width} height={height} alt="Ozonteh × BULL Machines" class={cls} loading={eager ? 'eager' : 'lazy'} decoding="async" />

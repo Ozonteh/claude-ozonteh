@@ -21,6 +21,7 @@ const f = ui.home.final;
       <p class="t-eyebrow"><span class="idx">09</span> {f.eyebrow}</p>
       <h2 id="final-title" class="t-h2">{f.title}</h2>
       <p class="t-lead">{f.text}</p>
+      <p class="final-leasing"><span class="badge badge-official">Leasing</span> {f.leasing}</p>
       <ul class="final-contacts" role="list">
         <li>
           <a href={`tel:${company.phone.tel}`} class="final-phone t-mono" data-track-loc="final-cta"><Icon name="phone" /> {company.phone.intl}</a>
@@ -51,6 +52,7 @@ const f = ui.home.final;
   .final-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--color-asphalt) 0%, rgb(18 19 20 / 0.82) 30%, rgb(18 19 20 / 0.9) 100%); }
   .final-grid { display: grid; gap: 2.5rem; }
   .final-copy { display: grid; gap: 1.25rem; align-content: start; }
+  .final-leasing { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-weight: 600; }
   .final-contacts { display: grid; gap: 0.75rem; margin-top: 0.5rem; }
   .final-phone { display: inline-flex; align-items: center; gap: 0.6rem; font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem); color: var(--color-bull-yellow); min-height: 48px; }
   .final-line { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--color-bone); min-height: 40px; }

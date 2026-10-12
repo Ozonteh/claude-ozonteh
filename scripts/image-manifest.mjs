@@ -102,6 +102,14 @@ const galleries = [
   ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/skidsteer/0${i}.png`, out: `galerie/miniincarcator-skid-steer-bull-av490-${i}.webp` })),
 ];
 
+// Postere pentru video-urile de pe canalul YouTube Ozonteh (miniaturile oficiale ale canalului, auto-găzduite).
+const videoPosters = [
+  ['FtM1nI-YGjU', 'video/video-ozonteh-dealer-oficial-bull-moldova.webp'],
+  ['tyFDVK73byY', 'video/video-buldoexcavator-bull-hd100-ozonteh.webp'],
+  ['HgDJ6PmjghU', 'video/video-miniincarcator-bull-av490-ozonteh.webp'],
+  ['zIWOgi8mmsk', 'video/video-vizita-bull-machines-ozonteh-straseni.webp'],
+].map(([id, out]) => ({ src: id, url: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`, out }));
+
 export const manifest = [
   ...products,
   ...scenes,
@@ -109,10 +117,11 @@ export const manifest = [
   ...blueprints,
   ...buckets,
   ...galleries,
+  ...videoPosters,
 ].map((e) => ({ ...e, url: e.url ?? BULL + e.src }));
 
 // Logo-uri (Anexa A). Ozonteh: original albastru + variantă albă pentru fundal întunecat.
+// Logo-ul BULL și logotipul comun OZONTEH × BULL sunt vectoriale, în src/assets/brand/ (furnizate de Ozonteh).
 export const logos = [
   { url: 'https://ozonteh.net/wp-content/uploads/2022/06/logo-ozonteh.png', out: 'logo/ozonteh-logo.png', variants: ['white'] },
-  { url: 'https://bullindia.com/images/bull-machine-logo.png', out: 'logo/bull-machines-logo.png' },
 ];

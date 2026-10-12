@@ -1,0 +1,60 @@
+# BULL Moldova: configurare Apache / LiteSpeed (hosting cPanel)
+Options -Indexes
+DirectoryIndex index.html index.php
+
+# ---------- HTTPS ----------
+# Recomandat: cPanel → Domains → bull.ozonteh.md → „Force HTTPS Redirect" = On (după ce AutoSSL emite certificatul).
+# Alternativ, după ce certificatul e activ, decomentați:
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# ---------- Rescrieri ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Endpoint-ul formularului „Cere ofertă"
+  RewriteRule ^api/lead/?$ api/lead.php [L,QSA]
+</IfModule>
+
+# ---------- Pagina 404 (pe /ru/… pagina 404 redirecționează singură către varianta rusă) ----------
+ErrorDocument 404 /404.html
+
+# ---------- Tipuri MIME ----------
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
+  AddCharset utf-8 .html .css .js .xml .txt .webmanifest
+</IfModule>
+
+# ---------- Compresie ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+
+# ---------- Cache ----------
+# Fișierele din /_astro/ au hash în nume → cache „immutable" (vezi _astro/.htaccess). Aici: HTML mereu proaspăt.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(ico|png|svg|webmanifest)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # ---------- Securitate ----------
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# ---------- Fișiere care nu trebuie servite ----------
+<FilesMatch "^(bull-config.*\.php|\.env.*|.*\.md|.*\.log)$">
+  Require all denied
+</FilesMatch>

@@ -15,7 +15,8 @@
     "images": "node scripts/fetch-images.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "test": "node --experimental-strip-types --no-warnings tests/lead.test.mts",
-    "icons": "node scripts/make-icons.mjs"
+    "icons": "node scripts/make-icons.mjs",
+    "test:php": "node tests/lead-php.test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

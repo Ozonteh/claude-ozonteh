@@ -508,15 +508,6 @@ html:lang(ru) {
   .switch:checked::after { transform: translateX(20px); background: var(--color-asphalt); }
   .switch:disabled { opacity: 0.6; }
 
-  /* Placă cu logo BULL (logo roșu/negru pe fond deschis) */
-  .bull-plate {
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-paper);
-    padding: 5px 8px;
-    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-  }
-
   /* Text pe imagine: degradeu pentru lizibilitate */
   .scrim-b { background: linear-gradient(to top, rgb(18 19 20 / 0.95) 0%, rgb(18 19 20 / 0.55) 45%, transparent 75%); }
   .scrim-l { background: linear-gradient(90deg, rgb(18 19 20 / 0.92) 0%, rgb(18 19 20 / 0.6) 40%, transparent 72%); }

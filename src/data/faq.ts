@@ -34,10 +34,11 @@ export const generalFaq: QA[] = [
     },
   },
   {
-    // TODO Ozonteh: completați cu partenerii de leasing, apoi ștergeți `draft`.
-    draft: true,
     q: { ro: 'Se poate cumpăra în leasing sau în rate?', ru: 'Можно купить в лизинг или в рассрочку?' },
-    a: { ro: '[de completat cu partenerii de leasing]', ru: '[заполнить после согласования с лизинговыми партнёрами]' },
+    a: {
+      ro: 'Da. Utilajele BULL se pot cumpăra în leasing prin partenerii noștri maib (Moldova Agroindbank) și Microinvest. Spune-ne modelul care te interesează și îți pregătim oferta pentru dosarul de leasing.',
+      ru: 'Да. Технику BULL можно купить в лизинг через наших партнёров: maib (Moldova Agroindbank) и Microinvest. Назовите интересующую модель, и мы подготовим предложение для оформления лизинга.',
+    },
   },
   {
     q: { ro: 'Ce diferență este între un buldoexcavator și un skid steer?', ru: 'Чем экскаватор-погрузчик отличается от мини-погрузчика?' },

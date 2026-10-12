@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/ui/Icon.astro';
 import OzontehLogo from '../components/ui/OzontehLogo.astro';
 import BullLogo from '../components/ui/BullLogo.astro';
+import OzontehBullLogo from '../components/ui/OzontehBullLogo.astro';
 import QuoteForm from '../components/layout/QuoteForm.astro';
 import { asset } from '../lib/images';
 
@@ -149,9 +150,14 @@ const icons = ['phone', 'whatsapp', 'quote', 'arrow', 'shield', 'breakout', 'fue
       <div class="row">
         <OzontehLogo height={36} />
         <span class="ds-light"><OzontehLogo variant="blue" height={36} /></span>
-        <BullLogo height={20} />
+        <BullLogo height={22} />
+        <span class="ds-light"><BullLogo height={22} variant="color" /></span>
       </div>
-      <p class="t-body-muted ds-note">Logo BULL: doar PNG 200×39 public. Pentru producție, cereți vectorul (SVG) din brand book-ul BULL.</p>
+      <div class="row">
+        <OzontehBullLogo height={110} />
+        <span class="ds-light"><OzontehBullLogo height={110} variant="color" /></span>
+      </div>
+      <p class="t-body-muted ds-note">Logo-uri vectoriale furnizate de Ozonteh. Pe fundal închis se folosește varianta „invers" (taurul și OZONTEH în culoarea hârtiei); pe fundal deschis, originalul.</p>
     </section>
 
     <section class="wrap ds-sec">

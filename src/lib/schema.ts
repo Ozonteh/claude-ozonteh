@@ -79,15 +79,25 @@ export function faqGraph(qa: { q: string; a: string }[]) {
   };
 }
 
-/** VideoObject — emis doar când data încărcării e cunoscută (câmp obligatoriu Google). */
-export function videoGraph(v: Product['videos'][number], lang: Lang, thumbnailUrl: string, description: string) {
+/** VideoObject — emis doar când data publicării e cunoscută (câmp obligatoriu Google). */
+export function videoGraph(v: {
+  id: string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string | null;
+  duration?: string;
+  inLanguage?: string;
+}) {
   if (!v.uploadDate) return null;
   return {
     '@type': 'VideoObject',
-    name: v.title[lang],
-    description,
-    thumbnailUrl,
+    name: v.name,
+    description: v.description,
+    thumbnailUrl: v.thumbnailUrl,
     uploadDate: v.uploadDate,
+    ...(v.duration && { duration: v.duration }),
+    ...(v.inLanguage && { inLanguage: v.inLanguage }),
     embedUrl: `https://www.youtube-nocookie.com/embed/${v.id}`,
     contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
   };

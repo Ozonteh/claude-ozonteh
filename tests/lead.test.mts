@@ -33,7 +33,7 @@ process.env.RESEND_API_KEY = 'k';
 calls.length = 0;
 r = await post(base);
 assert(r.status === 200 && (await r.json()).via === 'email', 'amoCRM eșuat → e-mail de rezervă');
-assert(calls.some((c) => c.url.includes('resend') && c.body.includes('office@ozonteh.md')), 'e-mail către office@ozonteh.md');
+assert(calls.some((c) => c.url.includes('resend') && c.body.includes('marketing@ozonteh.md')), 'e-mail către marketing@ozonteh.md');
 
 calls.length = 0;
 r = await post({ ...base, website: 'spam' });

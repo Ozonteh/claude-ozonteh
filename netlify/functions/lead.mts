@@ -1,5 +1,5 @@
 // Netlify Function: primește cererile „Cere ofertă" și le trimite în amoCRM (contul Ozonteh).
-// Dacă amoCRM nu e configurat sau răspunde cu eroare → e-mail de rezervă către office@ozonteh.md (Resend).
+// Dacă amoCRM nu e configurat sau răspunde cu eroare → e-mail de rezervă către marketing@ozonteh.md (Resend).
 // Variabile de mediu: vezi .env.example.
 
 type Lead = {
@@ -106,7 +106,7 @@ async function toEmail(l: Lead): Promise<boolean> {
     headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
     body: JSON.stringify({
       from: env('LEAD_EMAIL_FROM') || 'BULL Moldova <site@bull.ozonteh.md>',
-      to: [env('LEAD_EMAIL_TO') || 'office@ozonteh.md'],
+      to: [env('LEAD_EMAIL_TO') || 'marketing@ozonteh.md'],
       subject: `${l.demo ? '[DEMO] ' : ''}Cerere ofertă ${l.model || 'BULL'}: ${l.name} ${l.phone}`,
       text: summary(l),
     }),

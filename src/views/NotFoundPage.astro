@@ -23,6 +23,13 @@ const picks = products.filter((p) => ['bull-sd76-super-smart', 'bull-hd-100', 'b
   ogImageAlt={ui.meta.ogAlt}
   noindex
 >
+  {
+    lang === 'ro' && (
+      <script is:inline slot="head">
+        if (/^\/ru(\/|$)/.test(location.pathname) && !location.pathname.startsWith('/ru/404')) location.replace('/ru/404/');
+      </script>
+    )
+  }
   <section class="nf on-dark blueprint">
     <div class="wrap nf-grid">
       <div class="nf-copy">

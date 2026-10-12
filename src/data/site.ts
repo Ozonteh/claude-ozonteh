@@ -5,7 +5,7 @@ export const company = {
   brandName: 'BULL Moldova',
   shortName: 'Ozonteh',
   foundingYear: 2011,
-  email: 'office@ozonteh.md',
+  email: 'marketing@ozonteh.md',
   // Numărul principal BULL Moldova: header, bara mobilă, formulare, footer, JSON-LD.
   phone: { display: '069 898 307', intl: '+373 69 898 307', tel: '+37369898307' },
   whatsapp: 'https://wa.me/37369898307',
@@ -13,7 +13,6 @@ export const company = {
     street: 'Șos. Chișinău 69 (E58)',
     city: 'Strășeni',
     locality: 'mun. Strășeni',
-    // Registrul de stat indică MD-3701; OpenStreetMap indică MD-3729 — de confirmat cu contabilitatea.
     postalCode: 'MD-3701',
     region: 'Strășeni',
     country: 'MD',
@@ -31,10 +30,15 @@ export const company = {
     facebook: 'https://www.facebook.com/ozonteh.md',
     instagram: 'https://www.instagram.com/ozonteh.md',
     tiktok: 'https://www.tiktok.com/@ozonteh.md',
-    // TODO: completați linkurile exacte ale canalelor YouTube și Telegram Ozonteh.
-    youtube: '',
-    telegram: '',
+    // YouTube și Telegram: linkurile folosite pe ozonteh.net
+    youtube: 'https://www.youtube.com/channel/UCaTEdTbAbCPlkM54HTUjHfg',
+    telegram: 'https://t.me/+37369898772',
   },
+  // Canalul YouTube Ozonteh: aici apar video-urile cu fiecare utilaj BULL.
+  youtubeChannel: 'https://www.youtube.com/channel/UCaTEdTbAbCPlkM54HTUjHfg',
+  youtubeSubscribe: 'https://www.youtube.com/channel/UCaTEdTbAbCPlkM54HTUjHfg?sub_confirmation=1',
+  // Parteneri de leasing (FAQ, CTA)
+  leasingPartners: ['maib', 'Microinvest'],
   warrantyYears: 1,
   warrantyMaxYears: 3,
 } as const;
