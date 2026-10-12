@@ -3,6 +3,7 @@
 // Se deschide din orice element [data-quote] (opțional data-model="bull-hd-100", data-demo).
 import Icon from '../ui/Icon.astro';
 import QuoteForm from './QuoteForm.astro';
+import WarrantyBadges from '../ui/WarrantyBadges.astro';
 import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
@@ -26,7 +27,7 @@ const ui = t(lang);
       </button>
     </header>
     <p class="sheet-sub">{ui.form.subtitle}</p>
-    <p class="badge badge-warranty sheet-badge"><Icon name="shield" /> {ui.badges.warranty}</p>
+    <WarrantyBadges lang={lang} />
     <QuoteForm lang={lang} id="dlg" variant="graphite" />
     <div class="sheet-alt">
       <span class="t-body-muted">{ui.form.orCall}</span>

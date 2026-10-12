@@ -29,8 +29,8 @@ export const generalFaq: QA[] = [
   {
     q: { ro: 'Ce garanție oferiți?', ru: 'Какая гарантия?' },
     a: {
-      ro: 'Garanție de 1 an pentru fiecare utilaj BULL, cu posibilitate de extindere până la 3 ani.',
-      ru: 'Гарантия 1 год на каждую машину BULL с возможностью продления до 3 лет.',
+      ro: 'Fiecare utilaj BULL are garanție de 24 de luni sau 2000 de moto-ore, iar motorul are garanție de 3 ani sau 3000 de moto-ore. Deservirea în garanție se face la service-ul Ozonteh din Strășeni și din Bălți.',
+      ru: 'На каждую машину BULL действует гарантия 24 месяца или 2000 моточасов, а на двигатель — 3 года или 3000 моточасов. Гарантийное обслуживание — в сервисе Ozonteh в Страшенах и Бельцах.',
     },
   },
   {

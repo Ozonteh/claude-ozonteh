@@ -3,7 +3,7 @@
 // Pe mobil: poster cu efect Ken Burns. Titlul apare cu reveal pe litere, în CSS pur (nu blochează LCP).
 import Icon from '../ui/Icon.astro';
 import { heroSources, HERO_MOBILE_MAX } from '../../lib/hero';
-import { heroVideo } from '../../data/site';
+import { heroVideo, company } from '../../data/site';
 import { products } from '../../lib/products';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
@@ -12,6 +12,8 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const ui = t(lang);
 const h = ui.home.hero;
+const wt = ui.home.warranty;
+const w = company.warranty;
 
 const { mob, mobAvif, mobWebp, deskAvif, deskWebp, fallback } = await heroSources();
 
@@ -92,12 +94,22 @@ const split = lines.map((line) => line.split(' ').map((word) => [...word].map((c
         <Icon name="arrow" class="arrow" />
       </button>
     </div>
-    <ul class="hero-badges fade-up" style="--delay:1s" role="list">
-      <li class="badge badge-warranty"><Icon name="shield" /> {ui.badges.warranty}</li>
+    <ul class="hero-badges fade-up" style="--delay:1.1s" role="list">
       <li class="badge badge-muted">{products.length} {h.models} · 52–100 {ui.units.hp}</li>
     </ul>
   </div>
 
+  <a href="#garantie" class="hero-warranty fade-up" style="--delay:.45s">
+    <span class="hw-icon" aria-hidden="true"><Icon name="shield" size={26} /></span>
+    <span class="hw-item">
+      <span class="hw-k">{h.warrantyMachine}</span>
+      <span class="hw-v"><b>{w.months}</b> {wt.months} <i>/</i> <b>{w.hours}</b> {wt.hours}</span>
+    </span>
+    <span class="hw-item">
+      <span class="hw-k">{h.warrantyEngine}</span>
+      <span class="hw-v"><b>{w.engineYears}</b> {wt.years} <i>/</i> <b>{w.engineHours}</b> {wt.hours}</span>
+    </span>
+  </a>
   <a href="#gama" class="hero-scroll fade-up" style="--delay:1.3s" aria-label={h.scroll}>
     <span class="t-mono">{h.scroll}</span>
     <span class="hero-scroll-line" aria-hidden="true"></span>
@@ -188,6 +200,44 @@ const split = lines.map((line) => line.split(' ').map((word) => [...word].map((c
   .hero-sub { max-width: 40rem; }
   .hero-ctas { display: grid; gap: 10px; margin-top: 0.5rem; }
   .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.25rem; }
+  /* Plăcuța de garanție: vizibilă în primul ecran (peste imagine), pe mobil sus, pe desktop jos-dreapta */
+  .hero-warranty {
+    position: absolute;
+    z-index: 2;
+    top: calc(var(--header-h) + 12px);
+    left: var(--gutter);
+    right: var(--gutter);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.2rem 0.75rem;
+    align-items: center;
+    width: fit-content;
+    max-width: calc(100% - 2 * var(--gutter));
+    padding: 0.6rem 0.8rem;
+    background: rgb(18 19 20 / 0.86);
+    box-shadow: inset 0 0 0 1px rgb(255 194 14 / 0.55), inset 4px 0 0 var(--color-bull-yellow), 0 12px 30px rgb(0 0 0 / 0.35);
+  }
+  .hero-warranty:hover { box-shadow: inset 0 0 0 1px var(--color-bull-yellow), inset 4px 0 0 var(--color-bull-yellow), 0 12px 30px rgb(0 0 0 / 0.35); }
+  .hw-icon { grid-row: span 2; display: grid; place-items: center; width: 38px; height: 38px; color: var(--color-asphalt); background: var(--color-bull-yellow); }
+  .hw-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; }
+  .hw-k { font-family: var(--font-mono); font-size: 0.5625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-steel); min-width: 10.5em; }
+  .hw-v { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-bone); white-space: nowrap; }
+  .hw-v b { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--color-bull-yellow); }
+  :global(html:lang(ru)) .hw-v b { font-weight: 600; font-size: 1rem; }
+  .hw-v i { font-style: normal; color: var(--color-steel); margin-inline: 0.15rem; }
+  @media (min-width: 64rem) {
+    .hero-warranty {
+      top: calc(var(--header-h) + 1.75rem);
+      left: auto;
+      right: var(--gutter);
+      padding: 1rem 1.25rem;
+      gap: 0.35rem 1rem;
+    }
+    .hw-icon { width: 48px; height: 48px; }
+    .hw-k { font-size: 0.6875rem; }
+    .hw-v { font-size: 0.9375rem; }
+    .hw-v b { font-size: 1.6rem; }
+  }
   .hero-scroll { display: none; }
 
   @media (min-width: 30rem) {

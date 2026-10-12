@@ -6,7 +6,7 @@ const ro = {
     siteName: 'BULL Moldova',
     homeTitle: 'Utilaje BULL în Moldova: buldoexcavatoare, încărcătoare, skid steer | Distribuitor oficial',
     homeDescription:
-      'Buldoexcavatoare, încărcătoare frontale și miniîncărcătoare skid steer BULL de la distribuitorul oficial Ozonteh. Garanție 1 an, extensibilă la 3 ani. Service și piese în Strășeni și Bălți. Sună: 069 898 307.',
+      'Buldoexcavatoare, încărcătoare frontale și skid steer BULL de la distribuitorul oficial Ozonteh. Garanție 24 luni/2000 moto-ore, motor 3 ani/3000 moto-ore. Sună: 069 898 307.',
     ogAlt: 'Buldoexcavator BULL pe șantier',
   },
   a11y: {
@@ -58,7 +58,8 @@ const ro = {
   },
   badges: {
     new: 'Nou',
-    warranty: 'Garanție 1 an, extensibilă la 3 ani',
+    warranty: 'Garanție 24 luni / 2000 moto-ore',
+    warrantyEngine: 'Motor: 3 ani / 3000 moto-ore',
     official: 'Distribuitor oficial',
   },
   units: { hp: 'CP', kw: 'kW', kg: 'kg', m: 'm', mm: 'mm', kmh: 'km/h', lpm: 'l/min', bar: 'bar', m3: 'm³', t: 't' },
@@ -135,16 +136,36 @@ const ro = {
     hero: {
       eyebrow: 'Distribuitor oficial BULL Machines în Republica Moldova',
       title: 'Utilaje BULL. Acum oficial în Moldova.',
-      sub: 'Buldoexcavatoare, încărcătoare frontale și skid steer de la producătorul nr. 1 din India, cu peste 60.000 de utilaje care lucrează în lume. Garanție 1 an, extensibilă la 3 ani. Livrare, service și piese direct de la Ozonteh, Strășeni.',
+      sub: 'Buldoexcavatoare, încărcătoare frontale și skid steer de la producătorul nr. 1 din India, cu peste 60.000 de utilaje care lucrează în lume. Livrare, service și piese direct de la Ozonteh, Strășeni.',
       imageAlt: 'Buldoexcavator BULL CH76 Challenger pe un șantier de construcții',
       scroll: 'Derulează',
       models: 'modele',
+      warrantyMachine: 'Garanție utilaj',
+      warrantyEngine: 'Garanție motor',
+    },
+    warranty: {
+      eyebrow: 'Garanție',
+      title: 'Garanție 24 de luni. Pentru motor, 3 ani.',
+      text: 'Fiecare utilaj BULL vândut de Ozonteh are garanție de 24 de luni sau 2000 de moto-ore. Motorul are garanție de 3 ani sau 3000 de moto-ore. Deservirea în garanție o face service-ul propriu Ozonteh, cu mecanici calificați, la Strășeni și la Bălți.',
+      machine: 'Utilaj',
+      engine: 'Motor',
+      months: 'luni',
+      years: 'ani',
+      hours: 'moto-ore',
+      or: 'sau',
+      points: [
+        'Service propriu în Strășeni și filiala din Bălți',
+        'Piese de schimb în stoc în Moldova',
+        'Deservire în garanție și post-garanție',
+      ],
+      serviceLabel: 'Departament tehnic / service',
+      partsLabel: 'Piese de schimb',
     },
     trust: {
       eyebrow: 'Distribuitor oficial',
       title: 'Distribuitor oficial BULL în Moldova',
       text: 'Ozonteh Impex SRL este reprezentanța oficială BULL Machines în Republica Moldova. Utilajele vin direct de la producător, iar garanția, service-ul și piesele de schimb sunt asigurate aici, la Strășeni și Bălți.',
-      ticker: ['60.000+ utilaje în lume', '600+ dealeri', '24+ ani de experiență', '12.000 de utilaje/an', '2 fabrici'],
+      ticker: ['Garanție 24 luni / 2000 moto-ore', 'Motor: 3 ani / 3000 moto-ore', '60.000+ utilaje în lume', '600+ dealeri', '24+ ani de experiență', '12.000 de utilaje/an', '2 fabrici'],
       counters: {
         machines: 'utilaje BULL lucrează în lume',
         dealers: 'dealeri în lume',
@@ -197,7 +218,7 @@ const ro = {
       title: 'Cumperi utilajul. Primești și echipa din spatele lui.',
       items: [
         { title: 'Distribuitor oficial', text: 'Utilaje noi, aduse direct de la BULL Machines, cu documente și garanție de producător.' },
-        { title: 'Garanție 1 an, extensibilă la 3 ani', text: 'Garanție standard de 1 an, cu posibilitate de extindere până la 3 ani.' },
+        { title: 'Garanție 24 luni / 2000 moto-ore', text: 'Pentru motor: 3 ani sau 3000 de moto-ore. Deservirea în garanție o face service-ul Ozonteh din Strășeni și Bălți.' },
         { title: 'Service propriu', text: 'Mecanici calificați în Strășeni și filiala din Bălți. Deservire în garanție și post-garanție.' },
         { title: 'Piese de schimb în stoc', text: 'Filtre, consumabile și piese de uzură disponibile în Moldova. Comenzi la 069 898 822.' },
         { title: 'Livrare în toată Moldova', text: 'Aducem utilajul la sediul tău sau direct pe șantier.' },
@@ -242,7 +263,7 @@ const ru: UI = {
     siteName: 'BULL Moldova',
     homeTitle: 'Спецтехника BULL в Молдове: экскаваторы-погрузчики, погрузчики, мини-погрузчики | Официальный дистрибьютор',
     homeDescription:
-      'Экскаваторы-погрузчики, фронтальные погрузчики и мини-погрузчики BULL от официального дистрибьютора Ozonteh. Гарантия 1 год с продлением до 3 лет. Сервис и запчасти в Страшенах и Бельцах. Звоните: 069 898 307.',
+      'Экскаваторы-погрузчики, фронтальные и мини-погрузчики BULL от официального дистрибьютора Ozonteh. Гарантия 24 мес./2000 моточасов, двигатель 3 года/3000 моточасов. Тел.: 069 898 307.',
     ogAlt: 'Экскаватор-погрузчик BULL на стройплощадке',
   },
   a11y: {
@@ -294,7 +315,8 @@ const ru: UI = {
   },
   badges: {
     new: 'Новинка',
-    warranty: 'Гарантия 1 год, с продлением до 3 лет',
+    warranty: 'Гарантия 24 месяца / 2000 моточасов',
+    warrantyEngine: 'Двигатель: 3 года / 3000 моточасов',
     official: 'Официальный дистрибьютор',
   },
   units: { hp: 'л.с.', kw: 'кВт', kg: 'кг', m: 'м', mm: 'мм', kmh: 'км/ч', lpm: 'л/мин', bar: 'бар', m3: 'м³', t: 'т' },
@@ -371,16 +393,36 @@ const ru: UI = {
     hero: {
       eyebrow: 'Официальный дистрибьютор BULL Machines в Республике Молдова',
       title: 'Техника BULL. Теперь официально в Молдове.',
-      sub: 'Экскаваторы-погрузчики, фронтальные погрузчики и мини-погрузчики от производителя № 1 в Индии: более 60 000 машин BULL работают по всему миру. Гарантия 1 год с продлением до 3 лет. Доставка, сервис и запчасти напрямую от Ozonteh, Страшены.',
+      sub: 'Экскаваторы-погрузчики, фронтальные погрузчики и мини-погрузчики от производителя № 1 в Индии: более 60 000 машин BULL работают по всему миру. Доставка, сервис и запчасти напрямую от Ozonteh, Страшены.',
       imageAlt: 'Экскаватор-погрузчик BULL CH76 Challenger на строительной площадке',
       scroll: 'Листайте',
       models: 'моделей',
+      warrantyMachine: 'Гарантия на технику',
+      warrantyEngine: 'Гарантия на двигатель',
+    },
+    warranty: {
+      eyebrow: 'Гарантия',
+      title: 'Гарантия 24 месяца. На двигатель — 3 года.',
+      text: 'На каждую машину BULL от Ozonteh действует гарантия 24 месяца или 2000 моточасов. На двигатель — 3 года или 3000 моточасов. Гарантийное обслуживание выполняет собственный сервис Ozonteh с квалифицированными механиками в Страшенах и Бельцах.',
+      machine: 'Техника',
+      engine: 'Двигатель',
+      months: 'мес.',
+      years: 'года',
+      hours: 'моточасов',
+      or: 'или',
+      points: [
+        'Собственный сервис в Страшенах и филиал в Бельцах',
+        'Запчасти на складе в Молдове',
+        'Гарантийное и постгарантийное обслуживание',
+      ],
+      serviceLabel: 'Технический отдел / сервис',
+      partsLabel: 'Запчасти',
     },
     trust: {
       eyebrow: 'Официальный дистрибьютор',
       title: 'Официальный дистрибьютор BULL в Молдове',
       text: 'Ozonteh Impex SRL — официальное представительство BULL Machines в Республике Молдова. Техника поставляется напрямую от производителя, а гарантия, сервис и запчасти — здесь, в Страшенах и Бельцах.',
-      ticker: ['60 000+ машин в мире', '600+ дилеров', '24+ года опыта', '12 000 машин в год', '2 завода'],
+      ticker: ['Гарантия 24 месяца / 2000 моточасов', 'Двигатель: 3 года / 3000 моточасов', '60 000+ машин в мире', '600+ дилеров', '24+ года опыта', '12 000 машин в год', '2 завода'],
       counters: {
         machines: 'машин BULL работают в мире',
         dealers: 'дилеров по всему миру',
@@ -433,7 +475,7 @@ const ru: UI = {
       title: 'Вы покупаете технику. И получаете команду, которая за ней стоит.',
       items: [
         { title: 'Официальный дистрибьютор', text: 'Новая техника напрямую от BULL Machines, с документами и гарантией производителя.' },
-        { title: 'Гарантия 1 год, с продлением до 3 лет', text: 'Стандартная гарантия 1 год с возможностью продления до 3 лет.' },
+        { title: 'Гарантия 24 месяца / 2000 моточасов', text: 'На двигатель — 3 года или 3000 моточасов. Гарантийное обслуживание в сервисе Ozonteh в Страшенах и Бельцах.' },
         { title: 'Собственный сервис', text: 'Квалифицированные механики в Страшенах и в филиале в Бельцах. Гарантийное и постгарантийное обслуживание.' },
         { title: 'Запчасти на складе', text: 'Фильтры, расходники и быстроизнашиваемые детали в Молдове. Заказ: 069 898 822.' },
         { title: 'Доставка по всей Молдове', text: 'Привезём технику к вам на базу или прямо на объект.' },

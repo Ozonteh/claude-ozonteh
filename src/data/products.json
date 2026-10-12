@@ -1434,12 +1434,12 @@
       "ru": "Экскаватор-погрузчик Heavy Duty"
     },
     "tagline": {
-      "ro": "100 CP Perkins și transmisie ZF Power Shift",
-      "ru": "100 л.с. Perkins и трансмиссия ZF Power Shift"
+      "ro": "100 CP Perkins, în două versiuni: ZF sau Carraro",
+      "ru": "100 л.с. Perkins, две версии: ZF или Carraro"
     },
     "summary": {
-      "ro": "Buldoexcavator de 100 CP cu motor Perkins, transmisie ZF Power Shift și 22 km/h în marșarier. Pentru șantiere mari, drumuri și cariere.",
-      "ru": "Экскаватор-погрузчик 100 л.с. с двигателем Perkins, трансмиссией ZF Power Shift и 22 км/ч задним ходом. Для крупных объектов, дорог и карьеров."
+      "ro": "Buldoexcavator de 100 CP cu motor Perkins, disponibil în Moldova în două versiuni: cu transmisie ZF Power Shift sau cu transmisie Carraro și pompe Casappa. Pentru șantiere mari, drumuri și cariere.",
+      "ru": "Экскаватор-погрузчик 100 л.с. с двигателем Perkins, в Молдове доступен в двух версиях: с трансмиссией ZF Power Shift или с трансмиссией Carraro и насосами Casappa. Для крупных объектов, дорог и карьеров."
     },
     "image": "produse/buldoexcavator-bull-hd100.webp",
     "alt": {
@@ -1474,7 +1474,9 @@
     },
     "brands": [
       "Perkins",
-      "ZF"
+      "ZF",
+      "Carraro",
+      "Casappa"
     ],
     "advantages": [
       {
@@ -1482,12 +1484,12 @@
         "ru": "Двигатель Perkins 1104D-44TA 100 л.с., 410 Н·м при 1400 об/мин"
       },
       {
-        "ro": "Transmisie ZF Power Shift: schimbarea treptelor sub sarcină",
-        "ru": "Трансмиссия ZF Power Shift: переключение передач под нагрузкой"
+        "ro": "Două versiuni în Moldova: transmisie ZF Power Shift sau Carraro cu pompe Casappa",
+        "ru": "Две версии в Молдове: трансмиссия ZF Power Shift или Carraro с насосами Casappa"
       },
       {
-        "ro": "40 km/h înainte și 22 km/h înapoi: mutări rapide pe șantier",
-        "ru": "40 км/ч вперёд и 22 км/ч назад: быстрые перемещения по объекту"
+        "ro": "Versiunea Carraro: cupă 6 în 1, ciocan hidraulic, braț telescopic, joystick și aer condiționat",
+        "ru": "Версия Carraro: ковш 6 в 1, гидромолот, телескопическая рукоять, джойстики и кондиционер"
       },
       {
         "ro": "Hidraulică de 145 l/min",
@@ -1543,8 +1545,8 @@
               "ru": "Трансмиссия"
             },
             "v": {
-              "ro": "ZF Power Shift, cu convertizor de cuplu",
-              "ru": "ZF Power Shift, с гидротрансформатором"
+              "ro": "ZF Power Shift cu convertizor de cuplu (versiunea ZF) · Carraro (versiunea Carraro)",
+              "ru": "ZF Power Shift с гидротрансформатором (версия ZF) · Carraro (версия Carraro)"
             }
           },
           {
@@ -1556,8 +1558,8 @@
           },
           {
             "k": {
-              "ro": "Viteză maximă",
-              "ru": "Макс. скорость"
+              "ro": "Viteză maximă (versiunea ZF)",
+              "ru": "Макс. скорость (версия ZF)"
             },
             "v": {
               "ro": "40 km/h înainte · 22 km/h înapoi",
@@ -1569,6 +1571,16 @@
       {
         "group": "hydraulics",
         "rows": [
+          {
+            "k": {
+              "ro": "Pompe (versiunea Carraro)",
+              "ru": "Насосы (версия Carraro)"
+            },
+            "v": {
+              "ro": "Casappa, Italia",
+              "ru": "Casappa, Италия"
+            }
+          },
           {
             "k": {
               "ro": "Presiune de lucru",
@@ -1698,8 +1710,53 @@
     ],
     "verify": [
       "Adâncimea de săpare (4,6 / 5,6 m) e preluată de pe pagina bullindia.com a modelului HD 100, nu din Anexa B. De confirmat cu broșura.",
-      "Video-urile Ozonteh (tyFDVK73byY, ZSgCwa84b0c) descriu „BULL 100 CP” cu transmisie Carraro, pompe Casappa și pachet complet pentru Moldova (cupă 6 în 1, ciocan hidraulic, braț telescopic 5,6 m, aer condiționat, joystick); Anexa B indică pentru HD 100 transmisie ZF Power Shift. De confirmat configurația livrată în Moldova.",
-      "Garanție: video-urile Ozonteh menționează „24 luni sau 2000 ore”, brief-ul cere „1 an, extensibilă la 3 ani”. Site-ul afișează varianta din brief până la confirmare."
+      "Confirmat de Ozonteh: în Moldova se vând două versiuni HD 100 (ZF Power Shift / Carraro + Casappa). Dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt preluate din video-urile Ozonteh; de confirmat dacă sunt standard. Viteza 40/22 km/h e din Anexa B (versiunea ZF)."
+    ],
+    "variants": [
+      {
+        "name": {
+          "ro": "Versiunea ZF Power Shift",
+          "ru": "Версия ZF Power Shift"
+        },
+        "points": [
+          {
+            "ro": "Transmisie ZF Power Shift cu convertizor de cuplu",
+            "ru": "Трансмиссия ZF Power Shift с гидротрансформатором"
+          },
+          {
+            "ro": "40 km/h înainte, 22 km/h înapoi",
+            "ru": "40 км/ч вперёд, 22 км/ч назад"
+          }
+        ]
+      },
+      {
+        "name": {
+          "ro": "Versiunea Carraro + Casappa",
+          "ru": "Версия Carraro + Casappa"
+        },
+        "points": [
+          {
+            "ro": "Transmisie Carraro",
+            "ru": "Трансмиссия Carraro"
+          },
+          {
+            "ro": "Pompe hidraulice Casappa (Italia)",
+            "ru": "Гидронасосы Casappa (Италия)"
+          },
+          {
+            "ro": "Cupă 6 în 1 și ciocan hidraulic",
+            "ru": "Ковш 6 в 1 и гидромолот"
+          },
+          {
+            "ro": "Braț telescopic: săpare până la 5,6 m",
+            "ru": "Телескопическая рукоять: копание до 5,6 м"
+          },
+          {
+            "ro": "Joystick și aer condiționat",
+            "ru": "Джойстики и кондиционер"
+          }
+        ]
+      }
     ]
   },
   {

@@ -39,8 +39,8 @@ export const company = {
   youtubeSubscribe: 'https://www.youtube.com/channel/UCaTEdTbAbCPlkM54HTUjHfg?sub_confirmation=1',
   // Parteneri de leasing (FAQ, CTA)
   leasingPartners: ['maib', 'Microinvest'],
-  warrantyYears: 1,
-  warrantyMaxYears: 3,
+  // Garanție: utilaj 24 luni sau 2000 moto-ore; motor 3 ani sau 3000 moto-ore (confirmat de Ozonteh).
+  warranty: { months: 24, hours: 2000, engineYears: 3, engineHours: 3000 },
 } as const;
 
 // Afișate doar pe pagina Contacte.

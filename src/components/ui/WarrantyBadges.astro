@@ -1,0 +1,16 @@
+---
+// Garanția (utilaj + motor) ca două badge-uri; se pot rupe pe două rânduri pe mobil.
+import Icon from './Icon.astro';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+interface Props { lang: Lang; class?: string }
+const { lang, class: cls } = Astro.props;
+const b = t(lang).badges;
+---
+<p class:list={['wb', cls]}>
+  <span class="badge badge-warranty"><Icon name="shield" /> {b.warranty}</span>
+  <span class="badge badge-warranty"><Icon name="gear" /> {b.warrantyEngine}</span>
+</p>
+<style>
+  .wb { display: flex; flex-wrap: wrap; gap: 6px; }
+</style>

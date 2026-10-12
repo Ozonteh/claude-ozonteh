@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
 import QuoteForm from '../layout/QuoteForm.astro';
+import WarrantyBadges from '../ui/WarrantyBadges.astro';
 import { asset } from '../../lib/images';
 import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
@@ -18,7 +19,7 @@ const f = ui.home.final;
   <div class="final-scrim" aria-hidden="true"></div>
   <div class="wrap section final-grid">
     <div class="final-copy" data-reveal>
-      <p class="t-eyebrow"><span class="idx">09</span> {f.eyebrow}</p>
+      <p class="t-eyebrow"><span class="idx">10</span> {f.eyebrow}</p>
       <h2 id="final-title" class="t-h2">{f.title}</h2>
       <p class="t-lead">{f.text}</p>
       <p class="final-leasing"><span class="badge badge-official">Leasing</span> {f.leasing}</p>
@@ -40,7 +41,7 @@ const f = ui.home.final;
       </ul>
     </div>
     <div class="final-form ticks" data-reveal style="--d:1">
-      <p class="badge badge-warranty"><Icon name="shield" /> {ui.badges.warranty}</p>
+      <WarrantyBadges lang={lang} />
       <QuoteForm lang={lang} id="final" />
     </div>
   </div>

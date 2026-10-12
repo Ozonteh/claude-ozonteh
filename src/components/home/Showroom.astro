@@ -80,6 +80,7 @@ const total = String(products.length).padStart(2, '0');
                         </div>
                       ))}
                     </dl>
+                    <p class="mcard-warranty"><Icon name="shield" size={15} /> {ui.badges.warranty}</p>
                     <div class="mcard-actions">
                       <a href={href} class="link-arrow" aria-label={`${ui.cta.details}: ${p.name}`}>
                         {ui.cta.more} <Icon name="arrow" size={16} />
@@ -241,6 +242,7 @@ const total = String(products.length).padStart(2, '0');
   .mcard-spec dt { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
   .mcard-spec dd { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--color-bone); white-space: nowrap; }
   .mcard-spec dd small { font-size: 0.75rem; color: var(--color-steel); margin-left: 0.25rem; }
+  .mcard-warranty { display: flex; align-items: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-bull-yellow); }
   .mcard-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.25rem; }
   .mcard-actions > * { white-space: nowrap; }
 

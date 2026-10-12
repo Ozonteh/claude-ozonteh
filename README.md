@@ -108,6 +108,10 @@ Build-ul eșuează dacă o imagine referită lipsește.
 
 Imaginile vin din Anexa C (bullindia.com). `npm run images` le **descarcă o singură dată** (fără hotlink), le optimizează și le salvează cu nume SEO, de exemplu `buldoexcavator-bull-sd76-super-smart.webp`. Pozele de produs primesc fundal transparent (decupaj automat), ca să arate bine pe fundalul grafit. La build, Astro generează variante AVIF/WebP responsive.
 
+## Garanție
+
+Garanția e definită într-un singur loc, `company.warranty` din `src/data/site.ts`: utilaj 24 luni sau 2000 moto-ore, motor 3 ani sau 3000 moto-ore. Textele sunt în `src/i18n/ui.ts` (`badges.warranty`, `badges.warrantyEngine`, `home.warranty`) și în FAQ. Pe Acasă apare în hero, în banda ticker, pe fiecare card din showroom, în secțiunea dedicată „Garanție”, în „De ce Ozonteh”, în FAQ, în formular și în footer. În schema Product apare ca `Offer.warranty`.
+
 ## Accesibilitate și motion
 
 - `prefers-reduced-motion`: toate animațiile devin fade-uri scurte. Pin-ul orizontal și Lenis se dezactivează, iar video-ul hero nu pornește.
@@ -121,6 +125,5 @@ Clipurile filmate de Ozonteh (canalul YouTube Ozonteh) stau în `src/data/videos
 ## De verificat cu Ozonteh / BULL înainte de lansare
 
 - Vectorul logo-ului BULL (SVG din brand book) și clipul de 6–10 s pentru hero.
-- **Garanția:** video-urile Ozonteh spun „24 luni sau 2000 ore”, brief-ul spune „1 an, extensibilă la 3 ani”. Site-ul afișează varianta din brief.
-- **BULL 100 CP / HD 100:** video-urile Ozonteh descriu transmisie Carraro + pompe Casappa și un pachet complet (6 în 1, ciocan, braț telescopic, AC), iar Anexa B indică transmisie ZF Power Shift.
+- **HD 100:** în Moldova se vând două versiuni (ZF Power Shift / Carraro + Casappa), confirmat de Ozonteh. Rămâne de confirmat dacă dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt standard.
 - Cifrele marcate `verify` în `products.json` (SD76 75/76 CP, AV490 50/52 CP, fișa Grandia DLX).

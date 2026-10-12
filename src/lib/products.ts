@@ -38,6 +38,8 @@ export type Product = {
     pressureBar: number | null;
   };
   brands: string[];
+  /** Versiuni vândute în Moldova (ex. HD 100: ZF / Carraro), opțional. */
+  variants?: { name: L; points: L[] }[];
   advantages: L[];
   specs: { group: SpecGroupId; rows: SpecRow[] }[];
   brochure: string;

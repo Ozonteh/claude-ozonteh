@@ -2,6 +2,7 @@
 import Icon from '../ui/Icon.astro';
 import OzontehLogo from '../ui/OzontehLogo.astro';
 import BullLogo from '../ui/BullLogo.astro';
+import WarrantyBadges from '../ui/WarrantyBadges.astro';
 import { company } from '../../data/site';
 import { products } from '../../lib/products';
 import { route, productPath, type Lang } from '../../i18n/routes';
@@ -37,7 +38,7 @@ const socials = [
       <p class="f-tagline">{ui.footer.tagline}</p>
       <div class="f-official">
         <BullLogo height={18} />
-        <span class="badge badge-warranty"><Icon name="shield" /> {ui.badges.warranty}</span>
+        <WarrantyBadges lang={lang} />
       </div>
       {
         socials.length > 0 && (

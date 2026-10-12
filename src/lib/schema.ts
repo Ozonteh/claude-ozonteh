@@ -130,11 +130,6 @@ export function productGraph(p: Product, site: URL, lang: Lang, imageUrl: string
     brand: { '@type': 'Brand', name: 'BULL' },
     manufacturer: { '@type': 'Organization', name: manufacturer.name, url: manufacturer.url },
     additionalProperty: props.map((x) => ({ '@type': 'PropertyValue', ...x })),
-    hasWarrantyPromise: {
-      '@type': 'WarrantyPromise',
-      durationOfWarranty: { '@type': 'QuantitativeValue', value: company.warrantyYears, unitCode: 'ANN' },
-      warrantyScope: ui.badges.warranty,
-    },
     offers: {
       '@type': 'Offer',
       url,
@@ -147,10 +142,18 @@ export function productGraph(p: Product, site: URL, lang: Lang, imageUrl: string
         description: ui.specs.onRequest,
       },
       seller: { '@id': orgId(site) },
-      warranty: {
-        '@type': 'WarrantyPromise',
-        durationOfWarranty: { '@type': 'QuantitativeValue', value: company.warrantyYears, unitCode: 'ANN' },
-      },
+      warranty: [
+        {
+          '@type': 'WarrantyPromise',
+          durationOfWarranty: { '@type': 'QuantitativeValue', value: company.warranty.months, unitCode: 'MON' },
+          warrantyScope: ui.badges.warranty,
+        },
+        {
+          '@type': 'WarrantyPromise',
+          durationOfWarranty: { '@type': 'QuantitativeValue', value: company.warranty.engineYears, unitCode: 'ANN' },
+          warrantyScope: ui.badges.warrantyEngine,
+        },
+      ],
     },
   };
 }

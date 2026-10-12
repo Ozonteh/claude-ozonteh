@@ -1,0 +1,116 @@
+---
+// Secțiunea „Garanție": accent pe 24 luni / 2000 moto-ore (utilaj) și 3 ani / 3000 moto-ore (motor).
+import Icon from '../ui/Icon.astro';
+import { company, departments } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = t(lang);
+const g = ui.home.warranty;
+const w = company.warranty;
+const service = departments.find((d) => d.key === 'service')!;
+const parts = departments.find((d) => d.key === 'parts')!;
+const cards = [
+  { label: g.machine, icon: 'shield' as const, a: w.months, au: g.months, b: w.hours, bu: g.hours },
+  { label: g.engine, icon: 'gear' as const, a: w.engineYears, au: g.years, b: w.engineHours, bu: g.hours },
+];
+---
+
+<section id="garantie" class="wty on-dark cv-auto" aria-labelledby="wty-title">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="wrap section wty-grid">
+    <div class="wty-copy" data-reveal>
+      <p class="t-eyebrow"><span class="idx">03</span> {g.eyebrow}</p>
+      <h2 id="wty-title" class="t-h2">{g.title}</h2>
+      <p class="t-lead">{g.text}</p>
+      <ul class="wty-points" role="list">
+        {g.points.map((pt) => <li><Icon name="check" size={18} /> {pt}</li>)}
+      </ul>
+      <div class="wty-cta">
+        <button type="button" class="btn btn-primary btn-lg" data-quote data-magnetic>{ui.cta.quote} <Icon name="arrow" class="arrow" /></button>
+        <div class="wty-phones">
+          <a href={`tel:${service.tel}`} class="wty-phone" data-track-loc="warranty">
+            <span class="wty-phone-k">{g.serviceLabel}</span>
+            <span class="t-mono">{service.phone}</span>
+          </a>
+          <a href={`tel:${parts.tel}`} class="wty-phone" data-track-loc="warranty">
+            <span class="wty-phone-k">{g.partsLabel}</span>
+            <span class="t-mono">{parts.phone}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wty-cards">
+      {
+        cards.map((c, i) => (
+          <div class="wty-card ticks" data-reveal style={`--d:${i + 1}`}>
+            <p class="wty-label">
+              <span class="wty-icon"><Icon name={c.icon} size={22} /></span>
+              {c.label}
+            </p>
+            <p class="wty-nums">
+              <span class="wty-num">
+                <b>{c.a}</b>
+                <small>{c.au}</small>
+              </span>
+              <span class="wty-or">{g.or}</span>
+              <span class="wty-num">
+                <b>{c.b}</b>
+                <small>{c.bu}</small>
+              </span>
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .wty { position: relative; background: var(--color-asphalt); }
+  .wty-grid { display: grid; gap: 2.5rem; }
+  .wty-copy { display: grid; gap: 1.25rem; align-content: start; }
+  .wty-points { display: grid; gap: 0.6rem; }
+  .wty-points li { display: flex; align-items: flex-start; gap: 0.6rem; }
+  .wty-points :global(svg) { flex: none; margin-top: 3px; color: var(--color-bull-yellow); }
+  .wty-cta { display: grid; gap: 1.25rem; margin-top: 0.5rem; }
+  .wty-phones { display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; }
+  .wty-phone { display: grid; gap: 0.15rem; min-height: 44px; color: var(--color-bone); }
+  .wty-phone .t-mono { font-size: 1.05rem; color: var(--color-bull-yellow); }
+  .wty-phone:hover .t-mono { text-decoration: underline; text-underline-offset: 3px; }
+  .wty-phone-k { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-steel); }
+
+  .wty-cards { display: grid; gap: 10px; align-content: start; }
+  .wty-card {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 1.25rem 1.75rem;
+    background-color: var(--color-graphite);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+  .wty-label { display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-steel); }
+  .wty-icon { display: grid; place-items: center; width: 40px; height: 40px; color: var(--color-asphalt); background: var(--color-bull-yellow); }
+  .wty-nums { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.9rem; }
+  .wty-num { white-space: nowrap; }
+  .wty-num { display: inline-flex; align-items: baseline; gap: 0.5rem; }
+  .wty-num b {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 1.4rem + 5vw, 6rem);
+    line-height: 0.85;
+    color: var(--color-bull-yellow);
+    font-variant-numeric: tabular-nums;
+  }
+  :global(html:lang(ru)) .wty-num b { font-weight: 600; font-size: clamp(2.3rem, 1.2rem + 4.4vw, 5rem); }
+  .wty-num small { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-bone); }
+  .wty-or { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; color: var(--color-steel); }
+
+  @media (min-width: 64rem) {
+    .wty-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 5rem; align-items: center; }
+    .wty-card { padding: 2rem 2.25rem 2.25rem; }
+    .wty-cta { grid-auto-flow: column; justify-content: start; align-items: center; gap: 2rem; }
+  }
+</style>
