@@ -1,18 +1,35 @@
-# Raport Lighthouse: Etapa 1 (design system + Acasă)
+# Raport Lighthouse: Etapa 2 (pagina de produs) + Acasă
 
-Data: 12.10.2026 (actualizat după logo-urile vectoriale și video-urile Ozonteh) · Lighthouse 13.5.0 · Chromium headless · build de producție (`npm run build`) servit static cu gzip și cache (ca pe hostingul de producție).
+Data: 12.10.2026 · Lighthouse 13.5.0 · Chromium headless · build de producție (`npm run build`) servit static cu gzip și cache, ca pe hosting.
 Mobil = emulare Moto G Power, 4G lent simulat, CPU ×4. Desktop = preset `desktop`.
+
+## Pagini de produs (etapa 2)
+
+| Pagina | Dispozitiv | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT | FCP | Greutate |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `/buldoexcavatoare/bull-hd-100/` | Mobil | **96** | **100** | **100** | **100** | 2,4 s | 0 | 0 ms | 2,1 s | 263 KiB |
+| `/buldoexcavatoare/bull-hd-100/` | Desktop | **100** | **100** | **100** | **100** | 0,5 s | 0 | 0 ms | 0,5 s | 223 KiB |
+| `/ru/ekskavatory-pogruzchiki/bull-hd-100/` | Mobil | **97** | **100** | **100** | **100** | 2,3 s | 0,002 | 0 ms | 2,0 s | 251 KiB |
+| `/ru/ekskavatory-pogruzchiki/bull-hd-100/` | Desktop | **100** | **100** | **100** | **100** | 0,5 s | 0,003 | 0 ms | 0,5 s | 211 KiB |
+| `/buldoexcavatoare/bull-ch76-challenger/` | Mobil | **97** | **100** | **100** | **100** | 2,2 s | 0 | 0 ms | 2,0 s | 216 KiB |
+| `/miniincarcatoare-skid-steer/bull-av490/` | Mobil | **98** | **100** | **100** | **100** | 2,1 s | 0 | 0 ms | 2,0 s | 236 KiB |
+| `/ru/ekskavatory-pogruzchiki/bull-grandia-dlx/` | Mobil | **97** | **100** | **100** | **100** | 2,3 s | 0 | 0 ms | 1,8 s | 208 KiB |
+
+Accessibility a fost 97 înaintea a două corecturi globale: eticheta linkului-logo din header conține acum textul vizibil („Distribuitor oficial”), iar linkul spre politica de confidențialitate din formular e subliniat.
+
+Elementul LCP pe pagina de produs e imaginea utilajului (`fetchpriority="high"`, AVIF). Watermark-ul cu numele modelului e text SVG, deci nu devine element LCP, iar animația de intrare a imaginii folosește doar `transform`, fără opacitate.
+
+Ce se încarcă abia la nevoie: desenul tehnic (lazy, un singur fișier pentru toate vederile), fotografiile galeriei (doar când se deschide lightbox-ul), posterele video (lazy) și iframe-ul YouTube (doar la Play).
+
+## Acasă (după etapa 2)
 
 | Pagina | Dispozitiv | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT | FCP |
 |---|---|---|---|---|---|---|---|---|---|
-| `/` (RO) | Mobil | **95–96** | **100** | **100** | **100** | 2,5 s | 0 | 0–60 ms | 2,1 s |
-| `/` (RO) | Desktop | **100** | **100** | **100** | **100** | 0,6 s | 0 | 0 ms | 0,4 s |
-| `/ru/` (RU) | Mobil | **96–97** | **100** | **100** | **100** | 2,3 s | 0 | 50 ms | 2,0 s |
-| `/ru/` (RU) | Desktop | **100** | **100** | **100** | **100** | 0,6 s | 0 | 0 ms | 0,5 s |
+| `/` (RO) | Mobil | **95** | **100** | **100** | **100** | 2,6 s | 0 | 10 ms | 2,1 s |
+| `/` (RO) | Desktop | **100** | **100** | **100** | **100** | 0,7 s | 0 | 0 ms | 0,5 s |
+| `/ru/` (RU) | Mobil | **96** | **100** | **100** | **100** | 2,4 s | 0 | 0 ms | 2,0 s |
 
-Ținte din brief: Lighthouse Mobile ≥ 90 la toate categoriile ✅ · LCP < 2,5 s ✅ (pe RO la limită: 2,49 s în simulare) · CLS < 0,05 ✅ · INP < 200 ms: INP nu se poate măsura în laborator; TBT ≤ 60 ms indică un INP mic. Se confirmă în teren, cu Search Console / CrUX după lansare.
-
-Greutate totală la prima încărcare: 224 KiB pe mobil și 347 KiB pe desktop.
+Ținte din brief: Lighthouse Mobile ≥ 90 la toate categoriile ✅ · CLS < 0,05 ✅ · LCP < 2,5 s ✅ pe toate paginile de produs. **Excepție: Acasă RO, unde LCP-ul simulat e 2,6 s**, puțin peste țintă. Creșterea a venit în etapa 1, după secțiunea „Garanție” și video-urile Ozonteh: HTML-ul a urcat de la 40 la 46 KB gzip. Pârghia rămasă sunt fonturile (vezi mai jos). INP nu se poate măsura în laborator; TBT ≤ 10 ms indică un INP mic, care se confirmă în teren (Search Console / CrUX) după lansare.
 
 ## Ce a contat pentru scor
 

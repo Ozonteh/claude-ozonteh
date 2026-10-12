@@ -4,17 +4,26 @@ import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
 
-interface Props { lang: Lang; items: { q: string; a: string }[] }
-const { lang, items } = Astro.props;
+interface Props {
+  lang: Lang;
+  items: { q: string; a: string }[];
+  idx?: string;
+  title?: string;
+  /** „split": titlu fix în stânga (Acasă). „stack": titlu deasupra (coloana îngustă a paginii de produs). */
+  layout?: 'split' | 'stack';
+  /** În coloana principală a paginii de produs: fundal pe toată lățimea, fără .wrap. */
+  band?: boolean;
+}
+const { lang, items, idx = '09', title, layout = 'split', band = false } = Astro.props;
 const ui = t(lang);
 const f = ui.home.faq;
 ---
 
-<section class="faq section on-light cv-auto" aria-labelledby="faq-title">
-  <div class="wrap faq-grid">
+<section class:list={['faq section on-light', band ? 'band' : 'cv-auto', `faq-${layout}`]} aria-labelledby="faq-title">
+  <div class:list={['faq-grid', { wrap: !band }]}>
     <div class="faq-head" data-reveal>
-      <p class="t-eyebrow"><span class="idx">09</span> {f.eyebrow}</p>
-      <h2 id="faq-title" class="t-h2">{f.title}</h2>
+      <p class="t-eyebrow"><span class="idx">{idx}</span> {f.eyebrow}</p>
+      <h2 id="faq-title" class="t-h2">{title ?? f.title}</h2>
       <div class="faq-contact">
         <a href={`tel:${company.phone.tel}`} class="btn btn-dark" data-track-loc="faq"><Icon name="phone" /> {company.phone.display}</a>
         <a href={company.whatsapp} class="btn btn-outline" target="_blank" rel="noopener" data-track-loc="faq"><Icon name="whatsapp" /> WhatsApp</a>
@@ -83,9 +92,10 @@ const f = ui.home.faq;
   @supports (interpolate-size: allow-keywords) {
     .faq { interpolate-size: allow-keywords; }
   }
+  .faq-stack .t-h2 { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
   @media (min-width: 64rem) {
-    .faq-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 5rem; }
-    .faq-head { position: sticky; top: calc(var(--header-h) + 2rem); }
+    .faq-split .faq-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 5rem; }
+    .faq-split .faq-head { position: sticky; top: calc(var(--header-h) + 2rem); }
     .faq-q { font-size: 1.1875rem; }
   }
 </style>

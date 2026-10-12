@@ -1,0 +1,60 @@
+---
+// Produse similare: întâi modelele din aceeași categorie, apoi restul gamei (3 carduri).
+import Icon from '../ui/Icon.astro';
+import ProductCard from './ProductCard.astro';
+import { products, type Product } from '../../lib/products';
+import { route, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const s = t(lang).product.similar;
+const others = products.filter((x) => x.id !== p.id);
+// Același tip întâi, apoi modelele cele mai apropiate ca putere.
+const list = others
+  .slice()
+  .sort((a, b) => Number(b.category === p.category) - Number(a.category === p.category) || Math.abs(a.key.powerHp - p.key.powerHp) - Math.abs(b.key.powerHp - p.key.powerHp))
+  .slice(0, 3);
+---
+
+<section class="sim on-dark section cv-auto" aria-labelledby="sim-title">
+  <div class="wrap">
+    <div class="section-head split">
+      <div class="sim-titles" data-reveal>
+        <p class="t-eyebrow"><span class="idx">09</span> {s.eyebrow}</p>
+        <h2 id="sim-title" class="t-h2">{s.title}</h2>
+      </div>
+      <a href={route('catalog', lang)} class="link-arrow sim-all" data-reveal style="--d:1">{s.all} <Icon name="arrow" size={18} /></a>
+    </div>
+    <ul class="sim-grid no-scrollbar" role="list">
+      {
+        list.map((x, i) => (
+          <li data-reveal style={`--d:${i}`}>
+            <ProductCard p={x} lang={lang} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sim-titles { display: grid; gap: 1.1rem; }
+  .sim-all { justify-self: start; }
+  .sim-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 360px);
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .sim-grid > li { display: grid; scroll-snap-align: start; }
+  @media (min-width: 48rem) {
+    .sim-grid { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; margin: 0; padding: 0; }
+    .sim-all { justify-self: end; }
+  }
+</style>

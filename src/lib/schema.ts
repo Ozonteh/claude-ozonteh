@@ -104,7 +104,7 @@ export function videoGraph(v: {
 }
 
 /** Product — fără preț inventat: ofertă „La cerere" (priceSpecification fără valoare). */
-export function productGraph(p: Product, site: URL, lang: Lang, imageUrl: string) {
+export function productGraph(p: Product, site: URL, lang: Lang, imageUrl: string | string[]) {
   const ui = t(lang);
   const props: { name: string; value: string | number; unitText?: string }[] = [];
   const k = p.key;

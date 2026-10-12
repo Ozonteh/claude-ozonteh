@@ -7,7 +7,7 @@ Site-ul de prezentare și generare de lead-uri pentru utilajele **BULL Machines*
 - **Date:** toate modelele sunt în `src/data/products.json`. Un model nou se adaugă fără cod.
 - **Lead-uri:** formularul trimite cererea la `/api/lead` (`api/lead.php` pe cPanel). De acolo ajunge în amoCRM, iar dacă amoCRM nu răspunde, pleacă un e-mail de rezervă către marketing@ozonteh.md.
 
-> **Stadiu: Etapa 1 din 3.** Sunt gata design system-ul (`/design-system/`), pagina Acasă în RO și RU, layout-ul global, SEO-ul tehnic, pagina 404 și funcția de lead. Urmează pagina de produs șablon (etapa 2) și restul paginilor (etapa 3). Linkurile către aceste pagini dau deocamdată 404.
+> **Stadiu: Etapa 2 din 3.** Sunt gata design system-ul (`/design-system/`), pagina Acasă, **paginile de produs pentru toate cele 9 modele** (RO și RU, 18 pagini), layout-ul global, SEO-ul tehnic, pagina 404 și funcția de lead. Urmează etapa 3: catalogul, paginile de categorie, comparatorul, cupe și atașamente, service, despre noi, contacte, blog, politici. Linkurile către aceste pagini (inclusiv breadcrumbs „Utilaje” și categoriile) dau deocamdată 404.
 
 ## Cerințe
 
@@ -74,15 +74,20 @@ src/
   data/attachments.ts       ← cele 19 cupe și atașamente
   data/site.ts              ← NAP, telefoane, program, rețele, contoare, video hero, analytics
   data/faq.ts               ← FAQ general (întrebările `draft` nu se publică)
+  data/dimensions.ts        ← denumirile cotelor din desenele tehnice (A, B, C…), RO + RU
+  data/videos.ts            ← clipurile de pe canalul YouTube Ozonteh
+  content/produse/ro|ru/    ← textele lungi ale paginilor de produs (Markdown: SEO title/description, FAQ, 4 secțiuni)
   i18n/routes.ts            ← URL-uri RO ↔ RU (slug-uri ruse transliterate), hreflang
   i18n/ui.ts                ← toate textele interfeței, RO + RU (traduse manual)
   styles/global.css         ← design system: tokens, tipografie, componente, motion
   components/layout/        ← header, meniu full-screen, bara mobilă, formular, cookie-uri, footer
   components/home/          ← secțiunile paginii Acasă
+  components/product/       ← secțiunile paginii de produs (hero + galerie, cifre, desen tehnic, fișă, video, broșură…)
+  views/ProductPage.astro   ← șablonul paginii de produs (date, JSON-LD, ordinea secțiunilor)
   components/seo/Seo.astro  ← title, description, canonical, hreflang, OG, Twitter, JSON-LD
   lib/schema.ts             ← JSON-LD: Organization, LocalBusiness, Product, FAQPage, BreadcrumbList, VideoObject
   scripts/                  ← JS client: header, dialoguri, consimțământ, tracking, formular
-  pages/                    ← index (RO), ru/index (RU), 404, design-system, robots.txt, sitemap-images.xml
+  pages/                    ← index, [category]/[product] (RO), ru/… (RU), 404, design-system, robots.txt, sitemap-images.xml
   assets/bull/              ← imagini BULL optimizate, cu nume SEO (generate de `npm run images`)
 public/api/lead.php         ← endpoint-ul /api/lead pe cPanel (amoCRM + e-mail de rezervă)
 public/.htaccess            ← Apache/LiteSpeed: rescrieri, 404, cache, compresie, securitate
@@ -100,9 +105,24 @@ Editați `src/data/products.json` și adăugați un obiect nou după modelul cel
 - `category` are una dintre valorile `buldoexcavatoare`, `incarcatoare-frontale`, `miniincarcatoare-skid-steer`;
 - `key` conține cifrele folosite pe carduri, în filtre și în schema Product. Câmpurile necunoscute se lasă `null` și **nu se estimează**;
 - `specs` conține fișa tehnică pe grupe (`engine`, `transmission`, `hydraulics`, `performance`, `dimensions`, `capacities`), fiecare valoare în RO și RU;
-- `image` este calea în `src/assets/bull/`. O imagine nouă se adaugă în `scripts/image-manifest.mjs` (cu `cutout: true` pentru fundal transparent), apoi se rulează `npm run images`.
+- `image` este calea în `src/assets/bull/`. O imagine nouă se adaugă în `scripts/image-manifest.mjs` (cu `cutout: true` pentru fundal transparent), apoi se rulează `npm run images`;
+- `drawing` descrie desenul tehnic: fișierul `-negativ.webp`, dimensiunile, unitatea (`m` sau `mm`) și vederile (`x` = intervalul în pixeli al vederii pe planșă). Fiecare cotă e `[literă, tip, valoare, valoare cu braț extensibil]`; tipurile și denumirile RO/RU sunt în `src/data/dimensions.ts`. Fără desen: `"drawing": null`, iar secțiunea nu apare;
+- `brochure` și `brochureMb`: linkul PDF oficial BULL și mărimea afișată pe buton;
+- `videos`: clipurile oficiale BULL (id YouTube, `poster`, `uploadDate`). Pentru clipurile „unlisted” `uploadDate` rămâne `null`, așa că nu se generează VideoObject.
+
+**Textul paginii** (minimum 400 de cuvinte în română) e în `src/content/produse/ro/<id>.md`, iar traducerea manuală e în `src/content/produse/ru/<id>.md`. Frontmatter-ul conține `title` (SEO), `description` și `faq` (afișat pe pagină și în schema FAQPage). Corpul are 4 secțiuni: pentru cine este, ce lucrări face, de ce acest model, service/piese/garanție. Un model nou fără aceste două fișiere oprește build-ul cu un mesaj clar.
 
 Build-ul eșuează dacă o imagine referită lipsește.
+
+## Pagina de produs
+
+Ordinea secțiunilor: hero cu galerie (lightbox) → 4–6 cifre cheie → avantaje (și versiunile vândute în Moldova, la HD 100) → textul lung → desen tehnic animat → fișa tehnică → atașamente compatibile → video → broșura PDF → FAQ → alte utilaje. Pe desktop formularul „Cere ofertă” stă fix în dreapta, cu modelul preselectat. Pe mobil formularul apare după FAQ, iar bara de jos deschide același formular preselectat.
+
+- **Desen tehnic („blueprint reveal”).** Desenul BULL e inversat (`-negativ.webp`, generat de `npm run images` din desenul original). Doar luminozitatea se inversează, deci galbenul BULL rămâne galben. La scroll, desenul se trasează cu un scanner galben, iar cotele apar una câte una, cu valorile reale. Planșele cu mai multe vederi se decupează din CSS, din același fișier. Desenul CH76 e extras din broșura oficială `ch76-new.pdf`, pagina 2. Grandia DLX nu are desen publicat.
+- **Fișa tehnică.** Pe mobil e afișată ca acordeoane, cu primul grup deschis. Pe desktop e un tabel cu antet fix. Fără JS, toate grupele rămân deschise.
+- **Video.** Întâi apar clipurile Ozonteh ale modelului (inclusiv Shorts, afișate vertical), apoi clipurile oficiale BULL. Iframe-ul YouTube se încarcă doar la Play.
+- **Broșura** se deschide de pe bullindia.com (PDF în engleză, 3,6–41,5 MB). Click-ul trimite evenimentul `download_brochure`.
+- **JSON-LD:** Product (garanție, preț „La cerere”), BreadcrumbList, FAQPage și VideoObject. Body-ul are `data-view-product`, din care pleacă evenimentul `view_product` după acordul pentru cookie-uri.
 
 ## Imagini
 
@@ -120,10 +140,12 @@ Garanția e definită într-un singur loc, `company.warranty` din `src/data/site
 
 ## Video-uri
 
-Clipurile filmate de Ozonteh (canalul YouTube Ozonteh) stau în `src/data/videos.ts`, cu data publicării și durata, iar din ele se generează schema `VideoObject`. Clipurile oficiale BULL rămân în `products.json`. Pentru un clip nou de pe canal adăugați o intrare în `videos.ts` (id YouTube, data, durata, modelul). Posterul se descarcă de pe YouTube prin `scripts/image-manifest.mjs` (`videoPosters`) și `npm run images`. Pe pagina unui model fără clip Ozonteh se va afișa linkul către canal.
+Clipurile filmate de Ozonteh (canalul YouTube Ozonteh) stau în `src/data/videos.ts`, cu data publicării și durata, iar din ele se generează schema `VideoObject`. Clipurile oficiale BULL rămân în `products.json`. Pentru un clip nou de pe canal adăugați o intrare în `videos.ts` (id YouTube, data, durata, modelul). Posterul se descarcă de pe YouTube prin `scripts/image-manifest.mjs` (`videoPosters`) și `npm run images`. Pe pagina unui model fără clip Ozonteh se afișează linkul către canal și mesajul că clipul apare în curând.
 
 ## De verificat cu Ozonteh / BULL înainte de lansare
 
-- Vectorul logo-ului BULL (SVG din brand book) și clipul de 6–10 s pentru hero.
-- **HD 100:** în Moldova se vând două versiuni (ZF Power Shift / Carraro + Casappa), confirmat de Ozonteh. Rămâne de confirmat dacă dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt standard.
-- Cifrele marcate `verify` în `products.json` (SD76 75/76 CP, AV490 50/52 CP, fișa Grandia DLX).
+- Clipul de 6–10 s pentru hero.
+- **CH76 Challenger, puterea:** Anexa B (regula numelui de model) dă 76 CP, dar broșura oficială `ch76-new.pdf` și pagina bullindia.com dau **55 HP (40,5 kW) la 2000 rpm** pentru motorul Ashok Leyland H4CSE5520 (3.840 cm³). Pe site rămân deocamdată 76 CP în fișă și pe carduri, iar textul paginii nu menționează nicio putere. Trebuie confirmat cu BULL.
+- **HD 100:** în Moldova se vând două versiuni (ZF Power Shift / Carraro + Casappa), confirmat de Ozonteh. Rămâne de confirmat dacă dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt standard. Textul le formulează ca „poate fi livrată cu”.
+- **Gabaritul:** pe bullindia.com, lungimea totală e 6,04 m la SD76/HD96 și 7,46 m la HD 100 (și în broșura CH76). Gabaritul Grandia e identic cu al SD76, deci probabil copiat. Pentru Grandia afișăm doar cotele de lucru.
+- Celelalte cifre marcate `verify` în `products.json` (SD76 75/76 CP, AV490 50/52 CP, fișa Grandia DLX).

@@ -1,0 +1,13 @@
+---
+// Pagina de produs, RO: /buldoexcavatoare/bull-hd-100/
+import ProductPage from '../../views/ProductPage.astro';
+import { products } from '../../lib/products';
+import { CATEGORY_SLUGS } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { category: CATEGORY_SLUGS[p.category].ro, product: p.id }, props: { id: p.id } }));
+}
+const { id } = Astro.props;
+---
+
+<ProductPage lang="ro" id={id} />

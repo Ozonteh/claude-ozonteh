@@ -1,0 +1,248 @@
+---
+// Desen tehnic „blueprint reveal": desenul BULL (negativ, pe grafit) se trasează la scroll, un scanner
+// galben îl parcurge, iar cotele A, B, C… apar una câte una, cu valorile reale din documentația BULL.
+// Planșa originală are mai multe vederi; le decupăm din CSS (aceeași imagine, descărcată o singură dată).
+import { getImage } from 'astro:assets';
+import { asset } from '../../lib/images';
+import type { Product, Dim } from '../../lib/products';
+import { DIMENSIONS } from '../../data/dimensions';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const ui = t(lang);
+const b = ui.product.blueprint;
+const d = p.drawing;
+const locale = lang === 'ro' ? 'ro-RO' : 'ru-RU';
+const nf = (n: number, digits: number) =>
+  new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n).replace(/ /g, ' ');
+
+const img = d ? await getImage({ src: asset(d.image), width: d.w, format: 'webp', quality: 82 }) : null;
+const unitLabel = d?.unit === 'mm' ? ui.units.mm : ui.units.m;
+const digits = d?.unit === 'm' ? 2 : 0;
+
+const row = (dim: Dim) => {
+  const [letter, kind, v, ext] = dim;
+  const def = DIMENSIONS[kind];
+  if (!def) throw new Error(`Cotă necunoscută: ${kind} (${p.id})`);
+  const dg = def.angle ? 0 : digits;
+  return {
+    letter,
+    label: def.label[lang],
+    n: v,
+    digits: dg,
+    text: nf(v, dg),
+    unit: def.angle ? '°' : ` ${unitLabel}`,
+    ext: ext !== undefined ? `${nf(ext, dg)} ${unitLabel} ${b.ext}` : null,
+  };
+};
+const views = d?.views.map((v) => ({ ...v, rows: v.dims.map(row) })) ?? [];
+const [main, ...rest] = views;
+const cropStyle = (x: [number, number]) => `--x0:${x[0]};--vw:${x[1] - x[0]};--W:${d!.w};--H:${d!.h}`;
+---
+
+{
+  d && img && main && (
+    <section class="bp band on-dark section" aria-labelledby="bp-title">
+      <div class="bp-grid blueprint" aria-hidden="true" />
+      <div class="bp-head" data-reveal>
+        <p class="t-eyebrow">
+          <span class="idx">03</span> {b.eyebrow}
+        </p>
+        <h2 id="bp-title" class="t-h2 bp-title">{tpl(b.title, { model: p.name })}</h2>
+        <p class="t-body-muted bp-text">{b.text}</p>
+      </div>
+
+      <div class="bp-main" data-draw>
+        <figure class="bp-sheet ticks">
+          <div class="bp-crop" style={cropStyle(main.x)}>
+            <img src={img.src} alt={`${b.eyebrow}: ${p.name}`} width={d.w} height={d.h} loading="lazy" decoding="async" />
+            <span class="bp-scan" aria-hidden="true" />
+          </div>
+          <figcaption class="bp-stamp t-mono">
+            <span>{b.sheet.model}</span>
+            <b>{p.name}</b>
+            <span>{b.sheet.units}</span>
+            <b>{d.unit === 'mm' ? ui.units.mm : ui.units.m}</b>
+            <span>{b.sheet.source}</span>
+            <b>BULL Machines</b>
+          </figcaption>
+        </figure>
+        <ol class="bp-legend" role="list">
+          {main.rows.map((r, i) => (
+            <li class="bp-row" style={`--i:${i}`}>
+              <span class="bp-k t-mono" aria-hidden="true">{r.letter}</span>
+              <span class="bp-label">
+                <span class="sr-only">{r.letter}: </span>
+                {r.label}
+              </span>
+              <span class="bp-val t-mono">
+                <span class="bp-num">
+                  <b data-count={r.n} data-digits={r.digits} data-fixed>{r.text}</b>
+                  {r.unit}
+                </span>
+                {r.ext && <small>{r.ext}</small>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {rest.length > 0 && (
+        <div class="bp-views">
+          <h3 class="t-eyebrow bp-views-title">
+            <span class="idx">{b.sheet.sheet} 2</span> {b.views}
+          </h3>
+          <div class="bp-views-grid">
+            {rest.map((v, j) => (
+              <figure class="bp-view" data-draw style={`--d:${j}`}>
+                <div class="bp-crop bp-crop-sm" style={cropStyle(v.x)}>
+                  <img src={img.src} alt="" width={d.w} height={d.h} loading="lazy" decoding="async" />
+                  <span class="bp-scan" aria-hidden="true" />
+                </div>
+                <figcaption>
+                  <ol class="bp-legend bp-legend-sm" role="list">
+                    {v.rows.map((r, i) => (
+                      <li class="bp-row" style={`--i:${i}`}>
+                        <span class="bp-k t-mono" aria-hidden="true">{r.letter}</span>
+                        <span class="bp-label">
+                          <span class="sr-only">{r.letter}: </span>
+                          {r.label}
+                        </span>
+                        <span class="bp-val t-mono">
+                          <span class="bp-num">
+                            <b>{r.text}</b>
+                            {r.unit}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .bp { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3.5rem); isolation: isolate; }
+  .bp-grid { position: absolute; inset: 0 -100vmax; z-index: -1; }
+  .bp-head { display: grid; gap: 1.1rem; max-width: 50rem; }
+  .bp-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .bp-text { font-size: 0.9375rem; }
+
+  .bp-main { display: grid; gap: 1.5rem; }
+  .bp-sheet { position: relative; margin: 0; padding: 14px; background: rgb(18 19 20 / 0.6); box-shadow: inset 0 0 0 1px var(--color-line); }
+
+  /* Decupaj CSS al unei vederi din planșă: aceeași imagine, poziționată după intervalul x al vederii. */
+  .bp-crop { position: relative; overflow: hidden; aspect-ratio: var(--vw) / var(--H); }
+  .bp-crop img {
+    position: absolute;
+    top: 0;
+    left: calc(var(--x0) / var(--vw) * -100%);
+    width: calc(var(--W) / var(--vw) * 100%);
+    max-width: none;
+    height: auto;
+  }
+  .bp-scan {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--color-bull-yellow);
+    box-shadow: 0 0 18px 4px rgb(255 194 14 / 0.45);
+    opacity: 0;
+  }
+
+  .bp-stamp {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr;
+    gap: 0;
+    margin-top: 12px;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+  .bp-stamp > * { padding: 6px 8px; box-shadow: inset -1px 0 0 var(--color-line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bp-stamp span { color: var(--color-steel); }
+  .bp-stamp b { font-weight: 500; color: var(--color-bone); }
+  .bp-stamp b:nth-of-type(2) { text-transform: none; }
+
+  .bp-legend { display: grid; align-content: start; border-top: 1px solid var(--color-line); }
+  .bp-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 46px;
+    padding-block: 0.45rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .bp-k {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+    color: var(--color-bull-yellow);
+    border: 1px solid var(--color-bull-yellow);
+    border-radius: 50%;
+  }
+  .bp-label { font-size: 0.9375rem; line-height: 1.3; color: var(--color-bone); }
+  .bp-val { display: grid; justify-items: end; text-align: right; font-size: 0.875rem; color: var(--color-bull-yellow); }
+  .bp-num { white-space: nowrap; }
+  .bp-val b { font-weight: 500; font-size: 1.125rem; }
+  .bp-val small { font-size: 0.6875rem; color: var(--color-steel); white-space: normal; max-width: 12rem; }
+
+  .bp-views { display: grid; gap: 1.25rem; }
+  .bp-views-title { margin: 0; }
+  .bp-views-grid { display: grid; gap: 10px; }
+  .bp-view { display: grid; gap: 0.75rem; align-content: start; margin: 0; padding: 12px; background: rgb(18 19 20 / 0.6); box-shadow: inset 0 0 0 1px var(--color-line); }
+  /* Vederile mici: înălțime maximă 260 px, lățimea rezultă din proporția vederii. */
+  .bp-crop-sm { width: min(100%, calc(260px * var(--vw) / var(--H))); margin-inline: auto; }
+  .bp-legend-sm .bp-row { min-height: 38px; gap: 0.6rem; grid-template-columns: 24px minmax(0, 1fr) auto; }
+  .bp-legend-sm .bp-k { width: 22px; height: 22px; font-size: 0.6875rem; }
+  .bp-legend-sm .bp-label { font-size: 0.8125rem; color: var(--color-steel); }
+  .bp-legend-sm .bp-val b { font-size: 0.9375rem; }
+
+  .bp-sheet { max-width: 46rem; }
+  .bp-main > .bp-sheet .bp-crop { max-width: calc(560px * var(--vw) / var(--H)); margin-inline: auto; }
+  @media (min-width: 48rem) {
+    .bp-legend:not(.bp-legend-sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; }
+    .bp-views-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* Animația: doar cu JS și fără reduced-motion (altfel totul e vizibil). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) [data-draw] .bp-crop img {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    :global(.js) [data-draw].is-drawn .bp-crop img { clip-path: inset(0 0 0 0); }
+    :global(.js) [data-draw] .bp-scan { left: 0; }
+    :global(.js) [data-draw].is-drawn .bp-scan { animation: bp-scan 1.6s cubic-bezier(0.65, 0, 0.35, 1) both; }
+    :global(.js) [data-draw] .bp-row {
+      opacity: 0;
+      transform: translate3d(-12px, 0, 0);
+      transition: opacity 0.45s var(--ease-hydraulic), transform 0.55s var(--ease-hydraulic);
+      transition-delay: calc(0.5s + var(--i) * 0.14s);
+    }
+    :global(.js) [data-draw].is-drawn .bp-row { opacity: 1; transform: none; }
+    :global(.js) [data-draw].is-drawn .bp-k { animation: bp-ping 0.9s ease-out both; animation-delay: calc(0.5s + var(--i) * 0.14s); }
+  }
+  @keyframes bp-scan {
+    0% { left: 0; opacity: 1; }
+    92% { opacity: 1; }
+    100% { left: calc(100% - 2px); opacity: 0; }
+  }
+  @keyframes bp-ping {
+    0% { box-shadow: 0 0 0 0 rgb(255 194 14 / 0.7); background: var(--color-bull-yellow); color: var(--color-asphalt); }
+    60% { background: transparent; color: var(--color-bull-yellow); }
+    100% { box-shadow: 0 0 0 10px rgb(255 194 14 / 0); }
+  }
+</style>

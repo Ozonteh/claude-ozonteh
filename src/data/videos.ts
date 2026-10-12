@@ -76,6 +76,7 @@ export const ozontehVideos: ChannelVideo[] = [
     duration: 'PT1M30S',
     format: 'short',
     product: 'bull-hd-100',
+    poster: 'video/video-buldoexcavator-bull-hd100-short-santier.webp',
   },
   {
     id: 'ZSgCwa84b0c',
@@ -85,6 +86,7 @@ export const ozontehVideos: ChannelVideo[] = [
     duration: 'PT1M29S',
     format: 'short',
     product: 'bull-hd-100',
+    poster: 'video/video-buldoexcavator-bull-hd100-short-dotari.webp',
   },
   {
     id: 'gsxGqn3Y77s',
@@ -94,6 +96,7 @@ export const ozontehVideos: ChannelVideo[] = [
     duration: 'PT1M',
     format: 'short',
     product: 'bull-av490',
+    poster: 'video/video-miniincarcator-bull-av490-short.webp',
   },
 ];
 
@@ -103,3 +106,15 @@ export const FEATURED_VIDEOS = ['FtM1nI-YGjU', 'tyFDVK73byY', 'HgDJ6PmjghU'];
 export const getVideo = (id: string) => ozontehVideos.find((v) => v.id === id);
 /** Clipurile Ozonteh pentru un model (primele afișate pe pagina de produs). */
 export const videosForProduct = (productId: string) => ozontehVideos.filter((v) => v.product === productId);
+
+/** Un clip afișat pe pagina de produs (Ozonteh sau BULL Machines), cu poster auto-găzduit. */
+export type VideoItem = {
+  id: string;
+  title: string;
+  description: string;
+  poster: string;
+  short: boolean;
+  source: 'ozonteh' | 'bull';
+  uploadDate: string | null;
+  duration?: string;
+};

@@ -1,0 +1,98 @@
+---
+// 4–6 cifre mari, alese după tipul utilajului. Doar valori din products.json (nimic estimat);
+// la modelele cu fișă incompletă completăm cu mărcile componentelor.
+import { fmt, type Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const ui = t(lang);
+const s = ui.specs;
+const st = ui.product.stats;
+const u = ui.units;
+const k = p.key;
+
+type Fig = { k: string; n?: number; digits?: number; v?: string; u?: string; note?: string };
+const all: Record<string, Fig | null> = {
+  power: { k: s.power, n: k.powerHp, digits: Number.isInteger(k.powerHp) ? 0 : 1, u: u.hp, note: k.powerKw ? `${fmt(k.powerKw, lang)} ${u.kw}` : undefined },
+  weight: k.weightKg ? { k: s.weight, n: k.weightKg, u: u.kg } : null,
+  dig: k.digDepthM
+    ? { k: s.digDepth, n: k.digDepthM, digits: 2, u: u.m, note: k.digDepthExtM ? tpl(st.ext, { v: `${fmt(k.digDepthExtM, lang, 2)} ${u.m}` }) : undefined }
+    : null,
+  speed: k.speedKmh ? { k: s.speed, n: k.speedKmh, u: u.kmh } : null,
+  flow: k.flowLpm ? { k: s.flow, n: k.flowLpm, u: u.lpm, note: k.flowHighLpm ? `${st.flowHigh}: ${k.flowHighLpm} ${u.lpm}` : undefined } : null,
+  pressure: k.pressureBar ? { k: st.pressure, n: k.pressureBar, u: u.bar } : null,
+  payload: k.payloadKg ? { k: s.payload, n: k.payloadKg, u: u.kg } : null,
+  bucket: k.bucketM3 ? { k: st.bucket, n: k.bucketM3, digits: 2, u: u.m3 } : null,
+  rated: k.ratedLoadKg ? { k: s.ratedLoad, n: k.ratedLoadKg, u: u.kg } : null,
+  tipping: k.tippingLoadKg ? { k: st.tipping, n: k.tippingLoadKg, u: u.kg } : null,
+  drive: { k: s.drive, v: k.drive.join(' / ') },
+};
+const order =
+  p.category === 'buldoexcavatoare'
+    ? ['power', 'weight', 'dig', 'speed', 'flow', 'pressure', 'drive']
+    : p.category === 'incarcatoare-frontale'
+      ? ['power', 'weight', 'payload', 'bucket', 'speed', 'flow', 'drive']
+      : ['power', 'rated', 'tipping', 'weight', 'flow', 'speed', 'drive'];
+let figs = order.map((x) => all[x]).filter((x): x is Fig => !!x);
+// „Tracțiune" doar dacă nu avem destule cifre.
+if (figs.length > 6) figs = figs.filter((f) => f.k !== s.drive).slice(0, 6);
+const groups = s.groups;
+const brandFigs: Fig[] = [
+  { k: groups.engine, v: p.brands[0] },
+  { k: groups.transmission, v: p.brands[1] },
+  { k: groups.hydraulics, v: p.brands[2] },
+  { k: groups.hydraulics, v: p.brands[3] },
+].filter((x) => x.v);
+while (figs.length < 4 && brandFigs.length) figs.push(brandFigs.shift()!);
+---
+
+<section class="kf on-graphite" aria-labelledby="kf-title">
+  <div class="hazard hazard-thin" aria-hidden="true"></div>
+  <div class="wrap kf-inner">
+    <h2 id="kf-title" class="t-eyebrow kf-title"><span class="idx">01</span> {tpl(ui.product.keyTitle, { model: p.name })}</h2>
+    <dl class="kf-grid" data-kf style={`--n:${figs.length}`}>
+      {
+        figs.map((f, i) => (
+          <div class="kf-item" data-reveal style={`--d:${i % 3}`}>
+            <dt class="stat-k">{f.k}</dt>
+            <dd class="kf-v">
+              {f.n !== undefined ? (
+                <span class="t-num" data-count={f.n} data-digits={f.digits ?? 0}>
+                  {fmt(f.n, lang, f.digits ?? 0)}
+                </span>
+              ) : (
+                <span class="t-num kf-text">{f.v}</span>
+              )}
+              {f.u && <small class="t-mono">{f.u}</small>}
+            </dd>
+            {f.note && <dd class="kf-note t-mono">{f.note}</dd>}
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .kf { position: relative; }
+  .kf-inner { padding-block: clamp(2rem, 1.5rem + 2vw, 3.25rem); display: grid; gap: 1.5rem; }
+  .kf-title { margin: 0; }
+  .kf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--color-line); box-shadow: 0 0 0 1px var(--color-line); }
+  .kf-item { display: grid; align-content: start; gap: 0.5rem; padding: 1.1rem 1rem 1.25rem; background: var(--color-graphite); }
+  .kf-v { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.35rem; margin: 0; }
+  .kf-v .t-num { font-size: clamp(2.4rem, 1.7rem + 2.6vw, 4.25rem); color: var(--color-bone); }
+  :global(html:lang(ru)) .kf-v .t-num { font-size: clamp(2.1rem, 1.5rem + 2.2vw, 3.6rem); }
+  .kf-v .kf-text { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 3rem); color: var(--color-bull-yellow); }
+  .kf-v small { font-size: 0.8125rem; color: var(--color-bull-yellow); }
+  .kf-note { margin: 0; font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--color-steel); }
+  .kf-item:first-child .t-num { color: var(--color-bull-yellow); }
+  @media (min-width: 40rem) {
+    .kf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 80rem) {
+    .kf-grid { grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr)); }
+    .kf-item { padding: 1.5rem 1.25rem 1.6rem; }
+  }
+</style>

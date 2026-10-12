@@ -8,8 +8,8 @@ import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
 
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; model?: string }
+const { lang, model } = Astro.props;
 const ui = t(lang);
 ---
 
@@ -28,7 +28,7 @@ const ui = t(lang);
     </header>
     <p class="sheet-sub">{ui.form.subtitle}</p>
     <WarrantyBadges lang={lang} />
-    <QuoteForm lang={lang} id="dlg" variant="graphite" />
+    <QuoteForm lang={lang} id="dlg" variant="graphite" model={model} />
     <div class="sheet-alt">
       <span class="t-body-muted">{ui.form.orCall}</span>
       <a href={`tel:${company.phone.tel}`} class="t-mono sheet-phone" data-track-loc="quote-sheet">{company.phone.display}</a>

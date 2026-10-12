@@ -1,0 +1,133 @@
+---
+// Fișa tehnică pe grupe (Motor, Transmisie, Hidraulică, Performanțe, Dimensiuni, Capacități).
+// Mobil: acordeoane (<details>), primul deschis. Desktop: toate deschise, ca tabel cu antet fix.
+// Fără JS toate grupele rămân deschise (conținutul e oricum în HTML, pentru SEO).
+import Icon from '../ui/Icon.astro';
+import { val, type Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const ui = t(lang);
+const s = ui.product.specs;
+const groups = ui.specs.groups as Record<string, string>;
+const icons: Record<string, 'gear' | 'tools' | 'breakout' | 'ruler' | 'box' | 'fuel'> = {
+  engine: 'gear',
+  transmission: 'tools',
+  hydraulics: 'breakout',
+  performance: 'ruler',
+  dimensions: 'box',
+  capacities: 'fuel',
+};
+---
+
+<section class="spec band on-light section" id="fisa-tehnica" aria-labelledby="spec-title">
+  <div class="spec-head" data-reveal>
+    <p class="t-eyebrow"><span class="idx">04</span> {s.eyebrow}</p>
+    <h2 id="spec-title" class="t-h2 spec-title">{tpl(s.title, { model: p.name })}</h2>
+  </div>
+
+  <div class="spec-table" data-spec>
+    <div class="spec-thead t-mono" aria-hidden="true">
+      <span>{s.param}</span>
+      <span>{s.value}</span>
+    </div>
+    {
+      p.specs.map((g, i) => (
+        <details class="spec-group" open data-spec-group data-first={i === 0 ? '' : undefined}>
+          <summary class="spec-sum">
+            <span class="spec-ico">
+              <Icon name={icons[g.group] ?? 'gear'} size={18} />
+            </span>
+            <span class="spec-gname">{groups[g.group]}</span>
+            <span class="spec-count t-mono">{g.rows.length}</span>
+            <span class="spec-sign" aria-hidden="true" />
+          </summary>
+          <table class="spec-rows">
+            <caption class="sr-only">{groups[g.group]}</caption>
+            <thead class="sr-only">
+              <tr>
+                <th scope="col">{s.param}</th>
+                <th scope="col">{s.value}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {g.rows.map((r) => (
+                <tr>
+                  <th scope="row">{val(r.k, lang)}</th>
+                  <td>{val(r.v, lang)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+      ))
+    }
+  </div>
+  <p class="spec-note t-mono">{s.note}</p>
+</section>
+
+<style>
+  .spec { display: grid; gap: clamp(1.75rem, 1.25rem + 2vw, 3rem); }
+  .spec-head { display: grid; gap: 1.1rem; }
+  .spec-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+
+  .spec-table { border-top: 2px solid var(--color-asphalt); }
+  .spec-thead { display: none; }
+  .spec-group { border-bottom: 1px solid var(--color-line-ink); }
+  .spec-sum {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 60px;
+    padding-block: 0.5rem;
+    cursor: pointer;
+  }
+  .spec-ico { display: grid; place-items: center; width: 36px; height: 36px; color: var(--color-bull-yellow); background: var(--color-asphalt); }
+  .spec-gname { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: var(--display-track); font-size: 1.375rem; line-height: 1; }
+  :global(html:lang(ru)) .spec-gname { font-weight: 600; font-size: 1.2rem; }
+  .spec-count { font-size: 0.75rem; color: var(--color-steel-ink); }
+  .spec-sign { position: relative; width: 32px; height: 32px; box-shadow: inset 0 0 0 1px var(--color-line-ink); }
+  .spec-sign::before, .spec-sign::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; background: var(--color-asphalt); transition: transform 0.35s var(--ease-hydraulic); }
+  .spec-sign::after { transform: rotate(90deg); }
+  .spec-group[open] .spec-sign::after { transform: rotate(0deg); }
+
+  .spec-rows { width: 100%; border-collapse: collapse; margin-bottom: 0.75rem; }
+  .spec-rows th, .spec-rows td { padding: 0.7rem 0; text-align: left; vertical-align: top; border-top: 1px dashed var(--color-line-ink); }
+  .spec-rows th { width: 44%; padding-right: 1rem; font-weight: 400; font-size: 0.875rem; color: var(--color-steel-ink); }
+  .spec-rows td { font-weight: 600; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+  .spec-note { font-size: 0.75rem; color: var(--color-steel-ink); max-width: 46rem; }
+
+  .spec-group::details-content { block-size: 0; overflow: clip; transition: block-size 0.45s var(--ease-hydraulic), content-visibility 0.45s allow-discrete; }
+  .spec-group[open]::details-content { block-size: auto; }
+  @supports (interpolate-size: allow-keywords) {
+    .spec { interpolate-size: allow-keywords; }
+  }
+
+  /* Desktop: tabel, antet fix sub header-ul site-ului, grupele nu se mai pliază. */
+  @media (min-width: 64rem) {
+    .spec-thead {
+      position: sticky;
+      top: var(--header-h);
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      padding: 0.75rem 1rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-bull-yellow);
+      background: var(--color-asphalt);
+    }
+    .spec-sum { pointer-events: none; min-height: 0; padding: 1.5rem 0 0.75rem; grid-template-columns: auto 1fr; }
+    .spec-sum::-webkit-details-marker { display: none; }
+    .spec-count, .spec-sign { display: none; }
+    .spec-group { border-bottom: 0; }
+    .spec-rows th, .spec-rows td { padding: 0.8rem 1rem; }
+    .spec-rows th { width: 40%; }
+    .spec-rows tr:nth-child(odd) { background: rgb(18 19 20 / 0.035); }
+    .spec-rows tr:hover { background: rgb(255 194 14 / 0.16); }
+  }
+</style>

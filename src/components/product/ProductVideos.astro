@@ -1,0 +1,124 @@
+---
+// Video pe pagina de produs: clipurile Ozonteh (în română, inclusiv Shorts) înaintea celor BULL Machines.
+// Facade: poster auto-găzduit, iframe youtube-nocookie doar după click. Fără clip → link spre canalul Ozonteh.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { asset } from '../../lib/images';
+import type { Product } from '../../lib/products';
+import type { VideoItem } from '../../data/videos';
+import { company } from '../../data/site';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang; videos: VideoItem[] }
+const { p, lang, videos } = Astro.props;
+const ui = t(lang);
+const v = ui.product.videos;
+const hv = ui.home.videos;
+const [first, ...rest] = videos;
+const hasBull = videos.some((x) => x.source === 'bull');
+const hasOzonteh = videos.some((x) => x.source === 'ozonteh');
+---
+
+<section class="pv band on-dark section" aria-labelledby="pv-title">
+  <div class="pv-head" data-reveal>
+    <p class="t-eyebrow"><span class="idx">06</span> {v.eyebrow}</p>
+    <h2 id="pv-title" class="t-h2 pv-title">{tpl(v.title, { model: p.name })}</h2>
+    {hasBull && <p class="t-body-muted pv-note">{v.bullNote}</p>}
+  </div>
+
+  {
+    first && (
+      <div class="pv-feature" data-reveal>
+        <div class:list={['pv-frame', { 'is-short': first.short }]} data-yt={first.id} data-yt-title={first.title}>
+          <Image src={asset(first.poster)} alt="" widths={[480, 800, 1200]} sizes="(min-width: 1024px) 60vw, 100vw" class="pv-poster" loading="lazy" />
+          <button type="button" class="pv-play" aria-label={`${hv.play}: ${first.title}`}>
+            <span class="pv-play-icon"><Icon name="play" size={28} /></span>
+          </button>
+          <span class="pv-tag t-mono">{first.source === 'ozonteh' ? v.ozonteh : v.bull}</span>
+        </div>
+        <p class="pv-name">{first.title}</p>
+      </div>
+    )
+  }
+
+  {
+    rest.length > 0 && (
+      <ul class="pv-row no-scrollbar" role="list">
+        {rest.map((x, i) => (
+          <li class:list={['pv-item', { 'is-short': x.short }]} data-reveal style={`--d:${i}`}>
+            <div class="pv-frame" data-yt={x.id} data-yt-title={x.title}>
+              <Image src={asset(x.poster)} alt="" widths={[400, 640]} sizes="(min-width: 1024px) 30vw, 70vw" class="pv-poster" loading="lazy" />
+              <button type="button" class="pv-play" aria-label={`${hv.play}: ${x.title}`}>
+                <span class="pv-play-icon pv-play-sm"><Icon name="play" size={22} /></span>
+              </button>
+              <span class="pv-tag t-mono">{x.short ? 'Shorts' : x.source === 'ozonteh' ? 'Ozonteh' : 'BULL'}</span>
+            </div>
+            <p class="pv-name pv-name-sm">{x.title}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {!hasOzonteh && <p class="pv-soon">{v.none}</p>}
+
+  <div class="pv-cta">
+    <a href={company.youtubeChannel} class="btn btn-outline" target="_blank" rel="noopener" data-track="click_youtube" data-track-loc="product-videos">
+      <Icon name="youtube" /> {hv.channel}
+    </a>
+    <a href={company.youtubeSubscribe} class="btn btn-ghost" target="_blank" rel="noopener" data-track="click_youtube_subscribe" data-track-loc="product-videos">
+      {hv.subscribe} <Icon name="arrowUpRight" size={18} />
+    </a>
+  </div>
+</section>
+
+<style>
+  .pv { display: grid; gap: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem); }
+  .pv-head { display: grid; gap: 1.1rem; }
+  .pv-title { font-size: calc(clamp(2.1rem, 1.4rem + 3vw, 4.5rem) * var(--display-scale)); }
+  .pv-note { font-size: 0.875rem; }
+  .pv-feature { display: grid; gap: 0.75rem; }
+  .pv-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-graphite); }
+  .pv-feature .pv-frame.is-short { aspect-ratio: 9 / 16; max-height: 70vh; margin-inline: auto; }
+  .pv-poster { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.8); transition: transform 0.8s var(--ease-hydraulic), filter 0.4s; }
+  .pv-frame:hover .pv-poster { transform: scale(1.04); filter: none; }
+  .pv-play { position: absolute; inset: 0; display: grid; place-items: center; padding: 0; background: none; border: 0; color: var(--color-asphalt); }
+  .pv-play-icon {
+    display: grid;
+    place-items: center;
+    width: 80px;
+    height: 80px;
+    background: var(--color-bull-yellow);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: transform 0.3s var(--ease-press);
+  }
+  .pv-play-sm { width: 56px; height: 56px; }
+  .pv-play:hover .pv-play-icon { transform: scale(1.08); }
+  .pv-tag { position: absolute; left: 10px; top: 10px; padding: 4px 6px; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; background: rgb(18 19 20 / 0.72); }
+  .pv-frame :global(.video-iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pv-name { font-weight: 600; line-height: 1.35; }
+  .pv-name-sm { font-size: 0.875rem; }
+
+  /* Rândul secundar: înălțime fixă, clipurile 16:9 și Shorts 9:16 stau unul lângă altul. */
+  .pv-row {
+    --h: 200px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .pv-item { flex: none; display: grid; gap: 0.5rem; align-content: start; width: calc(var(--h) * 16 / 9); scroll-snap-align: start; }
+  .pv-item .pv-frame { height: var(--h); aspect-ratio: auto; }
+  .pv-item.is-short { width: calc(var(--h) * 9 / 16); }
+  .pv-soon { font-size: 0.9375rem; color: var(--color-steel); }
+  .pv-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 1rem; }
+  .pv-cta :global(svg) { color: #ff3d3d; }
+  .pv-cta .btn-ghost :global(svg) { color: inherit; }
+  @media (min-width: 64rem) {
+    .pv-row { --h: 220px; margin: 0; padding: 0; overflow: visible; flex-wrap: wrap; }
+  }
+</style>

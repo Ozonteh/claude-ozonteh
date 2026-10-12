@@ -1,0 +1,75 @@
+---
+// Formularul „Cere ofertă" cu modelul preselectat. Desktop: coloana din dreapta, fix la scroll.
+// Mobil: apare ca secțiune după FAQ (bara de jos deschide oricum formularul din dialog).
+import Icon from '../ui/Icon.astro';
+import QuoteForm from '../layout/QuoteForm.astro';
+import { company } from '../../data/site';
+import type { Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const ui = t(lang);
+const a = ui.product.aside;
+---
+
+<aside class="qa" id="oferta" aria-labelledby="qa-title">
+  <div class="qa-card">
+    <div class="hazard hazard-thin" aria-hidden="true"></div>
+    <div class="qa-body">
+      <p class="qa-wty t-mono"><Icon name="shield" size={16} /> {ui.badges.warranty} <span>·</span> {ui.badges.warrantyEngine}</p>
+      <h2 id="qa-title" class="qa-title">{tpl(a.title, { model: p.name })}</h2>
+      <p class="qa-text">{a.text}</p>
+      <QuoteForm lang={lang} id="aside" model={p.id} variant="dark" />
+      <div class="qa-alt" data-track-loc="product-aside">
+        <a href={`tel:${company.phone.tel}`} class="qa-phone t-mono"><Icon name="phone" size={18} /> {company.phone.display}</a>
+        <a href={company.whatsapp} class="qa-wa" target="_blank" rel="noopener" aria-label="WhatsApp"><Icon name="whatsapp" /></a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .qa { position: relative; z-index: 3; padding: clamp(3rem, 2rem + 4vw, 5rem) var(--gutter); background: var(--color-asphalt); }
+  .qa-card { background: var(--color-graphite); box-shadow: 0 0 0 1px var(--color-line), 0 30px 60px rgb(0 0 0 / 0.35); }
+  .qa-body { display: grid; gap: 1rem; padding: 1.5rem 1.1rem 1.25rem; }
+  .qa-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: var(--display-track);
+    font-size: calc(clamp(1.9rem, 1.5rem + 1.5vw, 2.6rem) * var(--display-scale));
+    line-height: 0.95;
+  }
+  :global(html:lang(ru)) .qa-title { font-weight: 600; line-height: 1.05; font-size: calc(clamp(1.9rem, 1.5rem + 1.5vw, 2.6rem) * 0.8); }
+  .qa-text { font-size: 0.9375rem; line-height: 1.5; color: var(--color-steel); }
+  .qa-alt { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 0.25rem; border-top: 1px solid var(--color-line); }
+  .qa-phone { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 48px; font-size: 1.125rem; color: var(--color-bull-yellow); }
+  .qa-wa { display: grid; place-items: center; width: 48px; height: 48px; color: #25d366; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .qa-wty { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.45rem; font-size: 0.6875rem; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-bull-yellow); }
+  .qa-wty span { color: var(--color-steel); }
+
+  @media (min-width: 64rem) {
+    .qa { padding: 0; background: none; }
+    .qa-card {
+      position: sticky;
+      top: calc(var(--header-h) + 1rem);
+      margin-block: 2rem;
+      max-height: calc(100dvh - var(--header-h) - 2rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .qa-body { padding: 1.25rem 1.4rem 0.75rem; gap: 0.7rem; }
+    .qa-title { font-size: calc(clamp(1.6rem, 1.2rem + 1vw, 2.1rem) * var(--display-scale)); }
+    :global(html:lang(ru)) .qa-title { font-size: calc(clamp(1.6rem, 1.2rem + 1vw, 2.1rem) * 0.8); }
+    .qa-text { display: none; }
+    .qa-card :global(.qform) { gap: 0.8rem; }
+    .qa-card :global(.qform-fields) { gap: 0.6rem; }
+    .qa-card :global(.field) { gap: 0.3rem; }
+    .qa-card :global(.input) { min-height: 48px; }
+    .qa-card :global(textarea) { min-height: 0; height: 64px; }
+    .qa-card :global(.qform-consent) { font-size: 0.75rem; line-height: 1.4; }
+    .qa-alt { padding-top: 0; }
+  }
+</style>

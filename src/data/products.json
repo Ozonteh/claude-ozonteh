@@ -29,7 +29,6 @@
       "santier/buldoexcavator-bull-sd76-santier-constructii.webp",
       "santier/buldoexcavator-bull-sd76-incarcare-basculanta.webp"
     ],
-    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-sd76.webp",
     "gallery": [],
     "key": {
       "powerHp": 76,
@@ -381,6 +380,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/sd76-all-new-high-speed.pdf",
+    "brochureMb": 41.5,
     "videos": [
       {
         "id": "uguJY_JSvbM",
@@ -388,12 +388,178 @@
           "ro": "BULL SD76 Super Smart, seria High Speed",
           "ru": "BULL SD76 Super Smart, серия High Speed"
         },
-        "uploadDate": null
+        "uploadDate": null,
+        "poster": "video/video-buldoexcavator-bull-sd76-super-smart.webp"
       }
     ],
     "verify": [
-      "Putere: pe card se afișează clasa de 76 CP (regula numelui de model); motorul Kirloskar 4R1190 are 75 CP / 54,8 kW. De confirmat cu BULL."
-    ]
+      "Putere: pe card se afișează clasa de 76 CP (regula numelui de model); motorul Kirloskar 4R1190 are 75 CP / 54,8 kW. De confirmat cu BULL.",
+      "Cotele din desenul tehnic sunt de pe pagina modelului de pe bullindia.com. Lungimea totală diferă între modele (6,04 m la SD76/HD96, 7,46 m la HD 100 și în broșura CH76): de confirmat cu BULL."
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-buldoexcavator-bull-sd76-negativ.webp",
+      "w": 1400,
+      "h": 305,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            6,
+            480
+          ],
+          "dims": [
+            [
+              "A",
+              "digDepth",
+              4.6,
+              5.6
+            ],
+            [
+              "B",
+              "reachRearAxle",
+              6.81,
+              7.91
+            ],
+            [
+              "C",
+              "reachSlew",
+              5.5,
+              6.6
+            ],
+            [
+              "D",
+              "reachTop",
+              2.85,
+              3.56
+            ],
+            [
+              "F",
+              "workHeight",
+              5.92,
+              6.77
+            ],
+            [
+              "G",
+              "loadOverExc",
+              4.14,
+              5.02
+            ],
+            [
+              "O",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "dumpHeight",
+              2.96
+            ],
+            [
+              "U",
+              "rollback",
+              49
+            ],
+            [
+              "T",
+              "digBelow",
+              0.1
+            ]
+          ]
+        },
+        {
+          "x": [
+            480,
+            641
+          ],
+          "dims": [
+            [
+              "L",
+              "bucketWidth",
+              2.35
+            ]
+          ]
+        },
+        {
+          "x": [
+            641,
+            811
+          ],
+          "dims": [
+            [
+              "H",
+              "totalHeight",
+              3.71
+            ],
+            [
+              "J",
+              "trackRear",
+              1.7
+            ],
+            [
+              "K",
+              "trackFront",
+              1.93
+            ]
+          ]
+        },
+        {
+          "x": [
+            811,
+            1105
+          ],
+          "dims": [
+            [
+              "A",
+              "length",
+              6.04
+            ],
+            [
+              "B",
+              "wheelbase",
+              2.22
+            ],
+            [
+              "G",
+              "cabHeight",
+              3.0
+            ],
+            [
+              "F",
+              "bonnetHeight",
+              1.99
+            ],
+            [
+              "D",
+              "groundClearance",
+              0.48
+            ],
+            [
+              "E",
+              "slewClearance",
+              0.65
+            ]
+          ]
+        },
+        {
+          "x": [
+            1105,
+            1394
+          ],
+          "dims": [
+            [
+              "M",
+              "sideReach",
+              6.08
+            ],
+            [
+              "C",
+              "kingpost",
+              1.03
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-ch76-challenger",
@@ -423,13 +589,12 @@
     "scenes": [
       "santier/buldoexcavator-bull-ch76-santier-moldova.webp"
     ],
-    "blueprint": null,
     "gallery": [],
     "key": {
       "powerHp": 76,
       "powerKw": null,
       "weightKg": 8010,
-      "digDepthM": null,
+      "digDepthM": 4.77,
       "digDepthExtM": null,
       "speedKmh": 36,
       "drive": [
@@ -476,6 +641,16 @@
             "v": {
               "ro": "Ashok Leyland H4CSE5520 BS-V (CEV), turbo",
               "ru": "Ashok Leyland H4CSE5520 BS-V (CEV), турбо"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cilindree",
+              "ru": "Рабочий объём"
+            },
+            "v": {
+              "ro": "3.840 cm³",
+              "ru": "3840 см³"
             }
           },
           {
@@ -582,6 +757,66 @@
         "rows": [
           {
             "k": {
+              "ro": "Adâncime maximă de săpare",
+              "ru": "Макс. глубина копания"
+            },
+            "v": {
+              "ro": "4,77 m",
+              "ru": "4,77 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Rază de acțiune la sol (de la axul roților spate)",
+              "ru": "Вылет на уровне земли (от оси задних колёс)"
+            },
+            "v": {
+              "ro": "6,77 m",
+              "ru": "6,77 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime maximă de lucru",
+              "ru": "Макс. рабочая высота"
+            },
+            "v": {
+              "ro": "5,98 m",
+              "ru": "5,98 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime maximă de încărcare (excavator)",
+              "ru": "Макс. высота погрузки (экскаватор)"
+            },
+            "v": {
+              "ro": "4,19 m",
+              "ru": "4,19 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă excavator",
+              "ru": "Ковш экскаватора"
+            },
+            "v": {
+              "ro": "0,26 m³",
+              "ru": "0,26 м³"
+            }
+          },
+          {
+            "k": {
+              "ro": "Cupă încărcător (GP)",
+              "ru": "Ковш погрузчика (GP)"
+            },
+            "v": {
+              "ro": "1,26 m³",
+              "ru": "1,26 м³"
+            }
+          },
+          {
+            "k": {
               "ro": "Înălțime de descărcare (încărcător)",
               "ru": "Высота выгрузки (погрузчик)"
             },
@@ -599,6 +834,26 @@
               "ro": "3,61 m",
               "ru": "3,61 м"
             }
+          },
+          {
+            "k": {
+              "ro": "Forță de rupere la cupă (încărcător)",
+              "ru": "Усилие отрыва ковша (погрузчик)"
+            },
+            "v": {
+              "ro": "8.183 kgf",
+              "ru": "8183 кгс"
+            }
+          },
+          {
+            "k": {
+              "ro": "Sarcină utilă (încărcător)",
+              "ru": "Грузоподъёмность (погрузчик)"
+            },
+            "v": {
+              "ro": "2.200 kg",
+              "ru": "2200 кг"
+            }
           }
         ]
       },
@@ -613,6 +868,36 @@
             "v": {
               "ro": "8.010 kg (2WD, cupă standard)",
               "ru": "8 010 кг (2WD, стандартный ковш)"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lungime totală",
+              "ru": "Общая длина"
+            },
+            "v": {
+              "ro": "7,46 m",
+              "ru": "7,46 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Înălțime",
+              "ru": "Высота"
+            },
+            "v": {
+              "ro": "3,49 m",
+              "ru": "3,49 м"
+            }
+          },
+          {
+            "k": {
+              "ro": "Lățime peste cupă",
+              "ru": "Ширина по ковшу"
+            },
+            "v": {
+              "ro": "2,35 m",
+              "ru": "2,35 м"
             }
           }
         ]
@@ -651,6 +936,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/ch76-new.pdf",
+    "brochureMb": 14.5,
     "videos": [
       {
         "id": "ToEVhtNICXM",
@@ -658,12 +944,95 @@
           "ro": "BULL CH76 Challenger, seria High Speed",
           "ru": "BULL CH76 Challenger, серия High Speed"
         },
-        "uploadDate": null
+        "uploadDate": null,
+        "poster": "video/video-buldoexcavator-bull-ch76-challenger.webp"
       }
     ],
     "verify": [
-      "Adâncimea de săpare și dimensiunile nu sunt în Anexa B: de extras din broșura ch76-new.pdf (format imagine)."
-    ]
+      "Putere: Anexa B (regula numelui de model) indică 76 CP; broșura oficială ch76-new.pdf și pagina bullindia.com indică 55 HP (40,5 kW) la 2000 rpm pentru motorul Ashok Leyland H4CSE5520 de 3.840 cm³. De confirmat cu BULL.",
+      "Cotele excavatorului, încărcătorului și gabaritul (7,46 × 2,35 × 3,49 m) sunt din broșura ch76-new.pdf, pagina 2."
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-buldoexcavator-bull-ch76-negativ.webp",
+      "w": 880,
+      "h": 626,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            0,
+            880
+          ],
+          "dims": [
+            [
+              "A",
+              "digDepth",
+              4.77
+            ],
+            [
+              "B",
+              "reachRearAxle",
+              6.77
+            ],
+            [
+              "C",
+              "reachSlew",
+              5.47
+            ],
+            [
+              "D",
+              "reachTop",
+              2.82
+            ],
+            [
+              "F",
+              "workHeight",
+              5.98
+            ],
+            [
+              "G",
+              "loadOverExc",
+              4.19
+            ],
+            [
+              "H",
+              "bucketRotation",
+              201
+            ],
+            [
+              "I",
+              "dumpHeight",
+              2.96
+            ],
+            [
+              "J",
+              "loadOver",
+              3.39
+            ],
+            [
+              "K",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "reachGround",
+              1.6
+            ],
+            [
+              "Q",
+              "rollback",
+              50
+            ],
+            [
+              "R",
+              "dumpAngle",
+              45
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-grandia-dlx",
@@ -691,7 +1060,6 @@
       "ru": "Экскаватор-погрузчик премиум-класса BULL Grandia DLX в чёрно-белой окраске с ковшом 6 в 1"
     },
     "scenes": [],
-    "blueprint": null,
     "gallery": [],
     "key": {
       "powerHp": 74.5,
@@ -829,6 +1197,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/grandia-dlx-new.pdf",
+    "brochureMb": 7.8,
     "videos": [
       {
         "id": "UHKTUwBiugI",
@@ -836,13 +1205,15 @@
           "ro": "BULL Grandia, seria High Speed",
           "ru": "BULL Grandia, серия High Speed"
         },
-        "uploadDate": null
+        "uploadDate": null,
+        "poster": "video/video-buldoexcavator-bull-grandia-dlx.webp"
       }
     ],
     "verify": [
       "Broșura grandia-dlx-new.pdf (sep. 2025) indică „74.5 HP Kirloskar Engine”; pagina de produs bullindia.com indică 76 CP / 54,8 kW.",
       "Broșura nu conține tabel de specificații: greutatea, viteza, hidraulica și dimensiunile trebuie cerute de la BULL."
-    ]
+    ],
+    "drawing": null
   },
   {
     "id": "bull-grandia",
@@ -874,7 +1245,6 @@
       "santier/buldoexcavator-bull-grandia-teren-accidentat.webp",
       "santier/buldoexcavator-bull-grandia-cariera.webp"
     ],
-    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-grandia.webp",
     "gallery": [
       "galerie/buldoexcavator-bull-grandia-1.webp",
       "galerie/buldoexcavator-bull-grandia-2.webp",
@@ -1121,6 +1491,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/bull-grandia-brochure.pdf",
+    "brochureMb": 3.6,
     "videos": [
       {
         "id": "bvptPBS75zY",
@@ -1128,10 +1499,80 @@
           "ro": "BULL Grandia cu direcție pe 4 roți",
           "ru": "BULL Grandia с управлением всеми колёсами"
         },
-        "uploadDate": null
+        "uploadDate": null,
+        "poster": "video/video-buldoexcavator-bull-grandia.webp"
       }
     ],
-    "verify": []
+    "verify": [
+      "Pe pagina Grandia de pe bullindia.com, gabaritul (lungime, înălțime, ecartament) e identic cu al SD76, deci probabil copiat. În desen se afișează doar cotele de lucru ale excavatorului și încărcătorului."
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-buldoexcavator-bull-grandia-negativ.webp",
+      "w": 2400,
+      "h": 475,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            100,
+            700
+          ],
+          "dims": [
+            [
+              "A",
+              "digDepth",
+              4.6,
+              5.6
+            ],
+            [
+              "B",
+              "reachRearAxle",
+              6.81,
+              7.91
+            ],
+            [
+              "C",
+              "reachSlew",
+              5.5,
+              6.6
+            ],
+            [
+              "D",
+              "reachTop",
+              2.85,
+              3.56
+            ],
+            [
+              "F",
+              "workHeight",
+              5.92,
+              6.77
+            ],
+            [
+              "G",
+              "loadOverExc",
+              4.14,
+              5.02
+            ],
+            [
+              "O",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "dumpHeight",
+              2.96
+            ],
+            [
+              "U",
+              "rollback",
+              50
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-hd96-4wd",
@@ -1163,14 +1604,7 @@
       "santier/buldoexcavator-bull-hd96-santier.webp",
       "santier/buldoexcavator-bull-hd96-cariera.webp"
     ],
-    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-hd96.webp",
-    "gallery": [
-      "galerie/buldoexcavator-bull-hd96-1.webp",
-      "galerie/buldoexcavator-bull-hd96-2.webp",
-      "galerie/buldoexcavator-bull-hd96-3.webp",
-      "galerie/buldoexcavator-bull-hd96-4.webp",
-      "galerie/buldoexcavator-bull-hd96-5.webp"
-    ],
+    "gallery": [],
     "key": {
       "powerHp": 96,
       "powerKw": 71.6,
@@ -1401,6 +1835,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/hd96-catalog.pdf",
+    "brochureMb": 4.4,
     "videos": [
       {
         "id": "ttnMjbMWgrw",
@@ -1408,7 +1843,8 @@
           "ro": "BULL Machines: film de prezentare a producătorului",
           "ru": "BULL Machines: корпоративный фильм производителя"
         },
-        "uploadDate": null
+        "uploadDate": "2023-02-18",
+        "poster": "video/video-bull-machines-prezentare.webp"
       },
       {
         "id": "l6_r_7QfqNw",
@@ -1416,10 +1852,177 @@
           "ro": "BULL HD96: părerea unui client din Africa de Sud",
           "ru": "BULL HD96: отзыв клиента из ЮАР"
         },
-        "uploadDate": null
+        "uploadDate": "2023-02-01",
+        "poster": "video/video-buldoexcavator-bull-hd96-client.webp"
       }
     ],
-    "verify": []
+    "verify": [
+      "Cotele din desenul tehnic sunt de pe pagina modelului de pe bullindia.com. Lungimea totală diferă între modele (6,04 m la SD76/HD96, 7,46 m la HD 100 și în broșura CH76): de confirmat cu BULL."
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-buldoexcavator-bull-hd96-negativ.webp",
+      "w": 1400,
+      "h": 305,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            6,
+            480
+          ],
+          "dims": [
+            [
+              "A",
+              "digDepth",
+              4.6,
+              5.6
+            ],
+            [
+              "B",
+              "reachRearAxle",
+              6.81,
+              7.91
+            ],
+            [
+              "C",
+              "reachSlew",
+              5.5,
+              6.6
+            ],
+            [
+              "D",
+              "reachTop",
+              2.85,
+              3.56
+            ],
+            [
+              "F",
+              "workHeight",
+              5.92,
+              6.77
+            ],
+            [
+              "G",
+              "loadOverExc",
+              4.14,
+              5.02
+            ],
+            [
+              "O",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "dumpHeight",
+              2.96
+            ],
+            [
+              "U",
+              "rollback",
+              50
+            ],
+            [
+              "T",
+              "digBelow",
+              0.08
+            ]
+          ]
+        },
+        {
+          "x": [
+            480,
+            641
+          ],
+          "dims": [
+            [
+              "L",
+              "bucketWidth",
+              2.35
+            ]
+          ]
+        },
+        {
+          "x": [
+            641,
+            811
+          ],
+          "dims": [
+            [
+              "H",
+              "totalHeight",
+              3.71
+            ],
+            [
+              "J",
+              "trackRear",
+              1.7
+            ],
+            [
+              "K",
+              "trackFront",
+              1.93
+            ]
+          ]
+        },
+        {
+          "x": [
+            811,
+            1105
+          ],
+          "dims": [
+            [
+              "A",
+              "length",
+              6.04
+            ],
+            [
+              "B",
+              "wheelbase",
+              2.22
+            ],
+            [
+              "G",
+              "cabHeight",
+              3.0
+            ],
+            [
+              "F",
+              "bonnetHeight",
+              1.99
+            ],
+            [
+              "D",
+              "groundClearance",
+              0.48
+            ],
+            [
+              "E",
+              "slewClearance",
+              0.65
+            ]
+          ]
+        },
+        {
+          "x": [
+            1105,
+            1394
+          ],
+          "dims": [
+            [
+              "M",
+              "sideReach",
+              6.08
+            ],
+            [
+              "C",
+              "kingpost",
+              1.03
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-hd-100",
@@ -1451,7 +2054,6 @@
       "santier/buldoexcavator-bull-hd100-cariera.webp",
       "santier/buldoexcavator-bull-hd100-terasamente.webp"
     ],
-    "blueprint": "desene/desen-tehnic-buldoexcavator-bull-hd100.webp",
     "gallery": [
       "galerie/buldoexcavator-bull-hd100-1.webp",
       "galerie/buldoexcavator-bull-hd100-2.webp",
@@ -1690,6 +2292,7 @@
       }
     ],
     "brochure": "https://bullindia.com/images/pdf/bhl-hd76-hd96-hd100.pdf",
+    "brochureMb": 9.9,
     "videos": [
       {
         "id": "TeWmmhVxYmc",
@@ -1697,7 +2300,8 @@
           "ro": "BULL HD100 cu braț telescopic, model de export",
           "ru": "BULL HD100 с телескопической рукоятью, экспортная модель"
         },
-        "uploadDate": null
+        "uploadDate": "2023-08-19",
+        "poster": "video/video-buldoexcavator-bull-hd100-brat-telescopic.webp"
       },
       {
         "id": "ITcMKf4AyAY",
@@ -1705,12 +2309,14 @@
           "ro": "BULL în Kenya: părerea dealerului",
           "ru": "BULL в Кении: отзыв дилера"
         },
-        "uploadDate": "2023-04-05"
+        "uploadDate": "2023-04-05",
+        "poster": "video/video-bull-kenya-dealer.webp"
       }
     ],
     "verify": [
       "Adâncimea de săpare (4,6 / 5,6 m) e preluată de pe pagina bullindia.com a modelului HD 100, nu din Anexa B. De confirmat cu broșura.",
-      "Confirmat de Ozonteh: în Moldova se vând două versiuni HD 100 (ZF Power Shift / Carraro + Casappa). Dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt preluate din video-urile Ozonteh; de confirmat dacă sunt standard. Viteza 40/22 km/h e din Anexa B (versiunea ZF)."
+      "Confirmat de Ozonteh: în Moldova se vând două versiuni HD 100 (ZF Power Shift / Carraro + Casappa). Dotările versiunii Carraro (6 în 1, ciocan, braț telescopic, AC, joystick) sunt preluate din video-urile Ozonteh; de confirmat dacă sunt standard. Viteza 40/22 km/h e din Anexa B (versiunea ZF).",
+      "Cotele din desenul tehnic sunt de pe pagina modelului de pe bullindia.com. Lungimea totală diferă între modele (6,04 m la SD76/HD96, 7,46 m la HD 100 și în broșura CH76): de confirmat cu BULL."
     ],
     "variants": [
       {
@@ -1757,7 +2363,171 @@
           }
         ]
       }
-    ]
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-buldoexcavator-bull-hd100-negativ.webp",
+      "w": 1178,
+      "h": 305,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            8,
+            409
+          ],
+          "dims": [
+            [
+              "A",
+              "digDepth",
+              4.6,
+              5.6
+            ],
+            [
+              "B",
+              "reachRearAxle",
+              6.81,
+              7.91
+            ],
+            [
+              "C",
+              "reachSlew",
+              5.5,
+              6.6
+            ],
+            [
+              "D",
+              "reachTop",
+              2.85,
+              3.56
+            ],
+            [
+              "F",
+              "workHeight",
+              5.92,
+              6.77
+            ],
+            [
+              "G",
+              "loadOverExc",
+              4.14,
+              5.02
+            ],
+            [
+              "O",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "dumpHeight",
+              2.96
+            ],
+            [
+              "U",
+              "rollback",
+              50
+            ],
+            [
+              "T",
+              "digBelow",
+              0.08
+            ]
+          ]
+        },
+        {
+          "x": [
+            409,
+            542
+          ],
+          "dims": [
+            [
+              "L",
+              "bucketWidth",
+              2.35
+            ]
+          ]
+        },
+        {
+          "x": [
+            542,
+            682
+          ],
+          "dims": [
+            [
+              "H",
+              "totalHeight",
+              3.71
+            ],
+            [
+              "J",
+              "trackRear",
+              1.7
+            ],
+            [
+              "K",
+              "trackFront",
+              1.93
+            ]
+          ]
+        },
+        {
+          "x": [
+            682,
+            926
+          ],
+          "dims": [
+            [
+              "A",
+              "length",
+              7.46
+            ],
+            [
+              "B",
+              "wheelbase",
+              2.22
+            ],
+            [
+              "G",
+              "cabHeight",
+              3.49
+            ],
+            [
+              "F",
+              "bonnetHeight",
+              1.99
+            ],
+            [
+              "D",
+              "groundClearance",
+              0.48
+            ],
+            [
+              "E",
+              "slewClearance",
+              0.65
+            ]
+          ]
+        },
+        {
+          "x": [
+            926,
+            1172
+          ],
+          "dims": [
+            [
+              "M",
+              "sideReach",
+              6.08
+            ],
+            [
+              "C",
+              "kingpost",
+              1.03
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-hd76-loader",
@@ -1789,7 +2559,6 @@
       "santier/incarcator-frontal-bull-hd76-concasor.webp",
       "santier/incarcator-frontal-bull-hd76-variante-cupa.webp"
     ],
-    "blueprint": "desene/desen-tehnic-incarcator-frontal-bull-hd76.webp",
     "gallery": [
       "galerie/incarcator-frontal-bull-hd76-1.webp",
       "galerie/incarcator-frontal-bull-hd76-2.webp",
@@ -2009,6 +2778,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/bull76-loader-new.pdf",
+    "brochureMb": 6.9,
     "videos": [
       {
         "id": "qUYmKJjrCC8",
@@ -2016,10 +2786,47 @@
           "ro": "Încărcătorul BULL la manipularea materialelor",
           "ru": "Погрузчик BULL на перевалке сыпучих материалов"
         },
-        "uploadDate": null
+        "uploadDate": "2015-04-17",
+        "poster": "video/video-incarcator-frontal-bull-hd76.webp"
       }
     ],
-    "verify": []
+    "verify": [],
+    "drawing": {
+      "image": "desene/desen-tehnic-incarcator-frontal-bull-hd76-negativ.webp",
+      "w": 1170,
+      "h": 305,
+      "unit": "m",
+      "views": [
+        {
+          "x": [
+            325,
+            772
+          ],
+          "dims": [
+            [
+              "O",
+              "pinHeight",
+              3.61
+            ],
+            [
+              "M",
+              "dumpHeight",
+              3.77
+            ],
+            [
+              "U",
+              "rollback",
+              60
+            ],
+            [
+              "T",
+              "digBelow",
+              0.16
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-av490",
@@ -2052,7 +2859,6 @@
       "santier/miniincarcator-skid-steer-bull-av490-depozit.webp",
       "santier/miniincarcator-skid-steer-bull-av490-hala.webp"
     ],
-    "blueprint": "desene/desen-tehnic-skid-steer-bull-av490.webp",
     "gallery": [
       "galerie/miniincarcator-skid-steer-bull-av490-1.webp",
       "galerie/miniincarcator-skid-steer-bull-av490-2.webp",
@@ -2372,6 +3178,7 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/skid-new.pdf",
+    "brochureMb": 15.3,
     "videos": [
       {
         "id": "3SVIaJpAJZQ",
@@ -2379,7 +3186,8 @@
           "ro": "Noul BULL AV490 skid steer, cu cabină climatizată",
           "ru": "Новый мини-погрузчик BULL AV490 с кондиционером"
         },
-        "uploadDate": null
+        "uploadDate": "2023-08-18",
+        "poster": "video/video-miniincarcator-bull-av490-prezentare.webp"
       },
       {
         "id": "6UeSTvTOTvg",
@@ -2387,12 +3195,117 @@
           "ro": "BULL AV490 la săpături pentru fundații",
           "ru": "BULL AV490 на земляных работах под фундамент"
         },
-        "uploadDate": null
+        "uploadDate": "2023-10-06",
+        "poster": "video/video-miniincarcator-bull-av490-fundatii.webp"
       }
     ],
     "verify": [
       "Putere: pagina de produs indică 52 CP / 39 kW, pagina de listare 50 CP / 36,5 kW. De confirmat cu BULL."
-    ]
+    ],
+    "drawing": {
+      "image": "desene/desen-tehnic-skid-steer-bull-av490-negativ.webp",
+      "w": 1178,
+      "h": 305,
+      "unit": "mm",
+      "views": [
+        {
+          "x": [
+            318,
+            694
+          ],
+          "dims": [
+            [
+              "A",
+              "length",
+              3282
+            ],
+            [
+              "B",
+              "lengthNoAtt",
+              2511
+            ],
+            [
+              "C",
+              "wheelbase",
+              980
+            ],
+            [
+              "D",
+              "groundClearance",
+              204
+            ],
+            [
+              "E",
+              "rollback",
+              30
+            ],
+            [
+              "F",
+              "departure",
+              27
+            ],
+            [
+              "G",
+              "totalHeight",
+              1970
+            ],
+            [
+              "H",
+              "dumpHeight",
+              2160
+            ],
+            [
+              "I",
+              "loadOver",
+              2646
+            ],
+            [
+              "J",
+              "pinHeight",
+              2813
+            ],
+            [
+              "K",
+              "dumpAngle",
+              42
+            ],
+            [
+              "L",
+              "dumpReach",
+              588
+            ],
+            [
+              "M",
+              "reachTop",
+              910
+            ]
+          ]
+        },
+        {
+          "x": [
+            694,
+            860
+          ],
+          "dims": [
+            [
+              "N",
+              "track",
+              1245
+            ],
+            [
+              "O",
+              "bucketWidth",
+              1580
+            ],
+            [
+              "P",
+              "widthTyres",
+              1500
+            ]
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "bull-av740",
@@ -2422,7 +3335,6 @@
     "scenes": [
       "santier/incarcator-compact-bull-av740-santier.webp"
     ],
-    "blueprint": "desene/desen-tehnic-incarcator-compact-bull-av740.webp",
     "gallery": [],
     "key": {
       "powerHp": 74.3,
@@ -2726,7 +3638,117 @@
       }
     ],
     "brochure": "https://bullindia.com/brochure/all-new-av-740.pdf",
+    "brochureMb": 15.8,
     "videos": [],
-    "verify": []
+    "verify": [],
+    "drawing": {
+      "image": "desene/desen-tehnic-incarcator-compact-bull-av740-negativ.webp",
+      "w": 1352,
+      "h": 350,
+      "unit": "mm",
+      "views": [
+        {
+          "x": [
+            396,
+            765
+          ],
+          "dims": [
+            [
+              "A",
+              "workHeight",
+              4150
+            ],
+            [
+              "B",
+              "cabHeight",
+              2086
+            ],
+            [
+              "C",
+              "departure",
+              28
+            ],
+            [
+              "D",
+              "groundClearance",
+              238
+            ],
+            [
+              "E",
+              "wheelbase",
+              1244
+            ],
+            [
+              "F",
+              "lengthNoAtt",
+              2892
+            ],
+            [
+              "G",
+              "length",
+              3644
+            ],
+            [
+              "H",
+              "rollback",
+              30
+            ],
+            [
+              "I",
+              "dumpHeight",
+              2570
+            ],
+            [
+              "J",
+              "heightToBucket",
+              3259
+            ],
+            [
+              "K",
+              "dumpReach",
+              819
+            ],
+            [
+              "L",
+              "dumpAngle",
+              37
+            ],
+            [
+              "M",
+              "rollbackTop",
+              92
+            ]
+          ]
+        },
+        {
+          "x": [
+            765,
+            930
+          ],
+          "dims": [
+            [
+              "N",
+              "bucketWidth",
+              1875
+            ],
+            [
+              "O",
+              "turnRadius",
+              2216
+            ],
+            [
+              "P",
+              "track",
+              1518
+            ],
+            [
+              "Q",
+              "widthTyres",
+              1825
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]

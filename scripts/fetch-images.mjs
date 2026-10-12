@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Descarcă imaginile din Anexa C (bullindia.com) și logo-urile, le optimizează și le salvează
 // cu nume SEO în src/assets/bull/. Rulare: `npm run images` (adaugă --force pentru re-descărcare).
-import { mkdir, writeFile, access } from 'node:fs/promises';
+import { mkdir, writeFile, access, readdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -89,6 +89,38 @@ async function cutout(input) {
   return sharp(out, { raw: info });
 }
 
+/**
+ * Varianta „negativ" a desenelor tehnice pentru secțiunea blueprint de pe fundal grafit.
+ * Inversează doar luminozitatea (HSL), deci galbenul BULL rămâne galben, liniile negre devin albe,
+ * iar fundalul alb devine transparent (alfa = luminozitatea pixelului).
+ */
+async function negative(input) {
+  const { data, info } = await sharp(input).flatten({ background: '#ffffff' }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const out = Buffer.alloc(info.width * info.height * 4);
+  const EDGE = 6; // rama planșei (la desenele HD) devine transparentă, nu linie albă
+  for (let i = 0, o = 0; i < data.length; i += 3, o += 4) {
+    const px = i / 3, x = px % info.width, y = (px / info.width) | 0;
+    if (x < EDGE || y < EDGE || x >= info.width - EDGE || y >= info.height - EDGE) continue;
+    const r = data[i] / 255, g = data[i + 1] / 255, b = data[i + 2] / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+    const d = max - min;
+    // L' = 1 - L, aceeași nuanță și saturație: pentru HSL, culoarea inversată e c' = c + (1 - max - min).
+    const shift = 1 - max - min;
+    let nr = r + shift, ng = g + shift, nb = b + shift;
+    if (d < 0.08) nr = ng = nb = 1 - l; // griurile rămân neutre
+    const a = Math.max(nr, ng, nb);
+    if (a < 0.04) continue; // fundal → transparent
+    out[o] = Math.round((nr / a) * 255);
+    out[o + 1] = Math.round((ng / a) * 255);
+    out[o + 2] = Math.round((nb / a) * 255);
+    out[o + 3] = Math.round(a * 255);
+  }
+  return sharp(out, { raw: { width: info.width, height: info.height, channels: 4 } });
+}
+
+const negativePath = (p) => p.replace(/\.webp$/, '-negativ.webp');
+
 async function processEntry(entry) {
   const target = join(OUT, entry.out);
   if (!force && (await exists(target))) return 'skip';
@@ -134,5 +166,21 @@ async function worker() {
   }
 }
 await Promise.all(Array.from({ length: 6 }, worker));
+
+// Negativele desenelor tehnice (inclusiv desenul CH76 extras din broșura ch76-new.pdf, pagina 2).
+const DESENE = join(OUT, 'desene');
+for (const name of await readdir(DESENE)) {
+  if (!name.endsWith('.webp') || name.includes('-negativ') || name.startsWith('raza-')) continue;
+  const target = negativePath(join(DESENE, name));
+  if (!force && (await exists(target))) continue;
+  try {
+    await writeFile(target, await (await negative(join(DESENE, name))).webp({ nearLossless: true, quality: 90 }).toBuffer());
+    results.ok++;
+    console.log('✓', 'desene/' + name.replace('.webp', '-negativ.webp'));
+  } catch (err) {
+    results.fail++;
+    console.error('✗', name, err.message);
+  }
+}
 console.log(`\nGata: ${results.ok} noi, ${results.skip} existente, ${results.fail} erori.`);
 if (results.fail) process.exit(1);

@@ -62,19 +62,8 @@ const featured = FEATURED_VIDEOS.map((id) => getVideo(id) as ChannelVideo).map((
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-yt]').forEach((frame) => {
-    frame.querySelector('button')?.addEventListener('click', () => {
-      const id = frame.dataset.yt!;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-      iframe.title = frame.dataset.ytTitle ?? 'YouTube';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.className = 'video-iframe';
-      frame.replaceChildren(iframe);
-      iframe.focus();
-    });
-  });
+  import { initYouTube } from '../../scripts/youtube';
+  initYouTube();
 </script>
 
 <style>

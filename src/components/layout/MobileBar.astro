@@ -4,7 +4,7 @@ import Icon from '../ui/Icon.astro';
 import { company } from '../../data/site';
 import type { Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
-interface Props { lang: Lang }
+interface Props { lang: Lang; model?: string }
 const ui = t(Astro.props.lang);
 ---
 <nav class="mobile-bar" aria-label={ui.menu.contact}>
@@ -14,7 +14,7 @@ const ui = t(Astro.props.lang);
   <a href={company.whatsapp} class="mb-btn mb-wa" target="_blank" rel="noopener" data-track-loc="mobile-bar">
     <Icon name="whatsapp" size={20} /><span>{ui.cta.whatsapp}</span>
   </a>
-  <button type="button" class="mb-btn mb-quote" data-quote>
+  <button type="button" class="mb-btn mb-quote" data-quote data-model={Astro.props.model}>
     <Icon name="quote" size={20} /><span>{ui.cta.quote}</span>
   </button>
 </nav>

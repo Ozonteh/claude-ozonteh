@@ -96,7 +96,7 @@ const buckets = [
 
 const galleries = [
   ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/bull-grandia/bull-grandia-${i}.webp`, out: `galerie/buldoexcavator-bull-grandia-${i}.webp` })),
-  ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/96-4wd/0${i}.jpg`, out: `galerie/buldoexcavator-bull-hd96-${i}.webp` })),
+  // Galeria HD96 de pe bullindia.com conține aceleași fotografii ca galeria HD 100, deci nu o folosim.
   ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/hd-100/0${i}.jpg`, out: `galerie/buldoexcavator-bull-hd100-${i}.webp` })),
   ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/76-loader/0${i}.jpg`, out: `galerie/incarcator-frontal-bull-hd76-${i}.webp` })),
   ...[1, 2, 3, 4, 5].map((i) => ({ src: `images/gallery/skidsteer/0${i}.png`, out: `galerie/miniincarcator-skid-steer-bull-av490-${i}.webp` })),
@@ -108,7 +108,27 @@ const videoPosters = [
   ['tyFDVK73byY', 'video/video-buldoexcavator-bull-hd100-ozonteh.webp'],
   ['HgDJ6PmjghU', 'video/video-miniincarcator-bull-av490-ozonteh.webp'],
   ['zIWOgi8mmsk', 'video/video-vizita-bull-machines-ozonteh-straseni.webp'],
-].map(([id, out]) => ({ src: id, url: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`, out }));
+  // Clipurile oficiale BULL Machines din products.json și clipurile Shorts Ozonteh.
+  // „hq": clipul nu are maxresdefault, deci luăm hqdefault (4:3 cu benzi negre) și decupăm zona 16:9.
+  ['uguJY_JSvbM', 'video/video-buldoexcavator-bull-sd76-super-smart.webp', 'hq'],
+  ['ToEVhtNICXM', 'video/video-buldoexcavator-bull-ch76-challenger.webp'],
+  ['UHKTUwBiugI', 'video/video-buldoexcavator-bull-grandia-dlx.webp', 'hq'],
+  ['bvptPBS75zY', 'video/video-buldoexcavator-bull-grandia.webp'],
+  ['ttnMjbMWgrw', 'video/video-bull-machines-prezentare.webp'],
+  ['l6_r_7QfqNw', 'video/video-buldoexcavator-bull-hd96-client.webp'],
+  ['TeWmmhVxYmc', 'video/video-buldoexcavator-bull-hd100-brat-telescopic.webp'],
+  ['ITcMKf4AyAY', 'video/video-bull-kenya-dealer.webp', 'hq'],
+  ['qUYmKJjrCC8', 'video/video-incarcator-frontal-bull-hd76.webp', 'hq'],
+  ['3SVIaJpAJZQ', 'video/video-miniincarcator-bull-av490-prezentare.webp'],
+  ['6UeSTvTOTvg', 'video/video-miniincarcator-bull-av490-fundatii.webp'],
+  ['63dShRAGAH4', 'video/video-buldoexcavator-bull-hd100-short-santier.webp'],
+  ['ZSgCwa84b0c', 'video/video-buldoexcavator-bull-hd100-short-dotari.webp'],
+  ['gsxGqn3Y77s', 'video/video-miniincarcator-bull-av490-short.webp'],
+].map(([id, out, size]) =>
+  size === 'hq'
+    ? { src: id, url: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, out, extract: { left: 0, top: 45, width: 480, height: 270 } }
+    : { src: id, url: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`, out, maxWidth: 1280 }
+);
 
 export const manifest = [
   ...products,

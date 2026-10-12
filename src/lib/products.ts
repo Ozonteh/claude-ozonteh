@@ -2,6 +2,9 @@ import data from '../data/products.json';
 import type { Lang, CategoryId } from '../i18n/routes';
 
 type L = Record<Lang, string>;
+/** [literă, tip (vezi data/dimensions.ts), valoare, valoare cu braț extensibil] */
+export type Dim = [string, string, number, number?];
+export type Drawing = { image: string; w: number; h: number; unit: 'm' | 'mm'; views: { x: [number, number]; dims: Dim[] }[] };
 export type SpecRow = { k: L; v: string | L };
 export type SpecGroupId = 'engine' | 'transmission' | 'hydraulics' | 'performance' | 'dimensions' | 'capacities';
 
@@ -19,8 +22,9 @@ export type Product = {
   image: string;
   alt: L;
   scenes: string[];
-  blueprint: string | null;
   gallery: string[];
+  /** Desen tehnic (varianta negativ) și cotele lui, grupate pe vederi (x = intervalul în pixeli al vederii). */
+  drawing: Drawing | null;
   key: {
     powerHp: number;
     powerKw: number | null;
@@ -43,7 +47,8 @@ export type Product = {
   advantages: L[];
   specs: { group: SpecGroupId; rows: SpecRow[] }[];
   brochure: string;
-  videos: { id: string; title: L; uploadDate: string | null }[];
+  brochureMb: number;
+  videos: { id: string; title: L; uploadDate: string | null; poster: string }[];
   verify: string[];
 };
 

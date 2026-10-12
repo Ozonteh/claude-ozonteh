@@ -1,0 +1,63 @@
+---
+// Card de model (produse similare; refolosit în catalog): imagine decupată pe planșă, 4 cifre cheie, link.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { asset } from '../../lib/images';
+import { cardStats, type Product } from '../../lib/products';
+import { productPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang; headingLevel?: 'h2' | 'h3' }
+const { p, lang, headingLevel = 'h3' } = Astro.props;
+const ui = t(lang);
+const stats = cardStats(p, lang, ui);
+const href = productPath(p, lang);
+const H = headingLevel;
+---
+
+<article class="pc">
+  <a href={href} class="pc-stage blueprint" tabindex="-1" aria-hidden="true">
+    {p.isNew && <span class="badge badge-new pc-new">{ui.badges.new}</span>}
+    <Image src={asset(p.image)} alt="" widths={[360, 540, 720]} sizes="(min-width: 1024px) 30vw, 84vw" loading="lazy" />
+  </a>
+  <div class="pc-body">
+    <p class="t-mono pc-type">{p.type[lang]}</p>
+    <H class="pc-name"><a href={href}>{p.name}</a></H>
+    <dl class="pc-stats">
+      {
+        stats.map((s) => (
+          <div>
+            <dt class="stat-k">{s.k}</dt>
+            <dd class="t-mono">
+              {s.v}
+              {s.u && <small> {s.u}</small>}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="pc-wty t-mono"><Icon name="shield" size={14} /> {ui.badges.warranty}</p>
+    <span class="link-arrow pc-more" aria-hidden="true">{ui.cta.more} <Icon name="arrow" size={18} /></span>
+  </div>
+</article>
+
+<style>
+  .pc { position: relative; display: grid; grid-template-rows: auto 1fr; background: var(--color-graphite); box-shadow: inset 0 0 0 1px var(--color-line); transition: box-shadow 0.3s, transform 0.4s var(--ease-hydraulic); }
+  .pc:hover { box-shadow: inset 0 0 0 1px var(--color-bull-yellow); transform: translateY(-4px); }
+  .pc-stage { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 3; padding: 1rem; overflow: hidden; }
+  .pc-stage :global(img) { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 16px 18px rgb(0 0 0 / 0.5)); transition: transform 0.7s var(--ease-hydraulic); }
+  .pc:hover .pc-stage :global(img) { transform: scale(1.04); }
+  .pc-new { position: absolute; left: 12px; top: 12px; z-index: 1; }
+  .pc-body { display: grid; gap: 0.75rem; align-content: start; padding: 1rem 1.1rem 1.25rem; }
+  .pc-type { font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-steel); }
+  .pc-name { font-family: var(--font-display); font-weight: 800; font-size: 1.75rem; line-height: 0.95; text-transform: uppercase; letter-spacing: var(--display-track); }
+  :global(html:lang(ru)) .pc-name { font-weight: 600; font-size: 1.5rem; }
+  .pc-name a::after { content: ''; position: absolute; inset: 0; }
+  .pc-name a:focus-visible { outline: none; }
+  .pc:has(.pc-name a:focus-visible) { box-shadow: inset 0 0 0 2px var(--color-bull-yellow); }
+  .pc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; padding-block: 0.75rem; border-block: 1px solid var(--color-line); }
+  .pc-stats dd { margin: 0.2rem 0 0; font-size: 1rem; color: var(--color-bone); }
+  .pc-stats small { font-size: 0.75rem; color: var(--color-steel); }
+  .pc-wty { display: flex; align-items: center; gap: 0.4rem; font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-bull-yellow); }
+  .pc-more { justify-self: start; }
+</style>

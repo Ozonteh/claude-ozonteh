@@ -10,8 +10,9 @@ import { t } from '../../i18n/ui';
 interface Props {
   lang: Lang;
   alternates: Partial<Record<Lang, string>>;
+  model?: string;
 }
-const { lang, alternates } = Astro.props;
+const { lang, alternates, model } = Astro.props;
 const ui = t(lang);
 const nav = [
   { href: route('attachments', lang), label: ui.nav.attachments },
@@ -53,7 +54,7 @@ const here = Astro.url.pathname;
         <Icon name="phone" size={18} />
         {company.phone.display}
       </a>
-      <button type="button" class="btn btn-primary btn-sm hide-mobile" data-quote data-magnetic>
+      <button type="button" class="btn btn-primary btn-sm hide-mobile" data-quote data-model={model} data-magnetic>
         {ui.cta.quote}
       </button>
       <a href={`tel:${company.phone.tel}`} class="header-icon show-mobile" aria-label={`${ui.cta.call}: ${company.phone.display}`} data-track-loc="header">

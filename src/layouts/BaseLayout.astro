@@ -26,9 +26,11 @@ interface Props {
   type?: 'website' | 'product' | 'article';
   noindex?: boolean;
   jsonld?: (Record<string, unknown> | null)[];
+  /** Pe pagina de produs: id-ul modelului (preselectat în formulare, evenimentul view_product). */
+  model?: string;
 }
 
-const { lang, title, description, alternates, ogImage, ogImageAlt, type, noindex, jsonld = [] } = Astro.props;
+const { lang, title, description, alternates, ogImage, ogImageAlt, type, noindex, jsonld = [], model } = Astro.props;
 const ui = t(lang);
 const site = Astro.site ?? new URL(Astro.url.origin);
 const logo = await getImage({ src: asset('logo/ozonteh-logo.png'), width: 600, format: 'png' });
@@ -72,16 +74,16 @@ const graph = [...organizationGraph(site, lang, new URL(logo.src, site).href), .
     <link rel="manifest" href={lang === 'ru' ? '/manifest-ru.webmanifest' : '/manifest.webmanifest'} />
     <slot name="head" />
   </head>
-  <body>
+  <body data-view-product={model}>
     <a class="skip-link" href="#main">{ui.a11y.skip}</a>
-    <Header lang={lang} alternates={alternates} />
+    <Header lang={lang} alternates={alternates} model={model} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer lang={lang} />
     <SiteMenu lang={lang} alternates={alternates} />
-    <MobileBar lang={lang} />
-    <QuoteDialog lang={lang} />
+    <MobileBar lang={lang} model={model} />
+    <QuoteDialog lang={lang} model={model} />
     <CookieConsent lang={lang} />
     <div class="grain" aria-hidden="true"></div>
     <script>

@@ -1,0 +1,157 @@
+---
+// Pagina de produs (șablon comun pentru toate modelele, RO + RU).
+// Ordinea secțiunilor: hero + galerie → cifre cheie → avantaje → prezentare (text lung) → desen tehnic
+// → fișă tehnică → atașamente → video → broșură → FAQ → produse similare. Pe desktop, formularul
+// „Cere ofertă" stă fix în coloana din dreapta; pe mobil apare după FAQ.
+import { getEntry, render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductHero from '../components/product/ProductHero.astro';
+import KeyFigures from '../components/product/KeyFigures.astro';
+import Overview from '../components/product/Overview.astro';
+import Blueprint from '../components/product/Blueprint.astro';
+import SpecSheet from '../components/product/SpecSheet.astro';
+import ProductAttachments from '../components/product/ProductAttachments.astro';
+import ProductVideos from '../components/product/ProductVideos.astro';
+import Brochure from '../components/product/Brochure.astro';
+import QuoteAside from '../components/product/QuoteAside.astro';
+import Similar from '../components/product/Similar.astro';
+import Faq from '../components/home/Faq.astro';
+import { getProduct } from '../lib/products';
+import { asset } from '../lib/images';
+import { breadcrumbGraph, faqGraph, productGraph, videoGraph } from '../lib/schema';
+import { videosForProduct, type VideoItem } from '../data/videos';
+import { categoryPath, productPath, route, type Lang } from '../i18n/routes';
+import { t, tpl } from '../i18n/ui';
+
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const p = getProduct(id);
+if (!p) throw new Error(`Model necunoscut: ${id}`);
+const entry = await getEntry('produse', `${lang}/${p.id}`);
+if (!entry) throw new Error(`Lipsește textul src/content/produse/${lang}/${p.id}.md`);
+const { Content } = await render(entry);
+const copy = entry.data;
+
+const ui = t(lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const abs = (path: string) => new URL(path, site).href;
+const alternates = { ro: productPath(p, 'ro'), ru: productPath(p, 'ru') };
+
+// Fotografii: imaginea de produs (decupată) + scene de șantier + galeria BULL.
+const photos = [...p.scenes, ...p.gallery];
+const ogSource = asset(p.scenes[0] ?? p.image);
+
+// Video: întâi clipurile Ozonteh (în română), apoi clipurile oficiale BULL Machines.
+const oz = videosForProduct(p.id).sort((a, b) => Number(a.format === 'short') - Number(b.format === 'short'));
+const videos: VideoItem[] = [
+  ...oz.map((v) => ({
+    id: v.id,
+    title: v.title[lang],
+    description: v.description[lang],
+    poster: v.poster!,
+    short: v.format === 'short',
+    source: 'ozonteh' as const,
+    uploadDate: v.uploadDate,
+    duration: v.duration,
+  })),
+  ...p.videos.map((v) => ({
+    id: v.id,
+    title: v.title[lang],
+    description: v.title[lang],
+    poster: v.poster,
+    short: false,
+    source: 'bull' as const,
+    uploadDate: v.uploadDate,
+  })),
+].slice(0, 4);
+
+// JSON-LD: Product (+ garanție, preț la cerere), BreadcrumbList, FAQPage, VideoObject.
+const [mainImg, sceneImg] = await Promise.all([
+  getImage({ src: asset(p.image), width: 1200, format: 'webp' }),
+  p.scenes[0] ? getImage({ src: asset(p.scenes[0]), width: 1200, format: 'jpg', quality: 80 }) : null,
+]);
+const crumbs = [
+  { name: ui.product.home, url: abs(route('home', lang)) },
+  { name: ui.nav.machines, url: abs(route('catalog', lang)) },
+  { name: ui.categories[p.category].plural, url: abs(categoryPath(p.category, lang)) },
+  { name: p.name, url: abs(productPath(p, lang)) },
+];
+const videoLd = await Promise.all(
+  videos.map(async (v) => {
+    const thumb = await getImage({ src: asset(v.poster), width: 1280, format: 'jpg', quality: 80 });
+    return videoGraph({
+      id: v.id,
+      name: v.title,
+      description: v.description,
+      thumbnailUrl: abs(thumb.src),
+      uploadDate: v.uploadDate,
+      duration: v.duration,
+      inLanguage: v.source === 'ozonteh' ? 'ro' : 'en',
+    });
+  })
+);
+const productLd = productGraph(p, site, lang, [abs(mainImg.src), ...(sceneImg ? [abs(sceneImg.src)] : [])]);
+const jsonld = [{ ...productLd, description: copy.description }, breadcrumbGraph(crumbs), faqGraph(copy.faq), ...videoLd];
+---
+
+<BaseLayout
+  lang={lang}
+  title={copy.title}
+  description={copy.description}
+  alternates={alternates}
+  ogImage={ogSource}
+  ogImageAlt={p.alt[lang]}
+  type="product"
+  jsonld={jsonld}
+  model={p.id}
+>
+  <ProductHero p={p} lang={lang} photos={photos} crumbs={crumbs} />
+  <KeyFigures p={p} lang={lang} />
+
+  <div class="pp">
+    <div class="pp-main">
+      <Overview p={p} lang={lang}>
+        <Content />
+      </Overview>
+      <Blueprint p={p} lang={lang} />
+      <SpecSheet p={p} lang={lang} />
+      <ProductAttachments p={p} lang={lang} />
+      <ProductVideos p={p} lang={lang} videos={videos} />
+      <Brochure p={p} lang={lang} />
+      <Faq lang={lang} items={copy.faq} idx="08" title={tpl(ui.product.faqTitle, { model: p.name })} layout="stack" band />
+    </div>
+    <QuoteAside p={p} lang={lang} />
+  </div>
+
+  <Similar p={p} lang={lang} />
+</BaseLayout>
+
+<script>
+  import '../scripts/product';
+</script>
+
+<style>
+  /*
+   * Două coloane pe desktop: conținut + formular fix. Secțiunile din coloana principală au fundaluri
+   * „band" care se întind pe toată lățimea ecranului (pseudo-element), formularul plutește deasupra lor.
+   */
+  .pp {
+    --outer: max(0px, (100% - 1440px) / 2);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: var(--outer);
+    /* Benzile și grila blueprint se întind dincolo de coloană; le tăiem la marginea ecranului
+       (clip nu creează container de scroll, deci elementele sticky funcționează). */
+    overflow-x: clip;
+  }
+  .pp-main { min-width: 0; }
+  .pp-main > :global(*) { padding-inline: var(--gutter); }
+  @media (min-width: 64rem) {
+    .pp {
+      grid-template-columns: minmax(0, 1fr) clamp(340px, 27vw, 410px);
+      column-gap: clamp(2rem, 1rem + 2vw, 3.5rem);
+      padding-right: calc(var(--outer) + var(--gutter));
+    }
+  }
+</style>

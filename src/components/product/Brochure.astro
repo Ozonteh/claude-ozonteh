@@ -1,0 +1,57 @@
+---
+// Broșura oficială BULL (PDF de pe bullindia.com, în engleză). Click → evenimentul download_brochure.
+import Icon from '../ui/Icon.astro';
+import { fmt, type Product } from '../../lib/products';
+import type { Lang } from '../../i18n/routes';
+import { t, tpl } from '../../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const b = t(lang).product.brochure;
+---
+
+<section class="br band on-yellow" aria-labelledby="br-title">
+  <div class="br-inner">
+    <div class="br-doc" aria-hidden="true">
+      <span class="t-mono">PDF</span>
+      <Icon name="download" size={30} />
+    </div>
+    <div class="br-copy">
+      <p class="t-eyebrow"><span class="idx">07</span> {b.eyebrow}</p>
+      <h2 id="br-title" class="t-h3">{tpl(b.title, { model: p.name })}</h2>
+      <p class="br-text">{b.text}</p>
+    </div>
+    <div class="br-action">
+      <a href={p.brochure} class="btn btn-dark btn-lg" target="_blank" rel="noopener" data-brochure={p.id} data-track-loc="brochure">
+        <Icon name="download" /> {b.button}
+      </a>
+      <p class="t-mono br-meta">{tpl(b.meta, { size: fmt(p.brochureMb, lang, 1) })}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .br { position: relative; padding-block: clamp(2.5rem, 2rem + 2vw, 3.75rem); }
+  .br::before { content: ''; position: absolute; inset: 0 -100vmax auto; height: 8px; background: repeating-linear-gradient(-45deg, var(--color-asphalt) 0 10px, transparent 10px 20px); }
+  .br-inner { display: grid; gap: 1.25rem; align-items: center; }
+  .br-doc {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 0.35rem;
+    width: 76px;
+    height: 96px;
+    color: var(--color-bull-yellow);
+    background: var(--color-asphalt);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+  }
+  .br-doc .t-mono { font-size: 0.8125rem; letter-spacing: 0.12em; }
+  .br-copy { display: grid; gap: 0.6rem; }
+  .br-text { max-width: 34rem; font-size: 0.9375rem; line-height: 1.5; }
+  .br-action { display: grid; gap: 0.5rem; justify-items: start; }
+  .br-meta { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (min-width: 48rem) {
+    .br-inner { grid-template-columns: auto minmax(0, 1fr) auto; gap: 1.75rem; }
+    .br-action { justify-items: end; text-align: right; }
+  }
+</style>
