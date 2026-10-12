@@ -123,13 +123,14 @@ html:lang(ru) {
   .t-h2 {
     font-weight: 800;
     font-size: calc(clamp(2.5rem, 1.55rem + 4.4vw, 6rem) * var(--display-scale));
-    line-height: 0.92;
+    /* 1.08: virgulele lungi de sub Ș/Ț (Big Shoulders) nu mai ating rândul următor */
+    line-height: 1.08;
   }
-  html:lang(ru) .t-h2 { font-weight: 600; line-height: 1.02; }
+  html:lang(ru) .t-h2 { font-weight: 600; line-height: 1.1; }
   .t-h3 {
     font-weight: 800;
     font-size: calc(clamp(1.65rem, 1.35rem + 1.1vw, 2.35rem) * var(--display-scale));
-    line-height: 0.95;
+    line-height: 1.1;
   }
   html:lang(ru) .t-h3 { font-weight: 600; line-height: 1.08; font-size: calc(clamp(1.65rem, 1.35rem + 1.1vw, 2.35rem) * 0.82); }
   .t-num {
@@ -577,7 +578,7 @@ html:lang(ru) {
     text-transform: uppercase;
     letter-spacing: var(--display-track);
     font-size: calc(clamp(1.75rem, 1.4rem + 1.4vw, 2.6rem) * var(--display-scale));
-    line-height: 0.95;
+    line-height: 1.1;
   }
   html:lang(ru) .prose h2 { font-weight: 600; line-height: 1.05; font-size: calc(clamp(1.75rem, 1.4rem + 1.4vw, 2.6rem) * 0.82); }
   .prose h2:first-child { margin-top: 0; }

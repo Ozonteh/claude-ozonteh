@@ -21,7 +21,7 @@ const icons = ['badge', 'shield', 'tools', 'box', 'truck', 'calendar'] as const;
         <h2 id="oz-title" class="t-h2">{w.title}</h2>
       </div>
       <div class="oz-logo" data-reveal style="--d:1">
-        <OzontehLogo variant="blue" height={44} />
+        <OzontehLogo variant="white" height={44} class="oz-logo-img" />
         <p class="t-mono oz-since">{company.legalName} · {company.foundingYear}</p>
       </div>
     </div>
@@ -57,6 +57,8 @@ const icons = ['badge', 'shield', 'tools', 'box', 'truck', 'calendar'] as const;
 </section>
 
 <style>
+  /* Logo alb pe galben: o umbră fină îl desprinde de fundal. */
+  .oz-logo :global(.oz-logo-img) { filter: drop-shadow(0 1px 1px rgb(18 19 20 / 0.35)) drop-shadow(0 0 10px rgb(18 19 20 / 0.12)); }
   .oz-titles { display: grid; gap: 1.1rem; }
   .oz-logo { display: grid; gap: 0.6rem; justify-items: start; }
   .oz-since { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-steel-ink); }
@@ -68,7 +70,7 @@ const icons = ['badge', 'shield', 'tools', 'box', 'truck', 'calendar'] as const;
     font-family: var(--font-display);
     font-weight: 800;
     font-size: calc(1.75rem * var(--display-scale) / 0.82);
-    line-height: 0.95;
+    line-height: 1.1;
     text-transform: uppercase;
   }
   :global(html:lang(ru)) .oz-title { font-weight: 600; font-size: 1.35rem; line-height: 1.1; }
@@ -86,7 +88,7 @@ const icons = ['badge', 'shield', 'tools', 'box', 'truck', 'calendar'] as const;
     font-family: var(--font-display);
     font-weight: 800;
     font-size: calc(clamp(1.8rem, 1.4rem + 1.6vw, 2.75rem) * var(--display-scale));
-    line-height: 0.95;
+    line-height: 1.1;
     text-transform: uppercase;
     color: var(--color-bull-yellow);
   }
